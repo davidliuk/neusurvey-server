@@ -1,4 +1,4 @@
-package io.renren;
+package cn.neud;
 
 public class Main {
     public static void main(String[] args) {
