@@ -87,7 +87,7 @@ public class UserController {
     }
 
 
-    @PostMapping("login/")
+    @PostMapping("login")
     @ApiOperation("登录")
     @LogOperation("登录")
     @RequiresPermissions("user:user:login")

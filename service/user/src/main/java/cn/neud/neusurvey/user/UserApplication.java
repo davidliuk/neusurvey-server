@@ -23,9 +23,9 @@ import org.springframework.context.annotation.ComponentScan;
  * @author David l729641074@163.com
  */
 @SpringBootApplication
+@ComponentScan({"springfox.documentation.schema"})
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan({"springfox.documentation.schema"})
 @ComponentScan(basePackages = "cn.neud.neusurvey")
 public class UserApplication {
 
