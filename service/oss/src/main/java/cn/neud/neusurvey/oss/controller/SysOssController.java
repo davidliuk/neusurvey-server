@@ -40,7 +40,7 @@ import java.util.*;
  * @author David l729641074@163.com
  */
 @RestController
-@RequestMapping("sys/oss")
+@RequestMapping("/oss")
 @Api(tags = "文件上传")
 public class SysOssController {
     @Autowired

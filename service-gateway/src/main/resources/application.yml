@@ -4,7 +4,7 @@ spring:
       active: dev
 
 server:
-  port: 8085
+  port: 8080
 
 ---
 
@@ -19,16 +19,16 @@ spring:
         server-addr: 101.43.31.212:8849
     gateway:
       routes:
-        - id: user
-          uri: lb://user
+        - id: neusurvey-user
+          uri: lb://neusurvey-user
           predicates:
             - Path=/user/**
-        - id: survey
-          uri: lb://survey
+        - id: neusurvey-survey
+          uri: lb://neusurvey-survey
           predicates:
             - Path=/survey/**
-        - id: oss
-          uri: lb://oss
+        - id: neusurvey-oss
+          uri: lb://neusurvey-oss
           predicates:
             - Path=/oss/**
       globalcors:
