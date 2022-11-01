@@ -3,6 +3,7 @@ package cn.neud.neusurvey.user.dao;
 import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.entity.user.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * user
@@ -12,5 +13,8 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserDao extends BaseDao<UserEntity> {
+
+    @Select("select * from user where username=#{username};")
+    UserEntity selectByUsername(String username);
 	
 }
