@@ -4,6 +4,7 @@ import cn.neud.common.service.CrudService;
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserLoginDTO;
+import cn.neud.neusurvey.dto.user.UserRegisterDTO;
 import cn.neud.neusurvey.entity.user.UserLoginEntity;
 import cn.neud.neusurvey.entity.user.UserEntity;
 
@@ -16,5 +17,7 @@ import cn.neud.neusurvey.entity.user.UserEntity;
 public interface UserService extends CrudService<UserEntity, UserDTO> {
 
     Result loginValidate(UserLoginDTO userLoginDTO);
+
+    Result register(UserRegisterDTO userRegisterDTO);
 
 }

@@ -12,6 +12,7 @@ import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserLoginDTO;
+import cn.neud.neusurvey.dto.user.UserRegisterDTO;
 import cn.neud.neusurvey.entity.user.UserLoginEntity;
 import cn.neud.neusurvey.user.excel.UserExcel;
 import cn.neud.neusurvey.user.service.UserService;
@@ -96,6 +97,16 @@ public class UserController {
         //效验数据
         ValidatorUtils.validateEntity(userLoginDTO, AddGroup.class, DefaultGroup.class);
         return userService.loginValidate(userLoginDTO);
+    }
+
+    @PostMapping("register")
+    @ApiOperation("注册")
+    @LogOperation("注册")
+    @RequiresPermissions("user:user:register")
+    public Result register(@RequestBody UserRegisterDTO userRegisterDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(userRegisterDTO, AddGroup.class, DefaultGroup.class);
+        return userService.register(userRegisterDTO);
     }
 
     @PutMapping

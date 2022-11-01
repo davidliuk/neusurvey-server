@@ -2,17 +2,23 @@ package cn.neud.neusurvey.user.service.impl;
 
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.UserLoginDTO;
+import cn.neud.neusurvey.dto.user.UserRegisterDTO;
 import cn.neud.neusurvey.entity.user.UserEntity;
+import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
 import cn.neud.neusurvey.user.dao.UserDao;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
+import org.quartz.Calendar;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * user
@@ -54,6 +60,28 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         } else {
             result.error("找不到用户");
         }
+
+        return result;
+    }
+
+    @Override
+    public Result register(UserRegisterDTO userRegisterDTO) {
+
+        Result result=new Result();
+
+        UserEntity userEntity=new UserEntity();
+        BeanUtils.copyProperties(userRegisterDTO,userEntity);
+
+        String userId= UuidUtils.generateUuid();
+        userEntity.setId(userId);
+        userEntity.setCreator(userId);
+        userEntity.setUpdater(userId);
+        userEntity.setCreateDate(new Date(System.currentTimeMillis()));
+        userEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+        userEntity.setIsDeleted(String.valueOf(0));
+
+        if(userDao.insert(userEntity)!=0) result.ok(null);
+        else result.error();
 
         return result;
     }
