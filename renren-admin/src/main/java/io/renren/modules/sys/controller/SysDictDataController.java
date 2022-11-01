@@ -32,7 +32,7 @@ import java.util.Map;
 /**
  * 字典数据
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @RestController
 @RequestMapping("sys/dict/data")

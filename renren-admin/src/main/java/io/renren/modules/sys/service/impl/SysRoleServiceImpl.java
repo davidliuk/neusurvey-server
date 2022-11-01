@@ -33,7 +33,7 @@ import java.util.Map;
 /**
  * 角色
  * 
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Service
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntity> implements SysRoleService {

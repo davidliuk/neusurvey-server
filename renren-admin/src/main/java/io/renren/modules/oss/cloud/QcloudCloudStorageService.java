@@ -26,7 +26,7 @@ import java.io.InputStream;
 /**
  * 腾讯云存储
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public class QcloudCloudStorageService extends AbstractCloudStorageService {
     private COSCredentials credentials;

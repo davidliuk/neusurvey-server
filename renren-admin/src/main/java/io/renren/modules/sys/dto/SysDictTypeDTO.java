@@ -26,7 +26,7 @@ import java.util.Date;
 /**
  * 字典类型
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Data
 @ApiModel(value = "字典类型")

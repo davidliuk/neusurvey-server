@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.neud.neusurvey.survey.dao.HaveDao">
 
-    <resultMap type="cn.neud.neusurvey.entity.user.HaveEntity" id="haveMap">
+    <resultMap type="cn.neud.neusurvey.entity.survey.HaveEntity" id="haveMap">
         <result property="surveyId" column="survey_id"/>
         <result property="questionId" column="question_id"/>
         <result property="nextId" column="next_id"/>

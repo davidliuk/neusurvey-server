@@ -11,7 +11,7 @@ package io.renren.modules.sys.enums;
 /**
  * 菜单类型枚举
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  * @since 1.0.0
  */
 public enum MenuTypeEnum {

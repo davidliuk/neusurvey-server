@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * 代码生成器
  * 
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Controller
 @RequestMapping("/sys/generator")

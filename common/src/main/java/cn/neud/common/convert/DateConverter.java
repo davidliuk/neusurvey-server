@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 日期转换
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Component
 public class DateConverter implements Converter<String, Date> {

@@ -24,7 +24,7 @@ import javax.annotation.Resource;
 /**
  * Redis配置
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Configuration
 public class RedisConfig {

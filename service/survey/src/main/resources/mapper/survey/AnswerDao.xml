@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.neud.neusurvey.survey.dao.AnswerDao">
 
-    <resultMap type="cn.neud.neusurvey.entity.user.AnswerEntity" id="answerMap">
+    <resultMap type="cn.neud.neusurvey.entity.survey.AnswerEntity" id="answerMap">
         <result property="surveyId" column="survey_id"/>
         <result property="questionId" column="question_id"/>
         <result property="userId" column="user_id"/>
@@ -15,6 +15,5 @@
         <result property="isDeleted" column="is_deleted"/>
         <result property="reserved" column="reserved"/>
     </resultMap>
-
 
 </mapper>

@@ -10,22 +10,23 @@ package cn.neud.neusurvey.oss.cloud;
 
 import cn.neud.common.constant.Constant;
 import cn.neud.common.utils.SpringContextUtils;
-import io.renren.modules.sys.service.SysParamsService;
+//import io.renren.modules.sys.service.SysParamsService;
 
 /**
  * 文件上传Factory
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public final class OSSFactory {
-    private static SysParamsService sysParamsService;
-
-    static {
-        OSSFactory.sysParamsService = SpringContextUtils.getBean(SysParamsService.class);
-    }
+//    private static SysParamsService sysParamsService;
+//
+//    static {
+//        OSSFactory.sysParamsService = SpringContextUtils.getBean(SysParamsService.class);
+//    }
 
     public static AbstractCloudStorageService build(){
         //获取云存储配置信息
-        CloudStorageConfig config = sysParamsService.getValueObject(Constant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
+//        CloudStorageConfig config = sysParamsService.getValueObject(Constant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
+        CloudStorageConfig config = new CloudStorageConfig();
 
         if(config.getType() == Constant.CloudService.QINIU.getValue()){
             return new QiniuCloudStorageService(config);

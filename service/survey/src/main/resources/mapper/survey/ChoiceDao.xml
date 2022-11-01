@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.neud.neusurvey.survey.dao.ChoiceDao">
 
-    <resultMap type="cn.neud.neusurvey.entity.user.ChoiceEntity" id="choiceMap">
+    <resultMap type="cn.neud.neusurvey.entity.survey.ChoiceEntity" id="choiceMap">
         <result property="id" column="id"/>
         <result property="content" column="content"/>
         <result property="belongTo" column="belong_to"/>

@@ -11,7 +11,7 @@ package cn.neud.common.interceptor;
 /**
  * 数据范围
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  * @since 1.0.0
  */
 public class DataScope {

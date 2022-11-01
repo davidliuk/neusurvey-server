@@ -18,7 +18,7 @@ import java.io.Serializable;
 /**
  * 登录表单
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Data
 @ApiModel(value = "登录表单")

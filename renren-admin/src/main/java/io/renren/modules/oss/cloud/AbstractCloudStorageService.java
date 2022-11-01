@@ -18,7 +18,7 @@ import java.util.UUID;
 /**
  * 云存储(支持七牛、阿里云、腾讯云)
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public abstract class AbstractCloudStorageService {
     /** 云存储配置信息 */

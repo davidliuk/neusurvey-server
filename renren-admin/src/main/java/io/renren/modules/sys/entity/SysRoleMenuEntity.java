@@ -16,7 +16,7 @@ import lombok.EqualsAndHashCode;
 /**
  * 角色菜单关系
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  * @since 1.0.0
  */
 @Data

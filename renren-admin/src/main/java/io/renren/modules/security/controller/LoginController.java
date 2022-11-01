@@ -45,7 +45,7 @@ import java.util.Date;
 /**
  * 登录
  * 
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @RestController
 @Api(tags="登录管理")

@@ -24,7 +24,7 @@ import java.io.Serializable;
 /**
  * 云存储配置信息
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Data
 @ApiModel(value = "云存储配置信息")

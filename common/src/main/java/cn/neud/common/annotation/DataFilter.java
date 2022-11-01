@@ -13,7 +13,7 @@ import java.lang.annotation.*;
 /**
  * 数据过滤注解
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

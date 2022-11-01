@@ -14,7 +14,7 @@ import io.renren.modules.sys.service.SysParamsService;
 
 /**
  * 文件上传Factory
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public final class OSSFactory {
     private static SysParamsService sysParamsService;

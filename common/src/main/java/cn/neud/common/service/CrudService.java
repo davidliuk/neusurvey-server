@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  *  CRUD基础服务接口
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public interface CrudService<T, D> extends BaseService<T> {
 

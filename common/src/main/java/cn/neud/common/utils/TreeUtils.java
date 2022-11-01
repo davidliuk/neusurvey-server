@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * 树形结构工具类，如：菜单、部门等
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  * @since 1.0.0
  */
 public class TreeUtils {

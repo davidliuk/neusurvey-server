@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * renren-generator
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @SpringBootApplication
 public class GeneratorApplication {

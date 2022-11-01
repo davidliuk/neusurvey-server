@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 /**
  * 异常处理器
  * 
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @RestControllerAdvice
 public class RenExceptionHandler {

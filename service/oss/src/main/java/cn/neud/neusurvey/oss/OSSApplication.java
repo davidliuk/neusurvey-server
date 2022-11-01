@@ -6,13 +6,12 @@
  * 版权所有，侵权必究！
  */
 
-package cn.neud.neusurvey.survey;
+package cn.neud.neusurvey.oss;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.ComponentScan;
 
 
 /**
@@ -21,15 +20,14 @@ import org.springframework.context.annotation.ComponentScan;
  * @author David l729641074@163.com
  */
 @SpringBootApplication
-@ComponentScan({"springfox.documentation.schema"})
-public class SurveyApplication extends SpringBootServletInitializer {
+public class OSSApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SurveyApplication.class, args);
+		SpringApplication.run(OSSApplication.class, args);
 	}
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(SurveyApplication.class);
+		return application.sources(OSSApplication.class);
 	}
 }

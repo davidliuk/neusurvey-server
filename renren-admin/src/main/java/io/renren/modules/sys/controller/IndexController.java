@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 首页提示
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @RestController
 public class IndexController {

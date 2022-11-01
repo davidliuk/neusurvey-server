@@ -29,7 +29,7 @@ import java.util.Set;
 /**
  * 认证
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Component
 public class Oauth2Realm extends AuthorizingRealm {

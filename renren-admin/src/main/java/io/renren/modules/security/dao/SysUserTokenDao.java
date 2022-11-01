@@ -16,7 +16,7 @@ import org.apache.ibatis.annotations.Param;
 /**
  * 系统用户Token
  * 
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Mapper
 public interface SysUserTokenDao extends BaseDao<SysUserTokenEntity> {

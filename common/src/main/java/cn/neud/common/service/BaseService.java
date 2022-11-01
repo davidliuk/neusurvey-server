@@ -16,7 +16,7 @@ import java.util.Collection;
 /**
  * 基础服务接口，所有Service接口都要继承
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public interface BaseService<T> {
     Class<T> currentModelClass();

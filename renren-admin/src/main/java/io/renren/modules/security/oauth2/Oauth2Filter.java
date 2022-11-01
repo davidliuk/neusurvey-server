@@ -29,7 +29,7 @@ import java.io.IOException;
 /**
  * oauth2过滤器
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public class Oauth2Filter extends AuthenticatingFilter {
 

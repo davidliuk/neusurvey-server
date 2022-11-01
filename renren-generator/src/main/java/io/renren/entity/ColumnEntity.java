@@ -11,7 +11,7 @@ package io.renren.entity;
 /**
  * 列的属性
  * 
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public class ColumnEntity {
 	//列名

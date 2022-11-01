@@ -3,7 +3,7 @@
 
 <mapper namespace="cn.neud.neusurvey.survey.dao.QuestionDao">
 
-    <resultMap type="cn.neud.neusurvey.entity.user.QuestionEntity" id="questionMap">
+    <resultMap type="cn.neud.neusurvey.entity.survey.QuestionEntity" id="questionMap">
         <result property="id" column="id"/>
         <result property="stem" column="stem"/>
         <result property="questionType" column="question_type"/>

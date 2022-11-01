@@ -14,7 +14,7 @@ import cn.neud.common.utils.MessageUtils;
 /**
  * 自定义异常
  *
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 public class RenException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

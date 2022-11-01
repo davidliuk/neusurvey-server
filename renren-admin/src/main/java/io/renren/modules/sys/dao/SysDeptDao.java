@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * 部门管理
  * 
- * @author Mark sunlightcs@gmail.com
+ * @author David l729641074@163.com
  */
 @Mapper
 public interface SysDeptDao extends BaseDao<SysDeptEntity> {
