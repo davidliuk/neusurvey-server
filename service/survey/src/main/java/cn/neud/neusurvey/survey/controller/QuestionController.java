@@ -113,4 +113,16 @@ public class QuestionController {
         ExcelUtils.exportExcelToTarget(response, null, list, QuestionExcel.class);
     }
 
+    @PostMapping
+    @ApiOperation("创建")
+    @LogOperation("创建")
+    @RequiresPermissions("survey:question:delete")
+    public Result CreateQuestion(@RequestBody ){
+        //效验数据
+        AssertUtils.isArrayEmpty(ids, "id");
+
+        questionService.delete(ids);
+
+        return new Result();
+    }
 }

@@ -30,5 +30,4 @@ public class AnswerServiceImpl extends CrudServiceImpl<AnswerDao, AnswerEntity, 
         return wrapper;
     }
 
-
 }
