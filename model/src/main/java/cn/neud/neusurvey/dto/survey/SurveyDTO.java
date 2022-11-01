@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -25,9 +26,6 @@ public class SurveyDTO implements Serializable {
 	@ApiModelProperty(value = "问卷名字")
 	private String name;
 
-	@ApiModelProperty(value = "管理人id")
-	private String managedBy;
-
 	@ApiModelProperty(value = "描述")
 	private String description;
 
@@ -43,23 +41,8 @@ public class SurveyDTO implements Serializable {
 	@ApiModelProperty(value = "问卷类型")
 	private String typeId;
 
-	@ApiModelProperty(value = "创建人")
-	private String creator;
-
-	@ApiModelProperty(value = "创建时间")
-	private Date createDate;
-
-	@ApiModelProperty(value = "更新人")
-	private String updater;
-
-	@ApiModelProperty(value = "更新时间")
-	private Date updateDate;
-
-	@ApiModelProperty(value = "软删除")
-	private String isDeleted;
-
-	@ApiModelProperty(value = "保留项json")
-	private String reserved;
+	@ApiModelProperty(value = "问题")
+	private ArrayList<ItemsDTO> questions;
 
 
 }

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -28,26 +29,7 @@ public class QuestionDTO implements Serializable {
 	@ApiModelProperty(value = "问题类型")
 	private Integer questionType;
 
-	@ApiModelProperty(value = "备注json")
-	private String note;
-
-	@ApiModelProperty(value = "创建人")
-	private String creator;
-
-	@ApiModelProperty(value = "创建时间")
-	private Date createDate;
-
-	@ApiModelProperty(value = "更新人")
-	private String updater;
-
-	@ApiModelProperty(value = "更新时间")
-	private Date updateDate;
-
-	@ApiModelProperty(value = "软删除")
-	private String isDeleted;
-
-	@ApiModelProperty(value = "保留项json")
-	private String reserved;
-
+	@ApiModelProperty(value = "选项")
+	private ArrayList<QuestionCreateChoiceDTO> choices ;
 
 }
