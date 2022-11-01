@@ -11,6 +11,8 @@ import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.UserDTO;
+import cn.neud.neusurvey.dto.user.UserLoginDTO;
+import cn.neud.neusurvey.entity.user.UserLoginEntity;
 import cn.neud.neusurvey.user.excel.UserExcel;
 import cn.neud.neusurvey.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -82,6 +84,17 @@ public class UserController {
         userService.save(dto);
 
         return new Result();
+    }
+
+
+    @PostMapping("login/")
+    @ApiOperation("登录")
+    @LogOperation("登录")
+    @RequiresPermissions("user:user:login")
+    public Result login(@RequestBody UserLoginDTO userLoginDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(userLoginDTO, AddGroup.class, DefaultGroup.class);
+        return userService.loginValidate(userLoginDTO);
     }
 
     @PutMapping
