@@ -23,8 +23,6 @@
         <module>common</module>
         <module>service</module>
         <module>service-client</module>
-        <module>service/survey</module>
-        <module>service/user</module>
         <module>service-gateway</module>
     </modules>
 
