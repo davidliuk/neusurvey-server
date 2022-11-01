@@ -5,9 +5,9 @@ server:
     threads:
       max: 1000
       min-spare: 30
-  port: 8081
+  port: 8083
   servlet:
-#    context-path: /user
+#    context-path: /survey
     session:
       cookie:
         http-only: true
@@ -49,7 +49,7 @@ spring:
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
   application:
-    name: neusurvey-user
+    name: neusurvey-oss
   cloud:
     nacos:
       discovery:
@@ -64,7 +64,7 @@ renren:
 mybatis-plus:
   mapper-locations: classpath*:/mapper/**/*.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: cn.neud.modules.*.entity
+  typeAliasesPackage: io.renren.modules.*.entity
   global-config:
     #数据库相关配置
     db-config:

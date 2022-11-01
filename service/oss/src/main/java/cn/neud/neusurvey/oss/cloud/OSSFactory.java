@@ -27,7 +27,14 @@ public final class OSSFactory {
         //获取云存储配置信息
 //        CloudStorageConfig config = sysParamsService.getValueObject(Constant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
         CloudStorageConfig config = new CloudStorageConfig();
-
+        config.setType(3);
+        config.setQcloudDomain("https://neusurvey-1309929060.cos.ap-beijing.myqcloud.com");
+        config.setQcloudPrefix("/");
+        config.setQcloudAppId(1309929060);
+        config.setQcloudSecretId("AKIDiBOK0Q9bmhLktnRow4yd3D7k6BzVpsd6");
+        config.setQcloudSecretKey("GFwNYTAdrrZ0B7nDNPCiyDKBl6B0av2t");
+        config.setQcloudBucketName("neusurvey");
+        config.setQcloudRegion("ap-beijing");
         if(config.getType() == Constant.CloudService.QINIU.getValue()){
             return new QiniuCloudStorageService(config);
         }else if(config.getType() == Constant.CloudService.ALIYUN.getValue()){

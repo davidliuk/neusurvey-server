@@ -6,13 +6,13 @@
  * 版权所有，侵权必究！
  */
 
-package cn.neud.common.config;
+package cn.neud.neusurvey.survey.config;
 
+import cn.neud.common.interceptor.DataFilterInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.BlockAttackInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import cn.neud.common.interceptor.DataFilterInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
