@@ -22,14 +22,15 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan({"springfox.documentation.schema"})
-public class UserApplication extends SpringBootServletInitializer {
+@ComponentScan(basePackages = "cn.neud.neusurvey")
+public class UserApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(UserApplication.class, args);
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(UserApplication.class);
-	}
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+//		return application.sources(UserApplication.class);
+//	}
 }

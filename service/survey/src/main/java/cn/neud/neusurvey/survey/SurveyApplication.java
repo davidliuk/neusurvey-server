@@ -22,6 +22,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan({"springfox.documentation.schema"})
+@ComponentScan(basePackages = "cn.neud.neusurvey")
 public class SurveyApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
