@@ -10,6 +10,7 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
+import cn.neud.neusurvey.dto.survey.QuestionCreateDTO;
 import cn.neud.neusurvey.dto.survey.QuestionDTO;
 import cn.neud.neusurvey.survey.excel.QuestionExcel;
 import cn.neud.neusurvey.survey.service.QuestionService;
@@ -113,16 +114,23 @@ public class QuestionController {
         ExcelUtils.exportExcelToTarget(response, null, list, QuestionExcel.class);
     }
 
-    @PostMapping
-    @ApiOperation("创建")
-    @LogOperation("创建")
-    @RequiresPermissions("survey:question:delete")
-    public Result CreateQuestion(@RequestBody ){
+    @PostMapping("addQuestion")
+    @ApiOperation("创建问题")
+    @LogOperation("创建问")
+    @RequiresPermissions("survey:question:add")
+    public Result createQuestion(@RequestParam(value = "userId") String userId,@RequestBody QuestionCreateDTO questionCreateDTO){
         //效验数据
-        AssertUtils.isArrayEmpty(ids, "id");
+//        ValidatorUtils.validateEntity(questionCreateDTO, UpdateGroup.class, DefaultGroup.class);
+        System.out.println("userId"+userId);
 
-        questionService.delete(ids);
+        int result_code = questionService.createQuestion(userId, questionCreateDTO);
+        Result result = new Result();
+        if (result_code == 444){
+            result.setMsg("创建失败 内容已存在");
+        }else {
+            result.setMsg("创建成功");
+        }
 
-        return new Result();
+        return result;
     }
 }

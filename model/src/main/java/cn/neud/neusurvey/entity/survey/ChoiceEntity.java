@@ -30,7 +30,7 @@ public class ChoiceEntity {
     /**
      * 顺序
      */
-	private Integer order;
+	private Integer choiceOrder;
     /**
      * 创建人
      */
