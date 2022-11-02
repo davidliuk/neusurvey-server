@@ -95,13 +95,12 @@ public class QuestionController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:question:delete")
-    public Result delete(@RequestBody String[] ids) {
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
-        questionService.delete(ids);
+        return questionService.deleteQuestion(ids);
 
-        return new Result();
     }
 
     @GetMapping("export")

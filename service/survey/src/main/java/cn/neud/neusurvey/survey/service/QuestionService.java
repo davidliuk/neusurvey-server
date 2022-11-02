@@ -21,4 +21,7 @@ public interface QuestionService extends CrudService<QuestionEntity, QuestionDTO
     public List<QuestionDTO> in(String[] ids);
 
     Result updateQuestion(QuestionDTO dto, String updaterId);
+
+    Result deleteQuestion(String[] ids);
+
 }
