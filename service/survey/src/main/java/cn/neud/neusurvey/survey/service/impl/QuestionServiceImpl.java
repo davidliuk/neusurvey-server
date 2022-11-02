@@ -165,7 +165,7 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
             //choice实体存在性检查
             ChoiceEntity choiceEntity = choiceDao.selectById(tempDTO.getId());
             if (choiceEntity == null) {
-                ifOK = false;
+                ifOK &= false;
                 msg += "找不到id为" + tempDTO.getId() + "的choice实体\n";
                 continue;
             }
@@ -179,6 +179,36 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
         }
 
         if (ifOK) return result.ok(null);
-        else return result.error(msg);
+        else return result.error(msg+"其余实体均操作完毕");
+    }
+
+    @Override
+    public Result deleteQuestion(String[] ids) {
+
+        Result result=new Result();
+
+        boolean ifOK=true;
+        String msg=new String();
+
+        for(int i=0;i<ids.length;i++)
+        {
+            QuestionEntity questionEntity=questionDao.selectById(ids[i]);
+
+            if(questionEntity==null)
+            {
+                ifOK&=false;
+                msg+="找不到id为"+ids[i]+"的question实体\n";
+                continue;
+            }
+
+            questionEntity.setIsDeleted("1");
+
+            questionDao.updateById(questionEntity);
+            
+        }
+
+        if(ifOK) return result.ok(null);
+        else return result.error(msg+"其余实体均操作完毕");
+
     }
 }
