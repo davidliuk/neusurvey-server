@@ -16,6 +16,11 @@
             <version>4.1.0</version>
             <scope>compile</scope>
         </dependency>
+		<dependency>
+			<groupId>cn.neud</groupId>
+			<artifactId>model</artifactId>
+			<version>5.0.0</version>
+		</dependency>
     </dependencies>
 
 	<build>

@@ -7,6 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -42,7 +43,6 @@ public class SurveyDTO implements Serializable {
 	private String typeId;
 
 	@ApiModelProperty(value = "问题")
-	private ArrayList<ItemsDTO> questions;
-
+	private List<QuestionDTO> questions;
 
 }

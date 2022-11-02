@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -25,6 +26,7 @@ public class ChoiceDTO implements Serializable {
 	@ApiModelProperty(value = "内容")
 	private String content;
 
-	@ApiModelProperty(value = "跳转")
-	private String  goTo;
+	@ApiModelProperty(value = "跳转题目列表")
+	private List<String> goTo;
+
 }

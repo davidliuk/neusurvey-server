@@ -116,7 +116,7 @@ public class QuestionController {
 
     @PostMapping("addQuestion")
     @ApiOperation("创建问题")
-    @LogOperation("创建问")
+    @LogOperation("创建问题")
     @RequiresPermissions("survey:question:add")
     public Result createQuestion(@RequestParam(value = "userId") String userId,@RequestBody QuestionCreateDTO questionCreateDTO){
         //效验数据
@@ -130,7 +130,6 @@ public class QuestionController {
         }else {
             result.setMsg("创建成功");
         }
-
         return result;
     }
 }

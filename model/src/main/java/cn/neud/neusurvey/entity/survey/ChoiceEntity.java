@@ -1,9 +1,11 @@
 package cn.neud.neusurvey.entity.survey;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * choice
@@ -23,6 +25,10 @@ public class ChoiceEntity {
      * 内容
      */
 	private String content;
+
+    @TableField(exist = false)
+    private List<String> goTo;
+
     /**
      * 题目id
      */

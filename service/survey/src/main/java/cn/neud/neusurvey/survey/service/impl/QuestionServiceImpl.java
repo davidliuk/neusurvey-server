@@ -76,7 +76,6 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
             choiceEntity.setReserved("");
             System.out.println(choiceEntity);
 
-
             //设置goto关系属性
             gotoEntity.setChoiceId(q.getId());
             gotoEntity.setQuestionId(questionEntity.getId());
@@ -98,8 +97,6 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
                return 444;
             }
 
-
-
         }
         questionEntity.setCreateDate(new Date(System.currentTimeMillis()));
         questionEntity.setCreator(userId);
@@ -112,10 +109,6 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
         }else {
             return 444;
         }
-
-
-
     }
-
 
 }

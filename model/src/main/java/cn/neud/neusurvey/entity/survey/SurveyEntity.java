@@ -1,9 +1,11 @@
 package cn.neud.neusurvey.entity.survey;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * survey
@@ -47,6 +49,10 @@ public class SurveyEntity {
      * 问卷类型
      */
 	private String typeId;
+
+    @TableField(exist = false)
+    private List<QuestionEntity> questions;
+
     /**
      * 创建人
      */
