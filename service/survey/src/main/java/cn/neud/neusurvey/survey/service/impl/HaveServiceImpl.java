@@ -21,14 +21,20 @@ import java.util.Map;
 public class HaveServiceImpl extends CrudServiceImpl<HaveDao, HaveEntity, HaveDTO> implements HaveService {
 
     @Override
-    public QueryWrapper<HaveEntity> getWrapper(Map<String, Object> params){
-        String id = (String)params.get("id");
+    public QueryWrapper<HaveEntity> getWrapper(Map<String, Object> params) {
+        String id = (String) params.get("id");
 
         QueryWrapper<HaveEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
 
         return wrapper;
     }
-
-
+    
+    @Override
+    public void delete(String surveyId, String questionId) {
+        QueryWrapper<HaveEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("survey_id", surveyId);
+        wrapper.eq("question_id", questionId);
+        baseDao.delete(wrapper);
+    }
 }

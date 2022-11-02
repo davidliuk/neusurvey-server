@@ -58,7 +58,7 @@ public class GotoController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("survey:goto:info")
-    public Result<GotoDTO> get(@PathVariable("id") Long id){
+    public Result<GotoDTO> get(@PathVariable("id") String id){
         GotoDTO data = gotoService.get(id);
 
         return new Result<GotoDTO>().ok(data);
@@ -94,7 +94,7 @@ public class GotoController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:goto:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

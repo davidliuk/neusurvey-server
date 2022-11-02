@@ -82,5 +82,4 @@ public class UserDTO implements Serializable {
 	@ApiModelProperty(value = "保留项json")
 	private String reserved;
 
-
 }

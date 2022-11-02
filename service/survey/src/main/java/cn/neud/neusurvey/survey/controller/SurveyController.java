@@ -10,6 +10,7 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
+import cn.neud.neusurvey.dto.survey.QuestionDTO;
 import cn.neud.neusurvey.dto.survey.SurveyDTO;
 import cn.neud.neusurvey.survey.excel.SurveyExcel;
 import cn.neud.neusurvey.survey.service.SurveyService;
@@ -23,6 +24,8 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +38,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("survey/survey")
-@Api(tags="survey")
+@Api(tags = "survey")
 public class SurveyController {
     @Autowired
     private SurveyService surveyService;
@@ -43,13 +46,13 @@ public class SurveyController {
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
+            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String")
     })
     @RequiresPermissions("survey:survey:page")
-    public Result<PageData<SurveyDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
+    public Result<PageData<SurveyDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageData<SurveyDTO> page = surveyService.page(params);
 
         return new Result<PageData<SurveyDTO>>().ok(page);
@@ -58,9 +61,8 @@ public class SurveyController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("survey:survey:info")
-    public Result<SurveyDTO> get(@PathVariable("id") Long id){
+    public Result<SurveyDTO> get(@PathVariable("id") String id) {
         SurveyDTO data = surveyService.get(id);
-
         return new Result<SurveyDTO>().ok(data);
     }
 
@@ -68,10 +70,13 @@ public class SurveyController {
     @ApiOperation("保存")
     @LogOperation("保存")
     @RequiresPermissions("survey:survey:save")
-    public Result save(@RequestBody SurveyDTO dto){
+    public Result save(
+            @RequestParam(value = "userId") String userId,
+            @RequestBody SurveyDTO dto
+    ) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-
+        System.out.println(dto);
         surveyService.save(dto);
 
         return new Result();
@@ -81,7 +86,7 @@ public class SurveyController {
     @ApiOperation("修改")
     @LogOperation("修改")
     @RequiresPermissions("survey:survey:update")
-    public Result update(@RequestBody SurveyDTO dto){
+    public Result update(@RequestBody SurveyDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
@@ -94,7 +99,7 @@ public class SurveyController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:survey:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

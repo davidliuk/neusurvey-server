@@ -52,7 +52,7 @@ public abstract class CrudServiceImpl<M extends BaseMapper<T>, T, D> extends Bas
     public abstract QueryWrapper<T> getWrapper(Map<String, Object> params);
 
     @Override
-    public D get(Long id) {
+    public D get(String id) {
         T entity = baseDao.selectById(id);
 
         return ConvertUtils.sourceToTarget(entity, currentDtoClass());
@@ -74,7 +74,7 @@ public abstract class CrudServiceImpl<M extends BaseMapper<T>, T, D> extends Bas
     }
 
     @Override
-    public void delete(Long[] ids) {
+    public void delete(String[] ids) {
         baseDao.deleteBatchIds(Arrays.asList(ids));
     }
 }

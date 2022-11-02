@@ -58,7 +58,7 @@ public class SurveyTypeController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("survey:surveytype:info")
-    public Result<SurveyTypeDTO> get(@PathVariable("id") Long id){
+    public Result<SurveyTypeDTO> get(@PathVariable("id") String id){
         SurveyTypeDTO data = surveyTypeService.get(id);
 
         return new Result<SurveyTypeDTO>().ok(data);
@@ -94,7 +94,7 @@ public class SurveyTypeController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:surveytype:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

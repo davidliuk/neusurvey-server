@@ -7,6 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -29,7 +30,10 @@ public class QuestionDTO implements Serializable {
 	@ApiModelProperty(value = "问题类型")
 	private Integer questionType;
 
+	@ApiModelProperty(value = "下一题id")
+	private String nextId;
+
 	@ApiModelProperty(value = "选项")
-	private ArrayList<QuestionCreateChoiceDTO> choices ;
+	private List<ChoiceDTO> choices ;
 
 }

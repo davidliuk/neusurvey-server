@@ -26,7 +26,7 @@ public class SurveyExcel {
     @Excel(name = "问卷结束时间")
     private Date endTime;
     @Excel(name = "答卷次数限制")
-    private Integer limit;
+    private Integer answerLimit;
     @Excel(name = "问卷类型")
     private String typeId;
     @Excel(name = "创建人")

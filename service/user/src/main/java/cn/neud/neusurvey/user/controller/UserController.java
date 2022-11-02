@@ -68,7 +68,7 @@ public class UserController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:user:info")
-    public Result<UserDTO> get(@PathVariable("id") Long id){
+    public Result<UserDTO> get(@PathVariable("id") String id){
         UserDTO data = userService.get(id);
         Result<UserDTO> result = new Result<UserDTO>().ok(data);
         result.setMsg("10086");
@@ -122,11 +122,13 @@ public class UserController {
         return new Result();
     }
 
+
+
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("user:user:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

@@ -24,12 +24,12 @@ public interface CrudService<T, D> extends BaseService<T> {
 
     List<D> list(Map<String, Object> params);
 
-    D get(Long id);
+    D get(String id);
 
     void save(D dto);
 
     void update(D dto);
 
-    void delete(Long[] ids);
+    void delete(String[] ids);
 
 }

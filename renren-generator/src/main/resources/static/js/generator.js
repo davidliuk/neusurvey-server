@@ -24,7 +24,7 @@ $(function () {
         },
         prmNames : {
             page:"page", 
-            rows:"limit", 
+            rows:"answerLimit", 
             order: "order"
         },
         gridComplete:function(){

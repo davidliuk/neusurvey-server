@@ -21,17 +21,17 @@ public class Query extends LinkedHashMap<String, Object> {
 	//当前页码
     private int page;
     //每页条数
-    private int limit;
+    private int answerLimit;
 
     public Query(Map<String, Object> params){
         this.putAll(params);
 
         //分页参数
         this.page = Integer.parseInt(params.get("page").toString());
-        this.limit = Integer.parseInt(params.get("limit").toString());
-        this.put("offset", (page - 1) * limit);
+        this.answerLimit = Integer.parseInt(params.get("answerLimit").toString());
+        this.put("offset", (page - 1) * answerLimit);
         this.put("page", page);
-        this.put("limit", limit);
+        this.put("answerLimit", answerLimit);
     }
 
 
@@ -43,11 +43,11 @@ public class Query extends LinkedHashMap<String, Object> {
         this.page = page;
     }
 
-    public int getLimit() {
-        return limit;
+    public int getAnswerLimit() {
+        return answerLimit;
     }
 
-    public void setLimit(int limit) {
-        this.limit = limit;
+    public void setAnswerLimit(int answerLimit) {
+        this.answerLimit = answerLimit;
     }
 }

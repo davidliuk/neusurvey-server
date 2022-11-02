@@ -58,7 +58,7 @@ public class AnswerController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("survey:answer:info")
-    public Result<AnswerDTO> get(@PathVariable("id") Long id){
+    public Result<AnswerDTO> get(@PathVariable("id") String id){
         AnswerDTO data = answerService.get(id);
 
         return new Result<AnswerDTO>().ok(data);
@@ -94,7 +94,7 @@ public class AnswerController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:answer:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

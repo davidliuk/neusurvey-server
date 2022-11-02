@@ -58,7 +58,7 @@ public class UserGroupController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:usergroup:info")
-    public Result<UserGroupDTO> get(@PathVariable("id") Long id){
+    public Result<UserGroupDTO> get(@PathVariable("id") String id){
         UserGroupDTO data = userGroupService.get(id);
 
         return new Result<UserGroupDTO>().ok(data);
@@ -94,7 +94,7 @@ public class UserGroupController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("user:usergroup:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

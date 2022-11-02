@@ -36,7 +36,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("survey/question")
-@Api(tags="question")
+@Api(tags = "question")
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
@@ -44,13 +44,13 @@ public class QuestionController {
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
+            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String")
     })
     @RequiresPermissions("survey:question:page")
-    public Result<PageData<QuestionDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
+    public Result<PageData<QuestionDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageData<QuestionDTO> page = questionService.page(params);
 
         return new Result<PageData<QuestionDTO>>().ok(page);
@@ -59,43 +59,43 @@ public class QuestionController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("survey:question:info")
-    public Result<QuestionDTO> get(@PathVariable("id") Long id){
+    public Result<QuestionDTO> get(@PathVariable("id") String id) {
         QuestionDTO data = questionService.get(id);
 
         return new Result<QuestionDTO>().ok(data);
     }
-
-    @PostMapping
-    @ApiOperation("保存")
-    @LogOperation("保存")
-    @RequiresPermissions("survey:question:save")
-    public Result save(@RequestBody QuestionDTO dto){
-        //效验数据
-        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-
-        questionService.save(dto);
-
-        return new Result();
-    }
-
-    @PutMapping
-    @ApiOperation("修改")
-    @LogOperation("修改")
-    @RequiresPermissions("survey:question:update")
-    public Result update(@RequestBody QuestionDTO dto){
-        //效验数据
-        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
-
-        questionService.update(dto);
-
-        return new Result();
-    }
+//  郭帅乐：这个创建问题已经有了
+//    @PostMapping
+//    @ApiOperation("保存")
+//    @LogOperation("保存")
+//    @RequiresPermissions("survey:question:save")
+//    public Result save(@RequestBody QuestionDTO dto){
+//        //效验数据
+//        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+//
+//        questionService.save(dto);
+//
+//        return new Result();
+//    }
+//  雷世鹏：这个修改问题已经做了
+//    @PutMapping
+//    @ApiOperation("修改")
+//    @LogOperation("修改")
+//    @RequiresPermissions("survey:question:update")
+//    public Result update(@RequestBody QuestionDTO dto){
+//        //效验数据
+//        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+//
+//        questionService.update(dto);
+//
+//        return new Result();
+//    }
 
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:question:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
@@ -116,21 +116,39 @@ public class QuestionController {
 
     @PostMapping("addQuestion")
     @ApiOperation("创建问题")
-    @LogOperation("创建问")
+    @LogOperation("创建问题")
     @RequiresPermissions("survey:question:add")
-    public Result createQuestion(@RequestParam(value = "userId") String userId,@RequestBody QuestionCreateDTO questionCreateDTO){
+    public Result createQuestion(@RequestParam(value = "userId") String userId, @RequestBody QuestionCreateDTO questionCreateDTO) {
         //效验数据
 //        ValidatorUtils.validateEntity(questionCreateDTO, UpdateGroup.class, DefaultGroup.class);
-        System.out.println("userId"+userId);
+        System.out.println("userId" + userId);
 
         int result_code = questionService.createQuestion(userId, questionCreateDTO);
         Result result = new Result();
-        if (result_code == 444){
+        if (result_code == 444) {
             result.setMsg("创建失败 内容已存在");
-        }else {
+        } else {
             result.setMsg("创建成功");
         }
-
         return result;
     }
+
+
+    /*
+    创建人:雷世鹏
+    功能:修改问题
+     */
+    @PostMapping()
+    @ApiOperation("修改")
+    @LogOperation("修改")
+    @RequiresPermissions("survey:question:update_question")
+    public Result updateQuestion(@RequestBody QuestionDTO dto, @RequestParam(name = "userId") String updaterId){
+        //效验数据
+        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+
+        //注意:这里只传了goto,因此跳转只局限于问卷内部,且choice的ID在全集唯一,因此一定能找到
+        return questionService.updateQuestion(dto,updaterId);
+
+    }
+
 }

@@ -7,6 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -28,6 +29,11 @@ public class SurveyDTO implements Serializable {
 
 	@ApiModelProperty(value = "描述")
 	private String description;
+	/**
+	 * 管理人id
+	 */
+	@ApiModelProperty(value = "问卷所有人")
+	private String managedBy;
 
 	@ApiModelProperty(value = "问卷开始时间")
 	private Date startTime;
@@ -36,13 +42,12 @@ public class SurveyDTO implements Serializable {
 	private Date endTime;
 
 	@ApiModelProperty(value = "答卷次数限制")
-	private Integer limit;
+	private Integer answerLimit;
 
 	@ApiModelProperty(value = "问卷类型")
 	private String typeId;
 
 	@ApiModelProperty(value = "问题")
-	private ArrayList<ItemsDTO> questions;
-
+	private List<QuestionDTO> questions;
 
 }
