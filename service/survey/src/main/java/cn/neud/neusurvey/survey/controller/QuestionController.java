@@ -64,32 +64,32 @@ public class QuestionController {
 
         return new Result<QuestionDTO>().ok(data);
     }
-
-    @PostMapping
-    @ApiOperation("保存")
-    @LogOperation("保存")
-    @RequiresPermissions("survey:question:save")
-    public Result save(@RequestBody QuestionDTO dto){
-        //效验数据
-        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-
-        questionService.save(dto);
-
-        return new Result();
-    }
-
-    @PutMapping
-    @ApiOperation("修改")
-    @LogOperation("修改")
-    @RequiresPermissions("survey:question:update")
-    public Result update(@RequestBody QuestionDTO dto){
-        //效验数据
-        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
-
-        questionService.update(dto);
-
-        return new Result();
-    }
+//  郭帅乐：这个创建问题已经有了
+//    @PostMapping
+//    @ApiOperation("保存")
+//    @LogOperation("保存")
+//    @RequiresPermissions("survey:question:save")
+//    public Result save(@RequestBody QuestionDTO dto){
+//        //效验数据
+//        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+//
+//        questionService.save(dto);
+//
+//        return new Result();
+//    }
+//  雷世鹏：这个修改问题已经做了
+//    @PutMapping
+//    @ApiOperation("修改")
+//    @LogOperation("修改")
+//    @RequiresPermissions("survey:question:update")
+//    public Result update(@RequestBody QuestionDTO dto){
+//        //效验数据
+//        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+//
+//        questionService.update(dto);
+//
+//        return new Result();
+//    }
 
     @DeleteMapping
     @ApiOperation("删除")
@@ -132,4 +132,23 @@ public class QuestionController {
         }
         return result;
     }
+
+
+    /*
+    创建人:雷世鹏
+    功能:修改问题
+     */
+    @PostMapping()
+    @ApiOperation("修改")
+    @LogOperation("修改")
+    @RequiresPermissions("survey:question:update_question")
+    public Result updateQuestion(@RequestBody QuestionDTO dto, @RequestParam(name = "userId") String updaterId){
+        //效验数据
+        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+
+        //注意:这里只传了goto,因此跳转只局限于问卷内部,且choice的ID在全集唯一,因此一定能找到
+        return questionService.updateQuestion(dto,updaterId);
+
+    }
+
 }
