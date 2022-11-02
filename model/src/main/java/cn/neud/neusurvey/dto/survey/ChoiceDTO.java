@@ -27,6 +27,6 @@ public class ChoiceDTO implements Serializable {
 	private String content;
 
 	@ApiModelProperty(value = "跳转题目列表")
-	private List<String> goTo;
+	private String goTo;
 
 }

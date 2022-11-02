@@ -36,7 +36,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("survey/question")
-@Api(tags="question")
+@Api(tags = "question")
 public class QuestionController {
     @Autowired
     private QuestionService questionService;
@@ -44,13 +44,13 @@ public class QuestionController {
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
+            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String")
     })
     @RequiresPermissions("survey:question:page")
-    public Result<PageData<QuestionDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
+    public Result<PageData<QuestionDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageData<QuestionDTO> page = questionService.page(params);
 
         return new Result<PageData<QuestionDTO>>().ok(page);
@@ -59,7 +59,7 @@ public class QuestionController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("survey:question:info")
-    public Result<QuestionDTO> get(@PathVariable("id") Long id){
+    public Result<QuestionDTO> get(@PathVariable("id") String id) {
         QuestionDTO data = questionService.get(id);
 
         return new Result<QuestionDTO>().ok(data);
@@ -95,7 +95,7 @@ public class QuestionController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:question:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
@@ -118,16 +118,16 @@ public class QuestionController {
     @ApiOperation("创建问题")
     @LogOperation("创建问题")
     @RequiresPermissions("survey:question:add")
-    public Result createQuestion(@RequestParam(value = "userId") String userId,@RequestBody QuestionCreateDTO questionCreateDTO){
+    public Result createQuestion(@RequestParam(value = "userId") String userId, @RequestBody QuestionCreateDTO questionCreateDTO) {
         //效验数据
 //        ValidatorUtils.validateEntity(questionCreateDTO, UpdateGroup.class, DefaultGroup.class);
-        System.out.println("userId"+userId);
+        System.out.println("userId" + userId);
 
         int result_code = questionService.createQuestion(userId, questionCreateDTO);
         Result result = new Result();
-        if (result_code == 444){
+        if (result_code == 444) {
             result.setMsg("创建失败 内容已存在");
-        }else {
+        } else {
             result.setMsg("创建成功");
         }
         return result;

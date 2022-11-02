@@ -58,7 +58,7 @@ public class UserHistoryController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:userhistory:info")
-    public Result<UserHistoryDTO> get(@PathVariable("id") Long id){
+    public Result<UserHistoryDTO> get(@PathVariable("id") String id){
         UserHistoryDTO data = userHistoryService.get(id);
 
         return new Result<UserHistoryDTO>().ok(data);
@@ -94,7 +94,7 @@ public class UserHistoryController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("user:userhistory:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

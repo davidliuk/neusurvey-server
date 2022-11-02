@@ -44,7 +44,7 @@ public class SurveyEntity {
     /**
      * 答卷次数限制
      */
-	private Integer limit;
+	private Integer answerLimit;
     /**
      * 问卷类型
      */

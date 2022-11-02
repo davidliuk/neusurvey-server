@@ -27,7 +27,7 @@ public class ChoiceEntity {
 	private String content;
 
     @TableField(exist = false)
-    private List<String> goTo;
+    private String goTo;
 
     /**
      * 题目id

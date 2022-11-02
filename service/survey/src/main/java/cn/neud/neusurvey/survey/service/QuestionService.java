@@ -6,6 +6,8 @@ import cn.neud.neusurvey.dto.survey.QuestionCreateDTO;
 import cn.neud.neusurvey.dto.survey.QuestionDTO;
 import cn.neud.neusurvey.entity.survey.QuestionEntity;
 
+import java.util.List;
+
 /**
  * question
  *
@@ -16,6 +18,7 @@ public interface QuestionService extends CrudService<QuestionEntity, QuestionDTO
 
     int createQuestion(String userId, QuestionCreateDTO questionCreateDTO);
 
+    public List<QuestionDTO> in(String[] ids);
 
     Result updateQuestion(QuestionDTO dto, String updaterId);
 }

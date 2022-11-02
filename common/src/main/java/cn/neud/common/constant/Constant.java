@@ -54,7 +54,7 @@ public interface Constant {
     /**
      * 每页显示记录数
      */
-    String LIMIT = "limit";
+    String LIMIT = "answerLimit";
     /**
      * 排序字段
      */

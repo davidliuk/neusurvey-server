@@ -30,5 +30,12 @@ public class GotoServiceImpl extends CrudServiceImpl<GotoDao, GotoEntity, GotoDT
         return wrapper;
     }
 
-
+    @Override
+    public void delete(String surveyId, String choiceId) {
+        QueryWrapper<GotoEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("survey_id", surveyId);
+//        wrapper.eq("questionId", questionId);
+        wrapper.eq("choice_id", choiceId);
+        baseDao.delete(wrapper);
+    }
 }

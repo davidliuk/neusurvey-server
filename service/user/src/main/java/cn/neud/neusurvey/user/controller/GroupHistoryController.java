@@ -58,7 +58,7 @@ public class GroupHistoryController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:grouphistory:info")
-    public Result<GroupHistoryDTO> get(@PathVariable("id") Long id){
+    public Result<GroupHistoryDTO> get(@PathVariable("id") String id){
         GroupHistoryDTO data = groupHistoryService.get(id);
 
         return new Result<GroupHistoryDTO>().ok(data);
@@ -94,7 +94,7 @@ public class GroupHistoryController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("user:grouphistory:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

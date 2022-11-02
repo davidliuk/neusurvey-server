@@ -58,7 +58,7 @@ public class SecretQuestionController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:secretquestion:info")
-    public Result<SecretQuestionDTO> get(@PathVariable("id") Long id){
+    public Result<SecretQuestionDTO> get(@PathVariable("id") String id){
         SecretQuestionDTO data = secretQuestionService.get(id);
 
         return new Result<SecretQuestionDTO>().ok(data);
@@ -94,7 +94,7 @@ public class SecretQuestionController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("user:secretquestion:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

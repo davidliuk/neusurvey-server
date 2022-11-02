@@ -22,10 +22,10 @@ public class GotoDTO implements Serializable {
 	@ApiModelProperty(value = "问卷id")
 	private String surveyId;
 
-	@ApiModelProperty(value = "问题id")
+	@ApiModelProperty(value = "下一个问题id")
 	private String questionId;
 
-	@ApiModelProperty(value = "下一个问题id")
+	@ApiModelProperty(value = "选项id")
 	private String choiceId;
 
 	@ApiModelProperty(value = "创建人")

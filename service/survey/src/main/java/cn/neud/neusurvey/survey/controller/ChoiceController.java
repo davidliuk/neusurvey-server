@@ -58,7 +58,7 @@ public class ChoiceController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("survey:choice:info")
-    public Result<ChoiceDTO> get(@PathVariable("id") Long id){
+    public Result<ChoiceDTO> get(@PathVariable("id") String id){
         ChoiceDTO data = choiceService.get(id);
 
         return new Result<ChoiceDTO>().ok(data);
@@ -94,7 +94,7 @@ public class ChoiceController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:choice:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

@@ -58,7 +58,7 @@ public class MemberController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:member:info")
-    public Result<MemberDTO> get(@PathVariable("id") Long id){
+    public Result<MemberDTO> get(@PathVariable("id") String id){
         MemberDTO data = memberService.get(id);
 
         return new Result<MemberDTO>().ok(data);
@@ -94,7 +94,7 @@ public class MemberController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("user:member:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

@@ -34,10 +34,10 @@ public class SysGeneratorService {
 	private GeneratorDao generatorDao;
 
 	public PageUtils queryList(Query query) {
-		Page<?> page = PageHelper.startPage(query.getPage(), query.getLimit());
+		Page<?> page = PageHelper.startPage(query.getPage(), query.getAnswerLimit());
 		List<Map<String, Object>> list = generatorDao.queryList(query);
 
-		return new PageUtils(list, (int)page.getTotal(), query.getLimit(), query.getPage());
+		return new PageUtils(list, (int)page.getTotal(), query.getAnswerLimit(), query.getPage());
 	}
 
 	public Map<String, String> queryTable(String tableName) {

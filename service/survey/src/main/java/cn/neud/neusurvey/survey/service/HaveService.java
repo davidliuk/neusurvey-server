@@ -11,5 +11,5 @@ import cn.neud.neusurvey.entity.survey.HaveEntity;
  * @since 1.0.0 2022-10-29
  */
 public interface HaveService extends CrudService<HaveEntity, HaveDTO> {
-
+    void delete(String surveyId, String questionId);
 }

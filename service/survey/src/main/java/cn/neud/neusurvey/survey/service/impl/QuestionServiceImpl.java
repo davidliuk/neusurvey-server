@@ -17,11 +17,13 @@ import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,6 +43,14 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
 
     @Autowired
     QuestionDao questionDao;
+
+    public List<QuestionDTO> in(String[] ids) {
+        QueryWrapper<QuestionEntity> wrapper = new QueryWrapper<>();
+        wrapper.in("id", ids);
+        List entityList = baseDao.selectList(wrapper);
+
+        return ConvertUtils.sourceToTarget(entityList, currentDtoClass());
+    }
 
     @Override
     public QueryWrapper<QuestionEntity> getWrapper(Map<String, Object> params) {

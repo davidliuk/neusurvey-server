@@ -20,11 +20,11 @@ public class GotoEntity {
      */
 	private String surveyId;
     /**
-     * 问题id
+     * 下一个问题id
      */
 	private String questionId;
     /**
-     * 下一个问题id
+     * 选项id
      */
 	private String choiceId;
     /**

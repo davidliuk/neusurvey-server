@@ -58,7 +58,7 @@ public class HaveController {
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("survey:have:info")
-    public Result<HaveDTO> get(@PathVariable("id") Long id){
+    public Result<HaveDTO> get(@PathVariable("id") String id){
         HaveDTO data = haveService.get(id);
 
         return new Result<HaveDTO>().ok(data);
@@ -94,7 +94,7 @@ public class HaveController {
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("survey:have:delete")
-    public Result delete(@RequestBody Long[] ids){
+    public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 

@@ -31,6 +31,9 @@ public class QuestionEntity {
 	private Integer questionType;
 
     @TableField(exist = false)
+    private String nextId;
+
+    @TableField(exist = false)
     private List<ChoiceEntity> choices;
 
     /**

@@ -11,5 +11,5 @@ import cn.neud.neusurvey.entity.survey.GotoEntity;
  * @since 1.0.0 2022-10-29
  */
 public interface GotoService extends CrudService<GotoEntity, GotoDTO> {
-
+    void delete(String surveyId, String choiceId);
 }
