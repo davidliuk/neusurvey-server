@@ -14,6 +14,14 @@
         <result property="isDeleted" column="is_deleted"/>
         <result property="reserved" column="reserved"/>
     </resultMap>
+<!--    @Select("select * from goto where survey_id=#{survey_id} and question_id = #{question_id} and choice_id = #{choice_id};")-->
+<!--    GotoEntity selectByPrimary(GotoEntity gotoEntity);-->
+    <select id="selectByPrimary" resultType="cn.neud.neusurvey.entity.survey.GotoEntity" parameterType="cn.neud.neusurvey.entity.survey.GotoEntity">
+        select *
+        from goto
+        where survey_id=#{surveyId}
+          and choice_id = #{choiceId};
+    </select>
 
 
 </mapper>
