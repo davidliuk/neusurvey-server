@@ -58,13 +58,6 @@ public class UserController {
         return new Result<PageData<UserDTO>>().ok(page);
     }
 
-    @GetMapping("")
-    @ApiOperation("信息")
-    @RequiresPermissions("user:user:info")
-    public String hello(){
-        return "hello";
-    }
-
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:user:info")
@@ -88,8 +81,7 @@ public class UserController {
         return new Result();
     }
 
-
-    @PostMapping("login/")
+    @PostMapping("login")
     @ApiOperation("登录")
     @LogOperation("登录")
     @RequiresPermissions("user:user:login")

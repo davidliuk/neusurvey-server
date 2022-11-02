@@ -16,7 +16,7 @@ class ChoiceMapperTest {
         ChoiceDTO choiceDTO = new ChoiceDTO();
         choiceDTO.setContent("abc");
         choiceDTO.setId("aaa");
-        choiceDTO.setGoTo(Arrays.asList("123", "234"));
+        choiceDTO.setGoTo("123");
         System.out.println(choiceDTO);
 
         ChoiceEntity choiceEntity = ChoiceMapper.INSTANCE.toChoice(choiceDTO);

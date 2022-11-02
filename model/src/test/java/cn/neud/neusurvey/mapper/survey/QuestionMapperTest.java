@@ -16,11 +16,11 @@ class QuestionMapperTest {
         ChoiceDTO choiceDTO = new ChoiceDTO();
         choiceDTO.setContent("abc");
         choiceDTO.setId("aaa");
-        choiceDTO.setGoTo(Arrays.asList("123", "234"));
+        choiceDTO.setGoTo("123");
         ChoiceDTO choiceDTO1 = new ChoiceDTO();
         choiceDTO1.setContent("acc");
         choiceDTO1.setId("aaa");
-        choiceDTO1.setGoTo(Arrays.asList("123", "234"));
+        choiceDTO1.setGoTo("123");
         QuestionDTO questionDTO = new QuestionDTO();
         questionDTO.setQuestionType(1);
         questionDTO.setStem("hello");
