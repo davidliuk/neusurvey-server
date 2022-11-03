@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class QuestionCreateDTO {
     String id;
     String stem;
-    Integer question_type;
+    Integer questionType;
     ArrayList<QuestionCreateChoiceDTO> choices;
 
 }

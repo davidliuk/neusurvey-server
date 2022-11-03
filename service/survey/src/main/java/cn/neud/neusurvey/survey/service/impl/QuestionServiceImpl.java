@@ -72,7 +72,7 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
 //        BeanUtil.copyProperties();
         QuestionEntity questionEntity = new QuestionEntity();
         questionEntity.setStem(questionCreateDTO.getStem());
-        questionEntity.setQuestionType(questionCreateDTO.getQuestion_type());
+        questionEntity.setQuestionType(questionCreateDTO.getQuestionType());
         questionEntity.setId(questionCreateDTO.getId());
         questionEntity.setIsDeleted("0");
 //        System.out.println(questionCreateDTO);
@@ -95,24 +95,8 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
             choiceEntity.setChoiceOrder(i);
 
 
-            //设置goto关系属性
-            gotoEntity.setChoiceId(q.getId());
-            gotoEntity.setQuestionId(q.getGo_to());
-            gotoEntity.setSurveyId("1");//后续修改
-            gotoEntity.setCreator(userId);
-            gotoEntity.setIsDeleted("0");//后续修改
-            gotoEntity.setCreateDate(new Date(System.currentTimeMillis()));
-            gotoEntity.setUpdateDate(new Date(System.currentTimeMillis()));
-            gotoEntity.setUpdater(userId);
-            System.out.println(gotoEntity);
-
             if (choiceDao.selectById(choiceEntity.getId()) == null) {
                 choiceDao.insert(choiceEntity);
-            } else {
-                return 444;
-            }
-            if (gotoDao.selectById(q.getId()) == null) {
-                gotoDao.insert(gotoEntity);
             } else {
                 return 444;
             }

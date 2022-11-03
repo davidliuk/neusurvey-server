@@ -138,7 +138,7 @@ public class QuestionController {
     创建人:雷世鹏
     功能:修改问题
      */
-    @PostMapping()
+    @PostMapping("updateQuestion")
     @ApiOperation("修改")
     @LogOperation("修改")
     @RequiresPermissions("survey:question:update_question")
