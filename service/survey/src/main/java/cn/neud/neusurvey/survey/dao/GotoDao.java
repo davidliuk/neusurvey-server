@@ -3,6 +3,7 @@ package cn.neud.neusurvey.survey.dao;
 import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.entity.survey.GotoEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * goto
@@ -12,5 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface GotoDao extends BaseDao<GotoEntity> {
-	
+
+
+    GotoEntity selectByPrimary(GotoEntity gotoEntity);
 }

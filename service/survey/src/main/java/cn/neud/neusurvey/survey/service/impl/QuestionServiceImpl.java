@@ -88,23 +88,23 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
             choiceEntity.setContent(q.getContent());
             choiceEntity.setCreateDate(new Date(System.currentTimeMillis()));
             choiceEntity.setUpdateDate(new Date(System.currentTimeMillis()));
-            choiceEntity.setUpdater("userId");
-            choiceEntity.setCreator("userId");
-            choiceEntity.setBelongTo("userId");
+            choiceEntity.setUpdater(userId);
+            choiceEntity.setCreator(userId);
+            choiceEntity.setBelongTo(userId);
             choiceEntity.setIsDeleted("0");//后续修改
             choiceEntity.setChoiceOrder(i);
-            choiceEntity.setReserved("");
-            System.out.println(choiceEntity);
+
 
             //设置goto关系属性
             gotoEntity.setChoiceId(q.getId());
-            gotoEntity.setQuestionId(questionEntity.getId());
+            gotoEntity.setQuestionId(q.getGo_to());
             gotoEntity.setSurveyId("1");//后续修改
             gotoEntity.setCreator(userId);
             gotoEntity.setIsDeleted("0");//后续修改
             gotoEntity.setCreateDate(new Date(System.currentTimeMillis()));
             gotoEntity.setUpdateDate(new Date(System.currentTimeMillis()));
             gotoEntity.setUpdater(userId);
+            System.out.println(gotoEntity);
 
             if (choiceDao.selectById(choiceEntity.getId()) == null) {
                 choiceDao.insert(choiceEntity);
@@ -118,6 +118,7 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
             }
 
         }
+
         questionEntity.setCreateDate(new Date(System.currentTimeMillis()));
         questionEntity.setCreator(userId);
         questionEntity.setUpdateDate(new Date(System.currentTimeMillis()));
