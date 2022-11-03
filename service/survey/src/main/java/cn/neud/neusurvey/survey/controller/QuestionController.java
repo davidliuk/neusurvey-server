@@ -100,8 +100,9 @@ public class QuestionController {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
-        return questionService.deleteQuestion(ids);
-
+//        return questionService.deleteQuestion(ids);
+        questionService.delete(ids);
+        return new Result();
     }
 
     @GetMapping("export")

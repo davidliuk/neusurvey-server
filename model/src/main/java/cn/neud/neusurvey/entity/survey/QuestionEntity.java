@@ -1,6 +1,8 @@
 package cn.neud.neusurvey.entity.survey;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -20,6 +22,7 @@ public class QuestionEntity {
     /**
      * 主键id
      */
+    @TableId
 	private String id;
     /**
      * 题干
@@ -59,7 +62,8 @@ public class QuestionEntity {
     /**
      * 软删除
      */
-	private String isDeleted;
+    @TableLogic
+	private Integer isDeleted;
     /**
      * 保留项json
      */

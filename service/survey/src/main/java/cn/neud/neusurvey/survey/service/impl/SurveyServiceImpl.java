@@ -48,6 +48,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
 
     @Resource
     ChoiceService choiceService;
+
     @Autowired
     QuestionDao questionDao;
 
@@ -87,6 +88,9 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         goTo.setSurveyId(survey.getId());
 
         for (QuestionEntity question : survey.getQuestions()) {
+            if (questionService.get(question.getId()) != null) {
+                continue;
+            }
             questionService.insert(question);
             have.setQuestionId(question.getId());
             have.setNextId(question.getNextId());
