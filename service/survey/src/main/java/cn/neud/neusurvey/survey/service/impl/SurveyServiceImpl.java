@@ -57,9 +57,17 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
     @Override
     public QueryWrapper<SurveyEntity> getWrapper(Map<String, Object> params) {
         String id = (String) params.get("id");
+        String name = (String) params.get("name");
+        String description = (String) params.get("description");
+        String managedBy = (String) params.get("managedBy");
+        String typeId = (String) params.get("typeId");
 
         QueryWrapper<SurveyEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.like(StringUtils.isNotBlank(name), "name", name);
+        wrapper.like(StringUtils.isNotBlank(description), "description", description);
+        wrapper.eq(StringUtils.isNotBlank(managedBy), "managedBy", managedBy);
+        wrapper.eq(StringUtils.isNotBlank(typeId), "typeId", typeId);
 
         return wrapper;
     }

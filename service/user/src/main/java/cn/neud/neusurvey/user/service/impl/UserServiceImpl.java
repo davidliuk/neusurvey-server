@@ -34,13 +34,18 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
     @Override
     public QueryWrapper<UserEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
+        String role = (String)params.get("role");
+        String username = (String)params.get("username");
+        String nickname = (String)params.get("nickname");
 
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
-        wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.like(StringUtils.isNotBlank(id), "id", id);
+        wrapper.eq(StringUtils.isNotBlank(role), "role", role);
+        wrapper.like(StringUtils.isNotBlank(username), "username", username);
+        wrapper.like(StringUtils.isNotBlank(nickname), "nickname", nickname);
 
         return wrapper;
     }
-
 
     @Override
     public Result loginValidate(UserLoginDTO userLoginDTO) {

@@ -56,9 +56,13 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
     @Override
     public QueryWrapper<QuestionEntity> getWrapper(Map<String, Object> params) {
         String id = (String) params.get("id");
+        String stem = (String) params.get("stem");
+        String questionType = (String) params.get("questionType");
 
         QueryWrapper<QuestionEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.like(StringUtils.isNotBlank(stem), "stem", stem);
+        wrapper.eq(StringUtils.isNotBlank(questionType), "questionType", questionType);
 
         return wrapper;
     }
@@ -126,7 +130,6 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
             return 444;
         }
     }
-
 
     @Override
     public Result updateQuestion(QuestionDTO dto, String updaterId) {
