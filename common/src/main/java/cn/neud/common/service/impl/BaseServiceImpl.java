@@ -41,7 +41,7 @@ import java.util.function.BiConsumer;
  * @author David l729641074@163.com
  */
 public abstract class BaseServiceImpl<M extends BaseMapper<T>, T>  implements BaseService<T> {
-    @Autowired
+    @Resource
     protected M baseDao;
     protected Log log = LogFactory.getLog(getClass());
 

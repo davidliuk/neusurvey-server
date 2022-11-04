@@ -40,7 +40,7 @@ import java.util.Map;
 @RequestMapping("survey/survey")
 @Api(tags = "survey")
 public class SurveyController {
-    @Autowired
+    @Resource
     private SurveyService surveyService;
 
     @GetMapping("page")

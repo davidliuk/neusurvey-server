@@ -26,13 +26,13 @@ import java.util.stream.Collectors;
 
 @Service
 public class ShiroServiceImpl implements ShiroService {
-    @Autowired
+    @Resource
     private SysMenuDao sysMenuDao;
-    @Autowired
+    @Resource
     private SysUserDao sysUserDao;
-    @Autowired
+    @Resource
     private SysUserTokenDao sysUserTokenDao;
-    @Autowired
+    @Resource
     private SysRoleDataScopeDao sysRoleDataScopeDao;
 
     @Override

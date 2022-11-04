@@ -55,6 +55,8 @@ spring:
       discovery:
         server-addr: 101.43.31.212:8849
 
+
+
 # 是否开启redis缓存  true开启   false关闭
 renren:
   redis:

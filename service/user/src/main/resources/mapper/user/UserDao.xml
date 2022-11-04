@@ -26,6 +26,9 @@
         <result property="isDeleted" column="is_deleted"/>
         <result property="reserved" column="reserved"/>
     </resultMap>
+    <select id="selectByEmail" parameterType="string" resultType="cn.neud.neusurvey.entity.user.UserEntity">
+        select * from user where email=#{email};
+    </select>
 
 
 </mapper>

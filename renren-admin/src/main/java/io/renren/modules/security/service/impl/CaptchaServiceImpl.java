@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class CaptchaServiceImpl implements CaptchaService {
-    @Autowired
+    @Resource
     private RedisUtils redisUtils;
     @Value("${renren.redis.open: false}")
     private boolean open;

@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("survey/goto")
 @Api(tags="goto")
 public class GotoController {
-    @Autowired
+    @Resource
     private GotoService gotoService;
 
     @GetMapping("page")

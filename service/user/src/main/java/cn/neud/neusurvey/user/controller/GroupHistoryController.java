@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("user/grouphistory")
 @Api(tags="group_history")
 public class GroupHistoryController {
-    @Autowired
+    @Resource
     private GroupHistoryService groupHistoryService;
 
     @GetMapping("page")

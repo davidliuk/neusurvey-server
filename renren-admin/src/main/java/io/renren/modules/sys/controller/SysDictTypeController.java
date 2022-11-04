@@ -40,7 +40,7 @@ import java.util.Map;
 @RequestMapping("sys/dict/type")
 @Api(tags="字典类型")
 public class SysDictTypeController {
-    @Autowired
+    @Resource
     private SysDictTypeService sysDictTypeService;
 
     @GetMapping("page")

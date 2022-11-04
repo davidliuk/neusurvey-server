@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("survey/have")
 @Api(tags="have")
 public class HaveController {
-    @Autowired
+    @Resource
     private HaveService haveService;
 
     @GetMapping("page")

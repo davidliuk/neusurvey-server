@@ -40,9 +40,9 @@ import java.util.Map;
  */
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUserDao, SysUserEntity> implements SysUserService {
-	@Autowired
+	@Resource
 	private SysRoleUserService sysRoleUserService;
-	@Autowired
+	@Resource
 	private SysDeptService sysDeptService;
 
 	@Override

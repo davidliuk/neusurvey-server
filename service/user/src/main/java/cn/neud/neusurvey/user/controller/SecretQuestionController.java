@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("user/secretquestion")
 @Api(tags="secret_question")
 public class SecretQuestionController {
-    @Autowired
+    @Resource
     private SecretQuestionService secretQuestionService;
 
     @GetMapping("page")

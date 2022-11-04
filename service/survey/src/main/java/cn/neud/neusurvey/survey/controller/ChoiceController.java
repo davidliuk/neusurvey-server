@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("survey/choice")
 @Api(tags="choice")
 public class ChoiceController {
-    @Autowired
+    @Resource
     private ChoiceService choiceService;
 
     @GetMapping("page")

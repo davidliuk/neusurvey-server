@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("survey/surveytype")
 @Api(tags="survey_type")
 public class SurveyTypeController {
-    @Autowired
+    @Resource
     private SurveyTypeService surveyTypeService;
 
     @GetMapping("page")

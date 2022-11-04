@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 @Service
 public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDTO> implements UserService {
-    @Autowired
+    @Resource
     private UserDao userDao;
 
     @Override
@@ -154,6 +154,16 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
 
 
+    public Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO) {
+//       UserEntity user = userDao.selectByEmail(userEmailLoginDTO.getEmail());
+        Result result = new Result();
+        String verifyCode = MailUtils.sendMail(userEmailLoginDTO.getEmail());
+        result.setData(verifyCode);
+        result.setMsg("验证码已发送至指定邮箱，请注意查收！");
+        return result;
+    }
+
+    @Override
     public Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO) {
 //       UserEntity user = userDao.selectByEmail(userEmailLoginDTO.getEmail());
         Result result = new Result();

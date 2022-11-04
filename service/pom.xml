@@ -17,6 +17,7 @@
         <module>survey</module>
         <module>oss</module>
         <module>sms</module>
+        <module>statistics</module>
     </modules>
 
     <properties>
@@ -44,11 +45,6 @@
         <dependency>
             <groupId>cn.neud</groupId>
             <artifactId>model</artifactId>
-            <version>5.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.neud</groupId>
-            <artifactId>service-client</artifactId>
             <version>5.0.0</version>
         </dependency>
         <dependency>
