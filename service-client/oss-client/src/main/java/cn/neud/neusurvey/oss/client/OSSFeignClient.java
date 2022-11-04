@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Map;
 
 @FeignClient(value = "neusurvey-oss")
-@RequestMapping("/oss")
+//@RequestMapping("/oss")
 @Repository
 public interface OSSFeignClient {
 

@@ -30,5 +30,4 @@ public class GroupHistoryServiceImpl extends CrudServiceImpl<GroupHistoryDao, Gr
         return wrapper;
     }
 
-
 }

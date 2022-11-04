@@ -23,4 +23,5 @@ public class SMSApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(SMSApplication.class);
 	}
+
 }

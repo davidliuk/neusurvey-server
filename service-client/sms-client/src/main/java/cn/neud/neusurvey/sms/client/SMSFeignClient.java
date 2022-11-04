@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 @FeignClient(value = "neusurvey-sms", name = "neusurvey-sms")
-@RequestMapping("sms/mail")
+//@RequestMapping("/sms/mail")
 @Repository
 public interface SMSFeignClient {
 

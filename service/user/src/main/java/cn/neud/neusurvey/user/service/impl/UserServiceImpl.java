@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -150,17 +151,6 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
         return result.ok(null);
 
-    }
-
-
-
-    public Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO) {
-//       UserEntity user = userDao.selectByEmail(userEmailLoginDTO.getEmail());
-        Result result = new Result();
-        String verifyCode = MailUtils.sendMail(userEmailLoginDTO.getEmail());
-        result.setData(verifyCode);
-        result.setMsg("验证码已发送至指定邮箱，请注意查收！");
-        return result;
     }
 
     @Override
