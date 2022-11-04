@@ -121,7 +121,7 @@ public class QuestionController {
     @RequiresPermissions("survey:question:add")
     public Result createQuestion(@RequestParam(value = "userId") String userId, @RequestBody QuestionCreateDTO questionCreateDTO) {
         //效验数据
-//        ValidatorUtils.validateEntity(questionCreateDTO, UpdateGroup.class, DefaultGroup.class);
+        ValidatorUtils.validateEntity(questionCreateDTO, UpdateGroup.class, DefaultGroup.class);
         System.out.println("userId" + userId);
 
         int result_code = questionService.createQuestion(userId, questionCreateDTO);

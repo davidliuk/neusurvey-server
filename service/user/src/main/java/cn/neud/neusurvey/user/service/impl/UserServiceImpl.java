@@ -74,20 +74,78 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
         Result result=new Result();
 
-        UserEntity userEntity=new UserEntity();
-        BeanUtils.copyProperties(userRegisterDTO,userEntity);
+        //用户名重复性检查
+        UserEntity user=userDao.selectByUsername(userRegisterDTO.getUsername());
+        if(user!=null)
+        {
+            result.error("该用户已存在");
+        }
+        else
+        {
+            UserEntity userEntity=new UserEntity();
+            BeanUtils.copyProperties(userRegisterDTO,userEntity);
 
-        String userId= UuidUtils.generateUuid();
-        userEntity.setId(userId);
-        userEntity.setCreator(userId);
-        userEntity.setUpdater(userId);
-        userEntity.setCreateDate(new Date(System.currentTimeMillis()));
-        userEntity.setUpdateDate(new Date(System.currentTimeMillis()));
-        userEntity.setIsDeleted(String.valueOf(0));
+            String userId= UuidUtils.generateUuid();
+            userEntity.setId(userId);
+            userEntity.setCreator(userId);
+            userEntity.setUpdater(userId);
+            userEntity.setCreateDate(new Date(System.currentTimeMillis()));
+            userEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+            userEntity.setIsDeleted(String.valueOf(0));
 
-        if(userDao.insert(userEntity)!=0) result.ok(null);
-        else result.error();
-
+            userDao.insert(userEntity);
+            result.ok(null);
+        }
         return result;
+    }
+
+    @Override
+    public Result deleteLogic(String[] ids) {
+
+        Result result=new Result();
+        boolean ifOK=true;
+        String msg=new String();
+
+        for(int i=0;i< ids.length;i++)
+        {
+            UserEntity userEntity=userDao.selectById(ids[i]);
+
+            if(userEntity==null)
+            {
+                ifOK&=false;
+                msg+="未找到id为"+ids[i]+"的用户实体\n";
+                continue;
+            }
+
+            userEntity.setIsDeleted("1");
+            userDao.updateById(userEntity);
+
+        }
+
+        if(ifOK) return result.ok(null);
+        else return result.error(msg);
+    }
+
+    @Override
+    public Result updateUser(UserDTO dto) {
+
+        Result result = new Result();
+
+
+        UserEntity userEntity = userDao.selectById(dto.getId());
+
+        if (userEntity == null)
+            return result.error("未找到id为" + dto.getId() + "的用户实体");
+
+        UserEntity userEntity_username= userDao.selectByUsername(dto.getUsername());
+
+        if (userEntity_username != null && !dto.getUsername().equals(userEntity.getUsername()))
+            return result.error("已存在用户名为"+dto.getUsername()+"的用户实体");
+
+        BeanUtils.copyProperties(dto,userEntity);
+
+        userDao.updateById(userEntity);
+
+        return result.ok(null);
     }
 }

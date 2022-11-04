@@ -20,4 +20,8 @@ public interface UserService extends CrudService<UserEntity, UserDTO> {
 
     Result register(UserRegisterDTO userRegisterDTO);
 
+    Result deleteLogic(String[] ids);
+
+    Result updateUser(UserDTO dto);
+
 }

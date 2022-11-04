@@ -100,6 +100,20 @@ public class UserController {
         ValidatorUtils.validateEntity(userRegisterDTO, AddGroup.class, DefaultGroup.class);
         return userService.register(userRegisterDTO);
     }
+//  雷世鹏:这个只有指定正确的id才能完成操作,没有相应提示
+//    @PutMapping
+//    @ApiOperation("修改")
+//    @LogOperation("修改")
+//    @RequiresPermissions("user:user:update")
+//    public Result update(@RequestBody UserDTO dto){
+//        //效验数据
+//        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+//
+//        userService.update(dto);
+//
+//        return new Result();
+//    }
+
 
     @PutMapping
     @ApiOperation("修改")
@@ -109,24 +123,38 @@ public class UserController {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        userService.update(dto);
+        return userService.updateUser(dto);
 
-        return new Result();
     }
 
 
 
-    @DeleteMapping
+    @DeleteMapping()
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("user:user:delete")
-    public Result delete(@RequestBody String[] ids){
+    public Result deleteReal(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
         userService.delete(ids);
 
         return new Result();
+    }
+
+    /*
+    雷世鹏: 逻辑删除
+     */
+    @DeleteMapping("logic")
+    @ApiOperation("逻辑删除")
+    @LogOperation("逻辑删除")
+    @RequiresPermissions("user:user:deleteLogic")
+    public Result deleteLogic(@RequestBody String[] ids){
+        //效验数据
+        AssertUtils.isArrayEmpty(ids, "id");
+
+        return userService.deleteLogic(ids);
+
     }
 
     @GetMapping("export")
