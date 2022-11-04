@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SysParamsRedis {
-    @Autowired
+    @Resource
     private RedisUtils redisUtils;
 
     public void delete(Object[] paramCodes) {

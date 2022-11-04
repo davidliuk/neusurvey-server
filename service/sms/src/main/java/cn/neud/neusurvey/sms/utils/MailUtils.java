@@ -36,7 +36,7 @@ public class MailUtils {
         // 发送邮件协议名称
         prop.setProperty("mail.transport.protocol", "smtp");
         // 开启SSL加密，否则会失败
-        String  verifyCode = createCode();
+        String verifyCode = createCode();
         //创建验证码
         try {
             MailSSLSocketFactory sf = new MailSSLSocketFactory();
@@ -50,7 +50,7 @@ public class MailUtils {
             // 连接邮件服务器：邮箱类型，帐号，POP3/SMTP协议授权码 163使用：smtp.163.com，qq使用：smtp.qq.com
             ts.connect("smtp.163.com", "soft000215@163.com", "ZKBEQUVNLHZSPPGP");
             // 创建邮件
-            Message message = createSimpleMail(session, receiveMail,verifyCode);
+            Message message = createSimpleMail(session, receiveMail, verifyCode);
             // 发送邮件
             ts.sendMessage(message, message.getAllRecipients());
             ts.close();
@@ -62,7 +62,7 @@ public class MailUtils {
 
     }
 
-    public static String createCode(){
+    public static String createCode() {
         //  获取6位随机验证码（英文）
         String[] letters = new String[]{
                 "q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c", "v", "b", "n", "m",
@@ -82,7 +82,7 @@ public class MailUtils {
      * @Method: createSimpleMail
      * @Description: 创建一封只包含文本的邮件
      */
-    public static MimeMessage createSimpleMail(Session session, String receiveMail, String  verifyCode) throws Exception {
+    public static MimeMessage createSimpleMail(Session session, String receiveMail, String verifyCode) throws Exception {
 
 
         // 创建邮件对象

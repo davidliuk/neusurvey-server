@@ -32,7 +32,7 @@ import java.util.*;
 
 @Service
 public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptDao, SysDeptEntity> implements SysDeptService {
-	@Autowired
+	@Resource
 	private SysUserDao sysUserDao;
 
 	@Override

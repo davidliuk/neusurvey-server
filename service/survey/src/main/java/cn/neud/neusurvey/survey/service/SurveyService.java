@@ -14,6 +14,4 @@ import cn.neud.neusurvey.entity.survey.SurveyEntity;
  */
 public interface SurveyService extends CrudService<SurveyEntity, SurveyDTO> {
 
-
-
 }

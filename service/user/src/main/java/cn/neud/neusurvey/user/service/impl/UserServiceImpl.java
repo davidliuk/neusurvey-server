@@ -18,6 +18,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.Map;
 import java.util.UUID;
@@ -30,7 +31,7 @@ import java.util.UUID;
  */
 @Service
 public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDTO> implements UserService {
-    @Autowired
+    @Resource
     private UserDao userDao;
 
     @Override
@@ -153,7 +154,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
     }
 
 
-
+    @Override
     public Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO) {
 //       UserEntity user = userDao.selectByEmail(userEmailLoginDTO.getEmail());
         Result result = new Result();

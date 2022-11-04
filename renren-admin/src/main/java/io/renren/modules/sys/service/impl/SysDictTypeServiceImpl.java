@@ -36,7 +36,7 @@ import java.util.Map;
  */
 @Service
 public class SysDictTypeServiceImpl extends BaseServiceImpl<SysDictTypeDao, SysDictTypeEntity> implements SysDictTypeService {
-    @Autowired
+    @Resource
     private SysDictDataDao sysDictDataDao;
     @Override
     public PageData<SysDictTypeDTO> page(Map<String, Object> params) {

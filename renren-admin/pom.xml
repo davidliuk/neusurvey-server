@@ -26,11 +26,6 @@
 			<artifactId>common</artifactId>
 			<version>5.0.0</version>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>io.renren</groupId>-->
-<!--			<artifactId>renren-dynamic-datasource</artifactId>-->
-<!--			<version>5.0.0</version>-->
-<!--		</dependency>-->
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>

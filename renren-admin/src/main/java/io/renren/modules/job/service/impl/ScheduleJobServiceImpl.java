@@ -29,7 +29,7 @@ import java.util.*;
 
 @Service
 public class ScheduleJobServiceImpl extends BaseServiceImpl<ScheduleJobDao, ScheduleJobEntity> implements ScheduleJobService {
-	@Autowired
+	@Resource
 	private Scheduler scheduler;
 
 	@Override
