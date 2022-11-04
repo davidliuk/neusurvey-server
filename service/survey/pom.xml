@@ -10,25 +10,13 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>survey</artifactId>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
-
     <dependencies>
+        <dependency>
+            <groupId>cn.neud</groupId>
+            <artifactId>oss-client</artifactId>
+            <version>5.0.0</version>
+            <scope>compile</scope>
+        </dependency>
         <dependency>
             <groupId>commons-email</groupId>
             <artifactId>commons-email</artifactId>
@@ -44,7 +32,24 @@
             <artifactId>activation</artifactId>
             <version>1.1.1</version>
         </dependency>
-
     </dependencies>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -39,7 +39,7 @@ import java.util.Map;
  */
 @Service
 public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsDao, SysParamsEntity> implements SysParamsService {
-    @Autowired
+    @Resource
     private SysParamsRedis sysParamsRedis;
 
     @Override

@@ -49,10 +49,10 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
     @Resource
     ChoiceService choiceService;
 
-    @Autowired
+    @Resource
     QuestionDao questionDao;
 
-    @Autowired
+    @Resource
     ChoiceDao choiceDao;
 
     @Override
@@ -94,12 +94,14 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             questionService.insert(question);
             have.setQuestionId(question.getId());
             have.setNextId(question.getNextId());
-            goTo.setQuestionId(question.getId());
             haveService.insert(have);
             for (ChoiceEntity choice : question.getChoices()) {
                 choiceService.insert(choice);
-                goTo.setChoiceId(choice.getId());
-                gotoService.insert(goTo);
+                if (choice.getGoTo() != null && !choice.getGoTo().equals("")) {
+                    goTo.setQuestionId(choice.getGoTo());
+                    goTo.setChoiceId(choice.getId());
+                    gotoService.insert(goTo);
+                }
             }
         }
     }
@@ -136,6 +138,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         Map<String, Object> map = new HashMap<>(1);
         map.put("surveyId", id);
         List<HaveDTO> questionList = haveService.list(map);
+        System.out.println(questionList);
         String[] questionIds = new String[questionList.size()];
         Map<String, String> questionsMap = new HashMap<>();
         for (int i = 0; i < questionList.size(); i++) {
@@ -157,6 +160,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             question.setNextId(questionsMap.get(question.getId()));
             choiceParams.put("belongTo", question.getId());
             List<ChoiceDTO> choiceList = choiceService.list(choiceParams);
+            System.out.println(choiceList);
             question.setChoices(choiceList);
             for (ChoiceDTO choice: choiceList) {
                 choice.setGoTo(choices.get(choice.getId()));

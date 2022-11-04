@@ -43,7 +43,7 @@ import java.util.Map;
 @RequestMapping("sys/log/error")
 @Api(tags="异常日志")
 public class SysLogErrorController {
-    @Autowired
+    @Resource
     private SysLogErrorService sysLogErrorService;
 
     @GetMapping("page")

@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("user/usergroup")
 @Api(tags="user_group")
 public class UserGroupController {
-    @Autowired
+    @Resource
     private UserGroupService userGroupService;
 
     @GetMapping("page")

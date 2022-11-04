@@ -43,11 +43,11 @@ import java.util.Map;
 @RequestMapping("/sys/role")
 @Api(tags="角色管理")
 public class SysRoleController {
-	@Autowired
+	@Resource
 	private SysRoleService sysRoleService;
-	@Autowired
+	@Resource
 	private SysRoleMenuService sysRoleMenuService;
-	@Autowired
+	@Resource
 	private SysRoleDataScopeService sysRoleDataScopeService;
 
 	@GetMapping("page")

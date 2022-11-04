@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("user/member")
 @Api(tags="member")
 public class MemberController {
-    @Autowired
+    @Resource
     private MemberService memberService;
 
     @GetMapping("page")

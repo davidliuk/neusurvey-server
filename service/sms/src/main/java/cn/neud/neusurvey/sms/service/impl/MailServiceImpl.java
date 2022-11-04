@@ -2,15 +2,12 @@ package cn.neud.neusurvey.sms.service.impl;
 
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
-import cn.neud.neusurvey.sms.service.CodeService;
+import cn.neud.neusurvey.sms.service.MailService;
 import cn.neud.neusurvey.sms.utils.MailUtils;
 import org.springframework.stereotype.Service;
 
-
 @Service
-public class CodeServiceImpl implements CodeService {
-
-
+public class MailServiceImpl implements MailService {
 
     @Override
     public Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO) {

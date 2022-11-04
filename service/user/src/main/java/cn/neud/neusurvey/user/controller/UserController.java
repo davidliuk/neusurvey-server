@@ -43,7 +43,7 @@ import java.util.Map;
 @RequestMapping("user/user")
 @Api(tags="user")
 public class UserController {
-    @Autowired
+    @Resource
     private UserService userService;
 
     @Resource

@@ -36,20 +36,20 @@ import java.util.Map;
 @Service
 public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEntity, QuestionDTO> implements QuestionService {
 
-    @Autowired
+    @Resource
     GotoDao gotoDao;
 
-    @Autowired
+    @Resource
     ChoiceDao choiceDao;
 
-    @Autowired
+    @Resource
     QuestionDao questionDao;
 
     public List<QuestionDTO> in(String[] ids) {
         QueryWrapper<QuestionEntity> wrapper = new QueryWrapper<>();
         wrapper.in("id", ids);
-        List entityList = baseDao.selectList(wrapper);
-
+        List<QuestionEntity> entityList = questionDao.selectList(wrapper);
+        System.out.println(entityList);
         return ConvertUtils.sourceToTarget(entityList, currentDtoClass());
     }
 
@@ -60,7 +60,7 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
         String questionType = (String) params.get("questionType");
 
         QueryWrapper<QuestionEntity> wrapper = new QueryWrapper<>();
-        wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.like(StringUtils.isNotBlank(id), "id", id);
         wrapper.like(StringUtils.isNotBlank(stem), "stem", stem);
         wrapper.eq(StringUtils.isNotBlank(questionType), "questionType", questionType);
 

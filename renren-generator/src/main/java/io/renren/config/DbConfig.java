@@ -25,13 +25,13 @@ import org.springframework.context.annotation.Primary;
 public class DbConfig {
     @Value("${renren.database: mysql}")
     private String database;
-    @Autowired
+    @Resource
     private MySQLGeneratorDao mySQLGeneratorDao;
-    @Autowired
+    @Resource
     private OracleGeneratorDao oracleGeneratorDao;
-    @Autowired
+    @Resource
     private SQLServerGeneratorDao sqlServerGeneratorDao;
-    @Autowired
+    @Resource
     private PostgreSQLGeneratorDao postgreSQLGeneratorDao;
 
     @Bean

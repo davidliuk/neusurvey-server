@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("user/userhistory")
 @Api(tags="user_history")
 public class UserHistoryController {
-    @Autowired
+    @Resource
     private UserHistoryService userHistoryService;
 
     @GetMapping("page")

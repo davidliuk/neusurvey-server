@@ -30,7 +30,7 @@ import java.util.UUID;
  */
 @Service
 public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDTO> implements UserService {
-    @Autowired
+    @Resource
     private UserDao userDao;
 
     @Override

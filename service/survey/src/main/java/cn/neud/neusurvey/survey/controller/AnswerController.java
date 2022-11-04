@@ -37,7 +37,7 @@ import java.util.Map;
 @RequestMapping("survey/answer")
 @Api(tags="answer")
 public class AnswerController {
-    @Autowired
+    @Resource
     private AnswerService answerService;
 
     @GetMapping("page")
