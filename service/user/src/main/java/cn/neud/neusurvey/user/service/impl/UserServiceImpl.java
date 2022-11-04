@@ -1,9 +1,11 @@
 package cn.neud.neusurvey.user.service.impl;
 
 import cn.neud.common.utils.Result;
+import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
 import cn.neud.neusurvey.dto.user.UserLoginDTO;
 import cn.neud.neusurvey.dto.user.UserRegisterDTO;
 import cn.neud.neusurvey.entity.user.UserEntity;
+import cn.neud.neusurvey.user.utils.MailUtils;
 import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
@@ -88,6 +90,16 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         if(userDao.insert(userEntity)!=0) result.ok(null);
         else result.error();
 
+        return result;
+    }
+
+    @Override
+    public Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO) {
+//       UserEntity user = userDao.selectByEmail(userEmailLoginDTO.getEmail());
+        Result result = new Result();
+        String verifyCode = MailUtils.sendMail(userEmailLoginDTO.getEmail());
+        result.setData(verifyCode);
+        result.setMsg("验证码已发送至指定邮箱，请注意查收！");
         return result;
     }
 }

@@ -31,6 +31,10 @@ spring:
           uri: lb://neusurvey-oss
           predicates:
             - Path=/oss/**
+        - id: neusurvey-sms
+            uri: lb://neusurvey-sms
+            predicates:
+              - Path=/sms/**
       globalcors:
         cors-configurations:
           '[/**]':

@@ -16,6 +16,7 @@
         <module>user</module>
         <module>survey</module>
         <module>oss</module>
+        <module>sms</module>
     </modules>
 
     <properties>
@@ -34,6 +35,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>cn.neud</groupId>
             <artifactId>common</artifactId>
