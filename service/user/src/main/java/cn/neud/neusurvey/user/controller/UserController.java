@@ -11,9 +11,10 @@ import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.UserDTO;
+import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
 import cn.neud.neusurvey.dto.user.UserLoginDTO;
 import cn.neud.neusurvey.dto.user.UserRegisterDTO;
-import cn.neud.neusurvey.entity.user.UserLoginEntity;
+
 import cn.neud.neusurvey.user.excel.UserExcel;
 import cn.neud.neusurvey.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -25,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,7 @@ import java.util.Map;
 public class UserController {
     @Autowired
     private UserService userService;
+
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -80,6 +83,8 @@ public class UserController {
 
         return new Result();
     }
+
+
 
     @PostMapping("login")
     @ApiOperation("登录")
@@ -165,6 +170,18 @@ public class UserController {
         List<UserDTO> list = userService.list(params);
 
         ExcelUtils.exportExcelToTarget(response, null, list, UserExcel.class);
+    }
+
+
+    @PostMapping("loginByEmail")
+    @ApiOperation("邮箱登录")
+    @LogOperation("邮箱登录")
+    @RequiresPermissions("user:user:login")
+    public Result loginByEmail(@RequestBody UserEmailLoginDTO userEmailLoginDTO){
+
+        //效验数据
+        ValidatorUtils.validateEntity(userEmailLoginDTO, AddGroup.class, DefaultGroup.class);
+        return userService.emailLoginValidate(userEmailLoginDTO);
     }
 
 }

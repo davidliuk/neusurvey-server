@@ -16,5 +16,6 @@ public interface UserDao extends BaseDao<UserEntity> {
 
     @Select("select * from user where username=#{username};")
     UserEntity selectByUsername(String username);
-	
+
+    UserEntity selectByEmail(String email);
 }
