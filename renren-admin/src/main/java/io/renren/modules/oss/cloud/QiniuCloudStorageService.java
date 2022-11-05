@@ -14,7 +14,7 @@ import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -48,10 +48,10 @@ public class QiniuCloudStorageService extends AbstractCloudStorageService {
         try {
             Response res = uploadManager.put(data, path, token);
             if (!res.isOK()) {
-                throw new RenException(ErrorCode.OSS_UPLOAD_FILE_ERROR, res.toString());
+                throw new NEUException(ErrorCode.OSS_UPLOAD_FILE_ERROR, res.toString());
             }
         } catch (Exception e) {
-            throw new RenException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
+            throw new NEUException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
         }
 
         return config.getQiniuDomain() + "/" + path;
@@ -63,7 +63,7 @@ public class QiniuCloudStorageService extends AbstractCloudStorageService {
             byte[] data = IOUtils.toByteArray(inputStream);
             return this.upload(data, path);
         } catch (IOException e) {
-            throw new RenException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
+            throw new NEUException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
         }
     }
 

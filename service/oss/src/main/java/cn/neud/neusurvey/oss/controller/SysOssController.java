@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 /**
@@ -43,9 +44,9 @@ import java.util.*;
 @RequestMapping("/oss")
 @Api(tags = "文件上传")
 public class SysOssController {
-    @Autowired
+    @Resource
     private SysOssService sysOssService;
-//    @Autowired
+//    @Resource
 //    private SysParamsService sysParamsService;
 
     private final static String KEY = Constant.CLOUD_STORAGE_CONFIG_KEY;

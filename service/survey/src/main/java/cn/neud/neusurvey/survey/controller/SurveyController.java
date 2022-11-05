@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Collections;
@@ -40,7 +41,7 @@ import java.util.Map;
 @RequestMapping("survey/survey")
 @Api(tags = "survey")
 public class SurveyController {
-    @Autowired
+    @Resource
     private SurveyService surveyService;
 
     @GetMapping("page")

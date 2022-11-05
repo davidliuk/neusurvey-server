@@ -35,7 +35,7 @@ import java.util.List;
 @RequestMapping("/sys/dept")
 @Api(tags="部门管理")
 public class SysDeptController {
-	@Autowired
+	@Resource
 	private SysDeptService sysDeptService;
 
 	@GetMapping("list")

@@ -39,9 +39,9 @@ import java.util.Set;
 @RequestMapping("/sys/menu")
 @Api(tags="菜单管理")
 public class SysMenuController {
-	@Autowired
+	@Resource
 	private SysMenuService sysMenuService;
-	@Autowired
+	@Resource
 	private ShiroService shiroService;
 
 	@GetMapping("nav")

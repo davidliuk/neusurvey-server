@@ -21,4 +21,10 @@ class SurveyControllerTest {
         Map<String, Object> map = new HashMap<>();
         System.out.println(surveyController.page(map).getData().getList().get(0));
     }
+
+    @Test
+    void get() {
+        surveyController.get("1588461503517646850");
+    }
+
 }

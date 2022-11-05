@@ -4,6 +4,8 @@ import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.entity.user.MemberEntity;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
  * member
  *
@@ -12,5 +14,12 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface MemberDao extends BaseDao<MemberEntity> {
-	
+
+
+
+    List<MemberEntity> selectByGroupId(String group_id);
+
+    void softDeleteByPrimary(String user_id, String group_id);
+
+    void addGroupUser(String user_id, String group_id);
 }

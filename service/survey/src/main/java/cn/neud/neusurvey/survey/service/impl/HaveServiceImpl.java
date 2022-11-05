@@ -23,9 +23,11 @@ public class HaveServiceImpl extends CrudServiceImpl<HaveDao, HaveEntity, HaveDT
     @Override
     public QueryWrapper<HaveEntity> getWrapper(Map<String, Object> params) {
         String id = (String) params.get("id");
+        String surveyId = (String) params.get("surveyId");
 
         QueryWrapper<HaveEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.eq(StringUtils.isNotBlank(surveyId), "survey_id", surveyId);
 
         return wrapper;
     }

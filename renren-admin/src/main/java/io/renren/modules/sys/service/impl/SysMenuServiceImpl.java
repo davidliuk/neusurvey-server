@@ -10,7 +10,7 @@ package io.renren.modules.sys.service.impl;
 
 import cn.neud.common.constant.Constant;
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import cn.neud.common.service.impl.BaseServiceImpl;
 import cn.neud.common.utils.ConvertUtils;
 import cn.neud.common.utils.TreeUtils;
@@ -21,7 +21,6 @@ import io.renren.modules.sys.entity.SysMenuEntity;
 import io.renren.modules.sys.enums.SuperAdminEnum;
 import io.renren.modules.sys.service.SysMenuService;
 import io.renren.modules.sys.service.SysRoleMenuService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +28,7 @@ import java.util.List;
 
 @Service
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuDao, SysMenuEntity> implements SysMenuService {
-	@Autowired
+	@Resource
 	private SysRoleMenuService sysRoleMenuService;
 
 	@Override
@@ -57,7 +56,7 @@ public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuDao, SysMenuEntit
 
 		//上级菜单不能为自身
 		if(entity.getId().equals(entity.getPid())){
-			throw new RenException(ErrorCode.SUPERIOR_MENU_ERROR);
+			throw new NEUException(ErrorCode.SUPERIOR_MENU_ERROR);
 		}
 
 		//更新菜单

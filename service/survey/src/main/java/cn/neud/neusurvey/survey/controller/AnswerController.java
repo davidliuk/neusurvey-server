@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +38,7 @@ import java.util.Map;
 @RequestMapping("survey/answer")
 @Api(tags="answer")
 public class AnswerController {
-    @Autowired
+    @Resource
     private AnswerService answerService;
 
     @GetMapping("page")
@@ -68,11 +69,11 @@ public class AnswerController {
     @ApiOperation("保存")
     @LogOperation("保存")
     @RequiresPermissions("survey:answer:save")
-    public Result save(@RequestBody AnswerDTO dto){
+    public Result save(@RequestBody AnswerDTO[] dtos){
         //效验数据
-        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+//        ValidatorUtils.validateEntity(dtos, AddGroup.class, DefaultGroup.class);
 
-        answerService.save(dto);
+        answerService.save(dtos);
 
         return new Result();
     }

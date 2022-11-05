@@ -1,7 +1,7 @@
 #默认使用配置
 spring:
   profiles:
-      active: dev
+    active: dev
 
 server:
   port: 8080
@@ -31,10 +31,14 @@ spring:
           uri: lb://neusurvey-oss
           predicates:
             - Path=/oss/**
+        - id: neusurvey-sms
+          uri: lb://neusurvey-sms
+          predicates:
+            - Path=/sms/**
       globalcors:
         cors-configurations:
           '[/**]':
-#            allowedOrigins: "*"
+            #            allowedOrigins: "*"
             allowedMethods:
               - "GET"
               - "POST"

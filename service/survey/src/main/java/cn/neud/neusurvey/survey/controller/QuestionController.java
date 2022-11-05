@@ -12,6 +12,7 @@ import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.survey.QuestionCreateDTO;
 import cn.neud.neusurvey.dto.survey.QuestionDTO;
+import cn.neud.neusurvey.oss.client.OSSFeignClient;
 import cn.neud.neusurvey.survey.excel.QuestionExcel;
 import cn.neud.neusurvey.survey.service.QuestionService;
 import io.swagger.annotations.Api;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +40,11 @@ import java.util.Map;
 @RequestMapping("survey/question")
 @Api(tags = "question")
 public class QuestionController {
-    @Autowired
+    @Resource
     private QuestionService questionService;
+
+//    @Resource
+//    private OSSFeignClient ossFeignClient;
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -121,7 +126,7 @@ public class QuestionController {
     @RequiresPermissions("survey:question:add")
     public Result createQuestion(@RequestParam(value = "userId") String userId, @RequestBody QuestionCreateDTO questionCreateDTO) {
         //效验数据
-//        ValidatorUtils.validateEntity(questionCreateDTO, UpdateGroup.class, DefaultGroup.class);
+        ValidatorUtils.validateEntity(questionCreateDTO, UpdateGroup.class, DefaultGroup.class);
         System.out.println("userId" + userId);
 
         int result_code = questionService.createQuestion(userId, questionCreateDTO);

@@ -21,4 +21,9 @@ public interface UserService extends CrudService<UserEntity, UserDTO> {
     Result codeLoginValidate(UserVerificationLoginDTO userVerificationLoginDTO) ;
 
     Result sendCode(SendCodeDTO sendCodeDTO) ;
+    Result deleteLogic(String[] ids);
+
+    Result updateUser(UserDTO dto);
+
+    Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO);
 }

@@ -17,6 +17,12 @@
             <scope>compile</scope>
         </dependency>
 		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>${jwt.version}</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
 			<groupId>cn.neud</groupId>
 			<artifactId>model</artifactId>
 			<version>5.0.0</version>

@@ -4,6 +4,7 @@ import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.entity.user.UserEntity;
 import cn.neud.neusurvey.user.service.HttpUtils;
+import cn.neud.neusurvey.user.utils.MailUtils;
 import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
@@ -16,6 +17,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +32,7 @@ import java.util.UUID;
  */
 @Service
 public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDTO> implements UserService {
-    @Autowired
+    @Resource
     private UserDao userDao;
     public String Code;
     @Override
@@ -76,20 +78,89 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
         Result result=new Result();
 
-        UserEntity userEntity=new UserEntity();
-        BeanUtils.copyProperties(userRegisterDTO,userEntity);
+        //用户名重复性检查
+        UserEntity user=userDao.selectByUsername(userRegisterDTO.getUsername());
+        if(user!=null)
+        {
+            result.error("该用户已存在");
+        }
+        else
+        {
+            UserEntity userEntity=new UserEntity();
+            BeanUtils.copyProperties(userRegisterDTO,userEntity);
 
-        String userId= UuidUtils.generateUuid();
-        userEntity.setId(userId);
-        userEntity.setCreator(userId);
-        userEntity.setUpdater(userId);
-        userEntity.setCreateDate(new Date(System.currentTimeMillis()));
-        userEntity.setUpdateDate(new Date(System.currentTimeMillis()));
-        userEntity.setIsDeleted(String.valueOf(0));
+            String userId= UuidUtils.generateUuid();
+            userEntity.setId(userId);
+            userEntity.setCreator(userId);
+            userEntity.setUpdater(userId);
+            userEntity.setCreateDate(new Date(System.currentTimeMillis()));
+            userEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+            userEntity.setIsDeleted(String.valueOf(0));
 
-        if(userDao.insert(userEntity)!=0) result.ok(null);
-        else result.error();
+            userDao.insert(userEntity);
+            result.ok(null);
+        }
+        return result;
+    }
 
+    @Override
+    public Result deleteLogic(String[] ids) {
+
+        Result result=new Result();
+        boolean ifOK=true;
+        String msg=new String();
+
+        for(int i=0;i< ids.length;i++)
+        {
+            UserEntity userEntity=userDao.selectById(ids[i]);
+
+            if(userEntity==null)
+            {
+                ifOK&=false;
+                msg+="未找到id为"+ids[i]+"的用户实体\n";
+                continue;
+            }
+
+            userEntity.setIsDeleted("1");
+            userDao.updateById(userEntity);
+
+        }
+
+        if(ifOK) return result.ok(null);
+        else return result.error(msg);
+    }
+
+    @Override
+    public Result updateUser(UserDTO dto) {
+
+        Result result = new Result();
+
+
+        UserEntity userEntity = userDao.selectById(dto.getId());
+
+        if (userEntity == null)
+            return result.error("未找到id为" + dto.getId() + "的用户实体");
+
+        UserEntity userEntity_username= userDao.selectByUsername(dto.getUsername());
+
+        if (userEntity_username != null && !dto.getUsername().equals(userEntity.getUsername()))
+            return result.error("已存在用户名为"+dto.getUsername()+"的用户实体");
+
+        BeanUtils.copyProperties(dto,userEntity);
+
+        userDao.updateById(userEntity);
+
+        return result.ok(null);
+
+    }
+
+    @Override
+    public Result emailLoginValidate(UserEmailDTO userEmailDTO) {
+//       UserEntity user = userDao.selectByEmail(userEmailLoginDTO.getEmail());
+        Result result = new Result();
+        String verifyCode = MailUtils.sendMail(userEmailDTO.getEmail());
+        result.setData(verifyCode);
+        result.setMsg("验证码已发送至指定邮箱，请注意查收！");
         return result;
     }
     @Override

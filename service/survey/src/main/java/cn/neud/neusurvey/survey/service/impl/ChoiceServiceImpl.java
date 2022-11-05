@@ -23,12 +23,13 @@ public class ChoiceServiceImpl extends CrudServiceImpl<ChoiceDao, ChoiceEntity, 
     @Override
     public QueryWrapper<ChoiceEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
+        String orderBy = (String)params.get("orderBy");
 
         QueryWrapper<ChoiceEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.orderBy(StringUtils.isNotBlank(orderBy), true, orderBy);
 
         return wrapper;
     }
-
 
 }

@@ -9,7 +9,7 @@
 package cn.neud.common.aspect;
 
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -41,7 +41,7 @@ public class RedisAspect {
                 result = point.proceed();
             }catch (Exception e){
                 logger.error("redis error", e);
-                throw new RenException(ErrorCode.REDIS_ERROR);
+                throw new NEUException(ErrorCode.REDIS_ERROR);
             }
         }
         return result;

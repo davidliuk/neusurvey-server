@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
@@ -31,7 +32,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/sys/generator")
 public class SysGeneratorController {
-	@Autowired
+	@Resource
 	private SysGeneratorService sysGeneratorService;
 	
 	/**

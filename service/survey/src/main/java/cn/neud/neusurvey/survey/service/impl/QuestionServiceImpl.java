@@ -17,11 +17,13 @@ import cn.neud.neusurvey.survey.service.QuestionService;
 import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,20 +38,21 @@ import java.util.Map;
 @Service
 public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEntity, QuestionDTO> implements QuestionService {
 
-    @Autowired
+    @Resource
     GotoDao gotoDao;
 
-    @Autowired
+    @Resource
     ChoiceDao choiceDao;
 
-    @Autowired
+    @Resource
     QuestionDao questionDao;
 
     public List<QuestionDTO> in(String[] ids) {
         QueryWrapper<QuestionEntity> wrapper = new QueryWrapper<>();
-        wrapper.in("id", ids);
-        List entityList = baseDao.selectList(wrapper);
 
+        wrapper.in(ObjectUtils.isNotEmpty(ids), "id", ids);
+        List<QuestionEntity> entityList = questionDao.selectList(wrapper);
+        System.out.println(entityList);
         return ConvertUtils.sourceToTarget(entityList, currentDtoClass());
     }
 
@@ -60,7 +63,7 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
         String questionType = (String) params.get("questionType");
 
         QueryWrapper<QuestionEntity> wrapper = new QueryWrapper<>();
-        wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.like(StringUtils.isNotBlank(id), "id", id);
         wrapper.like(StringUtils.isNotBlank(stem), "stem", stem);
         wrapper.eq(StringUtils.isNotBlank(questionType), "questionType", questionType);
 

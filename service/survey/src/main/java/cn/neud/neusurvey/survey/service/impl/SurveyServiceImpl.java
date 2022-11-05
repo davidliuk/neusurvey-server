@@ -1,5 +1,6 @@
 package cn.neud.neusurvey.survey.service.impl;
 
+import cn.hutool.core.lang.hash.Hash;
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.survey.QuestionCreateChoiceDTO;
 import cn.neud.neusurvey.dto.survey.QuestionDTO;
@@ -21,12 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * survey
@@ -49,10 +45,10 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
     @Resource
     ChoiceService choiceService;
 
-    @Autowired
+    @Resource
     QuestionDao questionDao;
 
-    @Autowired
+    @Resource
     ChoiceDao choiceDao;
 
     @Override
@@ -65,10 +61,10 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
 
         QueryWrapper<SurveyEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
-        wrapper.like(StringUtils.isNotBlank(name), "name", name);
-        wrapper.like(StringUtils.isNotBlank(description), "description", description);
         wrapper.eq(StringUtils.isNotBlank(managedBy), "managedBy", managedBy);
         wrapper.eq(StringUtils.isNotBlank(typeId), "typeId", typeId);
+        wrapper.like(StringUtils.isNotBlank(name), "name", name);
+        wrapper.like(StringUtils.isNotBlank(description), "description", description);
 
         return wrapper;
     }
@@ -86,6 +82,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         have.setSurveyId(survey.getId());
         GotoEntity goTo = new GotoEntity();
         goTo.setSurveyId(survey.getId());
+//        Set<String> oldQuestion = new HashSet<>(questionService.list());
 
         for (QuestionEntity question : survey.getQuestions()) {
             if (questionService.get(question.getId()) != null) {
@@ -94,12 +91,18 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             questionService.insert(question);
             have.setQuestionId(question.getId());
             have.setNextId(question.getNextId());
-            goTo.setQuestionId(question.getId());
             haveService.insert(have);
-            for (ChoiceEntity choice : question.getChoices()) {
+            List<ChoiceEntity> choices = question.getChoices();
+            for (int i = 0; i < choices.size(); i++) {
+                ChoiceEntity choice = choices.get(i);
+                choice.setBelongTo(question.getId());
+                choice.setChoiceOrder(i);
                 choiceService.insert(choice);
-                goTo.setChoiceId(choice.getId());
-                gotoService.insert(goTo);
+                if (StringUtils.isNotBlank(choice.getGoTo())) {
+                    goTo.setQuestionId(choice.getGoTo());
+                    goTo.setChoiceId(choice.getId());
+                    gotoService.insert(goTo);
+                }
             }
         }
     }
@@ -109,15 +112,19 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         for (String id : ids) {
             SurveyEntity survey = SurveyMapper.INSTANCE.toSurvey(this.get(id));
             this.deleteById(survey.getId());
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("surveyId", survey.getId());
+            haveService.delete(map);
+            gotoService.delete(map);
 
-            for (QuestionEntity question : survey.getQuestions()) {
-                questionService.deleteById(question.getId());
-                haveService.delete(survey.getId(), question.getId());
-                for (ChoiceEntity choice : question.getChoices()) {
-                    choiceService.deleteById(choice.getId());
-                    gotoService.delete(survey.getId(), choice.getId());
-                }
-            }
+//            for (QuestionEntity question : survey.getQuestions()) {
+//                questionService.deleteById(question.getId());
+//                haveService.delete(survey.getId(), question.getId());
+//                for (ChoiceEntity choice : question.getChoices()) {
+//                    choiceService.deleteById(choice.getId());
+//                    gotoService.delete(survey.getId(), choice.getId());
+//                }
+//            }
         }
     }
 
@@ -136,6 +143,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         Map<String, Object> map = new HashMap<>(1);
         map.put("surveyId", id);
         List<HaveDTO> questionList = haveService.list(map);
+        System.out.println(questionList);
         String[] questionIds = new String[questionList.size()];
         Map<String, String> questionsMap = new HashMap<>();
         for (int i = 0; i < questionList.size(); i++) {

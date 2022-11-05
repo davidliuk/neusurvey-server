@@ -32,4 +32,6 @@ public interface CrudService<T, D> extends BaseService<T> {
 
     void delete(String[] ids);
 
+    void delete(Map<String, Object> params);
+
 }

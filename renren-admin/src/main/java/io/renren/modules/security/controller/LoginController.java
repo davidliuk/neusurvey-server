@@ -9,7 +9,7 @@
 package io.renren.modules.security.controller;
 
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import cn.neud.common.utils.IpUtils;
 import cn.neud.common.utils.Result;
 import cn.neud.common.validator.AssertUtils;
@@ -30,7 +30,6 @@ import io.renren.modules.sys.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,13 +49,13 @@ import java.util.Date;
 @RestController
 @Api(tags="登录管理")
 public class LoginController {
-	@Autowired
+	@Resource
 	private SysUserService sysUserService;
-	@Autowired
+	@Resource
 	private SysUserTokenService sysUserTokenService;
-	@Autowired
+	@Resource
 	private CaptchaService captchaService;
-	@Autowired
+	@Resource
 	private SysLogLoginService sysLogLoginService;
 
 	@GetMapping("captcha")
@@ -98,7 +97,7 @@ public class LoginController {
 			log.setCreatorName(login.getUsername());
 			sysLogLoginService.save(log);
 
-			throw new RenException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
+			throw new NEUException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
 		}
 
 		//密码错误
@@ -108,7 +107,7 @@ public class LoginController {
 			log.setCreatorName(user.getUsername());
 			sysLogLoginService.save(log);
 
-			throw new RenException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
+			throw new NEUException(ErrorCode.ACCOUNT_PASSWORD_ERROR);
 		}
 
 		//账号停用
@@ -118,7 +117,7 @@ public class LoginController {
 			log.setCreatorName(user.getUsername());
 			sysLogLoginService.save(log);
 
-			throw new RenException(ErrorCode.ACCOUNT_DISABLE);
+			throw new NEUException(ErrorCode.ACCOUNT_DISABLE);
 		}
 
 		//登录成功

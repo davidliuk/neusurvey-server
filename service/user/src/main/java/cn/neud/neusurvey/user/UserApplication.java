@@ -25,7 +25,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan({"springfox.documentation.schema"})
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "cn.neud.neusurvey")
 @ComponentScan(basePackages = "cn.neud.neusurvey")
 public class UserApplication {
 

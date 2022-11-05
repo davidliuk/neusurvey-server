@@ -10,7 +10,7 @@ package io.renren.modules.sys.service.impl;
 
 import cn.neud.common.constant.Constant;
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import cn.neud.common.service.impl.BaseServiceImpl;
 import cn.neud.common.utils.ConvertUtils;
 import cn.neud.common.utils.TreeUtils;
@@ -23,7 +23,6 @@ import io.renren.modules.sys.entity.SysDeptEntity;
 import io.renren.modules.sys.enums.SuperAdminEnum;
 import io.renren.modules.sys.service.SysDeptService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,7 +31,7 @@ import java.util.*;
 
 @Service
 public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptDao, SysDeptEntity> implements SysDeptService {
-	@Autowired
+	@Resource
 	private SysUserDao sysUserDao;
 
 	@Override
@@ -79,13 +78,13 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptDao, SysDeptEntit
 
 		//上级部门不能为自身
 		if(entity.getId().equals(entity.getPid())){
-			throw new RenException(ErrorCode.SUPERIOR_DEPT_ERROR);
+			throw new NEUException(ErrorCode.SUPERIOR_DEPT_ERROR);
 		}
 
 		//上级部门不能为下级部门
 		List<Long> subDeptList = getSubDeptIdList(entity.getId());
 		if(subDeptList.contains(entity.getPid())){
-			throw new RenException(ErrorCode.SUPERIOR_DEPT_ERROR);
+			throw new NEUException(ErrorCode.SUPERIOR_DEPT_ERROR);
 		}
 
 		entity.setPids(getPidList(entity.getPid()));
@@ -98,13 +97,13 @@ public class SysDeptServiceImpl extends BaseServiceImpl<SysDeptDao, SysDeptEntit
 		//判断是否有子部门
 		List<Long> subList = getSubDeptIdList(id);
 		if(subList.size() > 1){
-			throw new RenException(ErrorCode.DEPT_SUB_DELETE_ERROR);
+			throw new NEUException(ErrorCode.DEPT_SUB_DELETE_ERROR);
 		}
 
 		//判断部门下面是否有用户
 		int count = sysUserDao.getCountByDeptId(id);
 		if(count > 0){
-			throw new RenException(ErrorCode.DEPT_USER_DELETE_ERROR);
+			throw new NEUException(ErrorCode.DEPT_USER_DELETE_ERROR);
 		}
 
 		//删除
