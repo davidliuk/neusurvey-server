@@ -9,7 +9,7 @@
 package cn.neud.neusurvey.oss.cloud;
 
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
@@ -65,10 +65,10 @@ public class QcloudCloudStorageService extends AbstractCloudStorageService {
             
             client.shutdown();
             if(result.getETag() == null){
-                throw new RenException(ErrorCode.OSS_UPLOAD_FILE_ERROR, "");
+                throw new NEUException(ErrorCode.OSS_UPLOAD_FILE_ERROR, "");
             }
         } catch (IOException e) {
-            throw new RenException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
+            throw new NEUException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
         }
 
         return config.getQcloudDomain() + "/" + path;

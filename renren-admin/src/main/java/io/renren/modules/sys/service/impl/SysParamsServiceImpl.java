@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import cn.neud.common.constant.Constant;
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import cn.neud.common.page.PageData;
 import cn.neud.common.service.impl.BaseServiceImpl;
 import cn.neud.common.utils.ConvertUtils;
@@ -23,7 +23,6 @@ import io.renren.modules.sys.entity.SysParamsEntity;
 import io.renren.modules.sys.redis.SysParamsRedis;
 import io.renren.modules.sys.service.SysParamsService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -127,7 +126,7 @@ public class SysParamsServiceImpl extends BaseServiceImpl<SysParamsDao, SysParam
         try {
             return clazz.newInstance();
         } catch (Exception e) {
-            throw new RenException(ErrorCode.PARAMS_GET_ERROR);
+            throw new NEUException(ErrorCode.PARAMS_GET_ERROR);
         }
     }
 

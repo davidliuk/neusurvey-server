@@ -22,12 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * survey
@@ -65,12 +60,11 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         String typeId = (String) params.get("typeId");
 
         QueryWrapper<SurveyEntity> wrapper = new QueryWrapper<>();
-//        wrapper.orderBy()
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
-        wrapper.like(StringUtils.isNotBlank(name), "name", name);
-        wrapper.like(StringUtils.isNotBlank(description), "description", description);
         wrapper.eq(StringUtils.isNotBlank(managedBy), "managedBy", managedBy);
         wrapper.eq(StringUtils.isNotBlank(typeId), "typeId", typeId);
+        wrapper.like(StringUtils.isNotBlank(name), "name", name);
+        wrapper.like(StringUtils.isNotBlank(description), "description", description);
 
         return wrapper;
     }
@@ -88,6 +82,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         have.setSurveyId(survey.getId());
         GotoEntity goTo = new GotoEntity();
         goTo.setSurveyId(survey.getId());
+//        Set<String> oldQuestion = new HashSet<>(questionService.list());
 
         for (QuestionEntity question : survey.getQuestions()) {
             if (questionService.get(question.getId()) != null) {
@@ -103,7 +98,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
                 choice.setBelongTo(question.getId());
                 choice.setChoiceOrder(i);
                 choiceService.insert(choice);
-                if (choice.getGoTo() != null && !choice.getGoTo().equals("")) {
+                if (StringUtils.isNotBlank(choice.getGoTo())) {
                     goTo.setQuestionId(choice.getGoTo());
                     goTo.setChoiceId(choice.getId());
                     gotoService.insert(goTo);

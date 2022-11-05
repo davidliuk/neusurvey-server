@@ -8,7 +8,7 @@
 
 package cn.neud.common.xss;
 
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import cn.neud.common.exception.ErrorCode;
 import org.apache.commons.lang3.StringUtils;
 
@@ -41,7 +41,7 @@ public class SqlFilter {
         //判断是否包含非法字符
         for(String keyword : keywords){
             if(str.indexOf(keyword) != -1){
-                throw new RenException(ErrorCode.INVALID_SYMBOL);
+                throw new NEUException(ErrorCode.INVALID_SYMBOL);
             }
         }
 

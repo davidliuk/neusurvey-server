@@ -9,7 +9,7 @@
 package cn.neud.neusurvey.oss.cloud;
 
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 import com.aliyun.oss.OSSClient;
 
 import java.io.ByteArrayInputStream;
@@ -39,7 +39,7 @@ public class AliyunCloudStorageService extends AbstractCloudStorageService {
             client.putObject(config.getAliyunBucketName(), path, inputStream);
             client.shutdown();
         } catch (Exception e){
-            throw new RenException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
+            throw new NEUException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
         }
 
         return config.getAliyunDomain() + "/" + path;

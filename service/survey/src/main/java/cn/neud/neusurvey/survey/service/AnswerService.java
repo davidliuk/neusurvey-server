@@ -12,4 +12,5 @@ import cn.neud.neusurvey.entity.survey.AnswerEntity;
  */
 public interface AnswerService extends CrudService<AnswerEntity, AnswerDTO> {
 
+    void save(AnswerDTO[] dtos);
 }
