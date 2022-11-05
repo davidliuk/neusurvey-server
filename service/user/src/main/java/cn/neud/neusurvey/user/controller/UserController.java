@@ -10,9 +10,7 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
-import cn.neud.neusurvey.dto.user.UserDTO;
-import cn.neud.neusurvey.dto.user.UserLoginDTO;
-import cn.neud.neusurvey.dto.user.UserRegisterDTO;
+import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.entity.user.UserLoginEntity;
 import cn.neud.neusurvey.user.excel.UserExcel;
 import cn.neud.neusurvey.user.service.UserService;
@@ -137,6 +135,26 @@ public class UserController {
         List<UserDTO> list = userService.list(params);
 
         ExcelUtils.exportExcelToTarget(response, null, list, UserExcel.class);
+    }
+
+    @PostMapping("verificationLogin")
+    @ApiOperation("验证码登录")
+    @LogOperation("验证码登录")
+    @RequiresPermissions("user:user:verificationLogin")
+    public Result verificationLogin(@RequestBody UserVerificationLoginDTO userVerificationLoginDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(userVerificationLoginDTO, AddGroup.class, DefaultGroup.class);
+        return userService.codeLoginValidate(userVerificationLoginDTO);
+    }
+
+    @PostMapping("sendCode")
+    @ApiOperation("发送验证码")
+    @LogOperation("发送验证码")
+    @RequiresPermissions("user:user:sendCode")
+    public Result sendCode(@RequestBody SendCodeDTO sendCodeDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(sendCodeDTO, AddGroup.class, DefaultGroup.class);
+        return userService.sendCode(sendCodeDTO);
     }
 
 }
