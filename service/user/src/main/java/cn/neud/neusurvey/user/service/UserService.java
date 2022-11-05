@@ -5,8 +5,9 @@ import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.entity.user.UserLoginEntity;
 import cn.neud.neusurvey.entity.user.UserEntity;
+import cn.neud.neusurvey.user.controller.UserController;
 
-/**
+/**F
  * user
  *
  * @author David l729641074@163.com
@@ -25,5 +26,5 @@ public interface UserService extends CrudService<UserEntity, UserDTO> {
 
     Result updateUser(UserDTO dto);
 
-    Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO);
+    Result emailLoginValidate(UserEmailDTO userEmailDTO);
 }

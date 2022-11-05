@@ -1,7 +1,7 @@
 package cn.neud.neusurvey.sms.service.impl;
 
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
+import cn.neud.neusurvey.dto.user.UserEmailDTO;
 import cn.neud.neusurvey.sms.service.MailService;
 import cn.neud.neusurvey.sms.utils.MailUtils;
 import org.springframework.stereotype.Service;
