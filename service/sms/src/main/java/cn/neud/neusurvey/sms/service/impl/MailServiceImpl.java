@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 public class MailServiceImpl implements MailService {
 
     @Override
-    public Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO) {
+    public Result emailLoginValidate(UserEmailDTO userEmailDTO) {
 //       UserEntity user = userDao.selectByEmail(userEmailLoginDTO.getEmail());
         Result result = new Result();
-        String verifyCode = MailUtils.sendMail(userEmailLoginDTO.getEmail());
+        String verifyCode = MailUtils.sendMail(userEmailDTO.getEmail());
         result.setData(verifyCode);
         result.setMsg("验证码已发送至指定邮箱，请注意查收！");
         return result;

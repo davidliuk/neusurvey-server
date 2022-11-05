@@ -29,6 +29,20 @@
     <select id="selectByEmail" parameterType="string" resultType="cn.neud.neusurvey.entity.user.UserEntity">
         select * from user where email=#{email};
     </select>
+    <select id="pageGroupUser" parameterType="map" resultType="cn.neud.neusurvey.dto.user.UserDTO">
+        select  *
+        from user where id in
+                        (select u.id
+                         from user u, member m
+                         where u.id = m.user_id and m.group_id = #{group_id})
+        order by  #{orderField}  #{order}
+        limit #{page}, #{size}
+    </select>
+    <select id="countGroupUser" parameterType="string" resultType="integer">
+        select count(*)
+        from member
+        where group_id = #{group_id}
+    </select>
 
 
 </mapper>

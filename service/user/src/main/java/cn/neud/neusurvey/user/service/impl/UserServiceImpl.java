@@ -1,7 +1,7 @@
 package cn.neud.neusurvey.user.service.impl;
 
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
+import cn.neud.neusurvey.dto.user.UserEmailDTO;
 import cn.neud.neusurvey.dto.user.UserLoginDTO;
 import cn.neud.neusurvey.dto.user.UserRegisterDTO;
 import cn.neud.neusurvey.entity.user.UserEntity;
@@ -13,7 +13,6 @@ import cn.neud.neusurvey.user.dao.UserDao;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.user.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.quartz.Calendar;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * user
@@ -154,10 +152,10 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
     }
 
     @Override
-    public Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO) {
+    public Result emailLoginValidate(UserEmailDTO userEmailDTO) {
 //       UserEntity user = userDao.selectByEmail(userEmailLoginDTO.getEmail());
         Result result = new Result();
-        String verifyCode = MailUtils.sendMail(userEmailLoginDTO.getEmail());
+        String verifyCode = MailUtils.sendMail(userEmailDTO.getEmail());
         result.setData(verifyCode);
         result.setMsg("验证码已发送至指定邮箱，请注意查收！");
         return result;

@@ -14,5 +14,22 @@
         <result property="reserved" column="reserved"/>
     </resultMap>
 
+    <select id="selectByGroupId" parameterType="string" resultType="cn.neud.neusurvey.entity.user.MemberEntity">
+        select *
+        from member
+        where group_id = #{group_id}
+    </select>
+
+    <update id="softDeleteByPrimary" parameterType="string" >
+        update member
+        set is_deleted = '1'
+        where user_id = #{user_id}
+          and group_id = #{group_id}
+    </update>
+    <insert id="addGroupUser" parameterType="string">
+        insert member(user_id,group_id)
+        values (#{user_id}, #{group_id})
+    </insert>
+
 
 </mapper>

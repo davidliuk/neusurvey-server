@@ -3,10 +3,9 @@ package cn.neud.neusurvey.user.service;
 import cn.neud.common.service.CrudService;
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.UserDTO;
-import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
+import cn.neud.neusurvey.dto.user.UserEmailDTO;
 import cn.neud.neusurvey.dto.user.UserLoginDTO;
 import cn.neud.neusurvey.dto.user.UserRegisterDTO;
-import cn.neud.neusurvey.entity.user.UserLoginEntity;
 import cn.neud.neusurvey.entity.user.UserEntity;
 
 /**

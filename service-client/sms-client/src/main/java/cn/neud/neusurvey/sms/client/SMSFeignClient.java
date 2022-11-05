@@ -2,7 +2,7 @@ package cn.neud.neusurvey.sms.client;
 
 import cn.neud.common.annotation.LogOperation;
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
+import cn.neud.neusurvey.dto.user.UserEmailDTO;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.cloud.openfeign.FeignClient;
