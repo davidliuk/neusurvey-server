@@ -11,6 +11,7 @@ import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.UserHistoryDTO;
+import cn.neud.neusurvey.dto.user.UserHistoryUpdateDTO;
 import cn.neud.neusurvey.user.excel.UserHistoryExcel;
 import cn.neud.neusurvey.user.service.UserHistoryService;
 import io.swagger.annotations.Api;
@@ -73,23 +74,21 @@ public class UserHistoryController {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
-        userHistoryService.save(dto);
-
-        return new Result();
+        return userHistoryService.saveUserHistory(dto);
     }
 
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
     @RequiresPermissions("user:userhistory:update")
-    public Result update(@RequestBody UserHistoryDTO dto){
+    public Result update(@RequestBody UserHistoryUpdateDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        userHistoryService.update(dto);
-
-        return new Result();
+        return userHistoryService.updateUserHistory(dto);
     }
+
+
 
     @DeleteMapping
     @ApiOperation("删除")
@@ -102,6 +101,18 @@ public class UserHistoryController {
         userHistoryService.delete(ids);
 
         return new Result();
+    }
+
+    @DeleteMapping("logic")
+    @ApiOperation("删除")
+    @LogOperation("删除")
+    @RequiresPermissions("user:userhistory:deleteLogic")
+    public Result deleteLogic(@RequestBody String[] ids){
+        //效验数据
+        AssertUtils.isArrayEmpty(ids, "id");
+
+        return userHistoryService.deleteLogic(ids);
+
     }
 
     @GetMapping("export")

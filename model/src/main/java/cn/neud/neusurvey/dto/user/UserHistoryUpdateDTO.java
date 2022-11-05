@@ -15,8 +15,8 @@ import java.util.Date;
  * @since 1.0.0 2022-10-29
  */
 @Data
-@ApiModel(value = "user_history")
-public class UserHistoryDTO implements Serializable {
+@ApiModel(value = "user_history_update")
+public class UserHistoryUpdateDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "主键id")
@@ -65,7 +65,7 @@ public class UserHistoryDTO implements Serializable {
 	private String managedBy;
 
 	@ApiModelProperty(value = "创建人")
-	private String creator;
+	private String updater;
 
 	@ApiModelProperty(value = "保留项json")
 	private String reserved;
