@@ -8,6 +8,9 @@
 
 package io.renren.modules.oss.cloud;
 
+import cn.neud.common.group.AliyunGroup;
+import cn.neud.common.group.QcloudGroup;
+import cn.neud.common.group.QiniuGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
