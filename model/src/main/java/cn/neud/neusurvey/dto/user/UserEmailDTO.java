@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @ApiModel(value = "user")
-public class UserEmailLoginDTO implements Serializable {
+public class UserEmailDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "邮箱")

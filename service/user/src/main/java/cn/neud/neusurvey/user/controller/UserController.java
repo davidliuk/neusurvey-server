@@ -11,10 +11,9 @@ import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.UserDTO;
-import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
+import cn.neud.neusurvey.dto.user.UserEmailDTO;
 import cn.neud.neusurvey.dto.user.UserLoginDTO;
 import cn.neud.neusurvey.dto.user.UserRegisterDTO;
-import cn.neud.neusurvey.entity.user.UserLoginEntity;
 import cn.neud.neusurvey.sms.client.SMSFeignClient;
 import cn.neud.neusurvey.user.excel.UserExcel;
 import cn.neud.neusurvey.user.service.UserService;
@@ -104,8 +103,8 @@ public class UserController {
     @RequiresPermissions("user:user:login")
     public Result loginByEmail(@RequestBody UserEmailLoginDTO userEmailLoginDTO) {
         //效验数据
-        ValidatorUtils.validateEntity(userEmailLoginDTO, AddGroup.class, DefaultGroup.class);
-        return smsFeignClient.loginByEmail(userEmailLoginDTO);
+        ValidatorUtils.validateEntity(userEmailDTO, AddGroup.class, DefaultGroup.class);
+        return smsFeignClient.loginByEmail(userEmailDTO);
     }
 
 

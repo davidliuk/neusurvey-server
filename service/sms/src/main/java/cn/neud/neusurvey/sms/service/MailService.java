@@ -1,10 +1,10 @@
 package cn.neud.neusurvey.sms.service;
 
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
+import cn.neud.neusurvey.dto.user.UserEmailDTO;
 
 public interface MailService {
 
-    Result emailLoginValidate(UserEmailLoginDTO userEmailLoginDTO);
+    Result emailLoginValidate(UserEmailDTO userEmailDTO);
 
 }
