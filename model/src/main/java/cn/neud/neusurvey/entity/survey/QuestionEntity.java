@@ -63,7 +63,7 @@ public class QuestionEntity {
      * 软删除
      */
     @TableLogic
-	private Integer isDeleted;
+	private Integer isDeleted = 0;
     /**
      * 保留项json
      */
