@@ -23,9 +23,11 @@ public class GotoServiceImpl extends CrudServiceImpl<GotoDao, GotoEntity, GotoDT
     @Override
     public QueryWrapper<GotoEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
+        String surveyId = (String) params.get("surveyId");
 
         QueryWrapper<GotoEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.eq(StringUtils.isNotBlank(surveyId), "survey_id", surveyId);
 
         return wrapper;
     }

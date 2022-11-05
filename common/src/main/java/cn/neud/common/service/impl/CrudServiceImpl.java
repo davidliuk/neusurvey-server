@@ -43,6 +43,11 @@ public abstract class CrudServiceImpl<M extends BaseMapper<T>, T, D> extends Bas
     }
 
     @Override
+    public void delete(Map<String, Object> params) {
+        baseDao.delete(getWrapper(params));
+    }
+
+    @Override
     public List<D> list(Map<String, Object> params) {
         List<T> entityList = baseDao.selectList(getWrapper(params));
 

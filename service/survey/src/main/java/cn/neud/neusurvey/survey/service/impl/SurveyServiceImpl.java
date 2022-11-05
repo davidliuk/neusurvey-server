@@ -1,5 +1,6 @@
 package cn.neud.neusurvey.survey.service.impl;
 
+import cn.hutool.core.lang.hash.Hash;
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.survey.QuestionCreateChoiceDTO;
 import cn.neud.neusurvey.dto.survey.QuestionDTO;
@@ -64,6 +65,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         String typeId = (String) params.get("typeId");
 
         QueryWrapper<SurveyEntity> wrapper = new QueryWrapper<>();
+//        wrapper.orderBy()
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
         wrapper.like(StringUtils.isNotBlank(name), "name", name);
         wrapper.like(StringUtils.isNotBlank(description), "description", description);
@@ -95,7 +97,11 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             have.setQuestionId(question.getId());
             have.setNextId(question.getNextId());
             haveService.insert(have);
-            for (ChoiceEntity choice : question.getChoices()) {
+            List<ChoiceEntity> choices = question.getChoices();
+            for (int i = 0; i < choices.size(); i++) {
+                ChoiceEntity choice = choices.get(i);
+                choice.setBelongTo(question.getId());
+                choice.setChoiceOrder(i);
                 choiceService.insert(choice);
                 if (choice.getGoTo() != null && !choice.getGoTo().equals("")) {
                     goTo.setQuestionId(choice.getGoTo());
@@ -111,15 +117,19 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         for (String id : ids) {
             SurveyEntity survey = SurveyMapper.INSTANCE.toSurvey(this.get(id));
             this.deleteById(survey.getId());
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("surveyId", survey.getId());
+            haveService.delete(map);
+            gotoService.delete(map);
 
-            for (QuestionEntity question : survey.getQuestions()) {
-                questionService.deleteById(question.getId());
-                haveService.delete(survey.getId(), question.getId());
-                for (ChoiceEntity choice : question.getChoices()) {
-                    choiceService.deleteById(choice.getId());
-                    gotoService.delete(survey.getId(), choice.getId());
-                }
-            }
+//            for (QuestionEntity question : survey.getQuestions()) {
+//                questionService.deleteById(question.getId());
+//                haveService.delete(survey.getId(), question.getId());
+//                for (ChoiceEntity choice : question.getChoices()) {
+//                    choiceService.deleteById(choice.getId());
+//                    gotoService.delete(survey.getId(), choice.getId());
+//                }
+//            }
         }
     }
 
@@ -160,7 +170,6 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             question.setNextId(questionsMap.get(question.getId()));
             choiceParams.put("belongTo", question.getId());
             List<ChoiceDTO> choiceList = choiceService.list(choiceParams);
-            System.out.println(choiceList);
             question.setChoices(choiceList);
             for (ChoiceDTO choice: choiceList) {
                 choice.setGoTo(choices.get(choice.getId()));
