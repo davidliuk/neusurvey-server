@@ -116,15 +116,6 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             map.put("surveyId", survey.getId());
             haveService.delete(map);
             gotoService.delete(map);
-
-//            for (QuestionEntity question : survey.getQuestions()) {
-//                questionService.deleteById(question.getId());
-//                haveService.delete(survey.getId(), question.getId());
-//                for (ChoiceEntity choice : question.getChoices()) {
-//                    choiceService.deleteById(choice.getId());
-//                    gotoService.delete(survey.getId(), choice.getId());
-//                }
-//            }
         }
     }
 
@@ -143,7 +134,10 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         Map<String, Object> map = new HashMap<>(1);
         map.put("surveyId", id);
         List<HaveDTO> questionList = haveService.list(map);
-        System.out.println(questionList);
+
+        if (questionList.size() == 0) {
+            return survey;
+        }
         String[] questionIds = new String[questionList.size()];
         Map<String, String> questionsMap = new HashMap<>();
         for (int i = 0; i < questionList.size(); i++) {
@@ -160,6 +154,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             choices.put(gotoDTO.getChoiceId(), gotoDTO.getQuestionId());
         }
 
+        // questions 所有的选项
         Map<String, Object> choiceParams = new HashMap<>(1);
         for (QuestionDTO question : questions) {
             question.setNextId(questionsMap.get(question.getId()));
