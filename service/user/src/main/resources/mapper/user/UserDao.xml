@@ -35,6 +35,7 @@
                         (select u.id
                          from user u, member m
                          where u.id = m.user_id and m.group_id = #{group_id})
+                    and username like '%' #{username} '%'
         order by  #{orderField}  #{order}
         limit #{page}, #{size}
     </select>
@@ -42,6 +43,7 @@
         select count(*)
         from member
         where group_id = #{group_id}
+          and user_id in (select u.id from user u where u.username like '%' #{username} '%')
     </select>
 
 

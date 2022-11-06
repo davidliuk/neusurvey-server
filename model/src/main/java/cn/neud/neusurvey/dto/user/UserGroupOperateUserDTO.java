@@ -11,4 +11,5 @@ public class UserGroupOperateUserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     private String[] user_ids;
     private String group_id;
+    private String creator;
 }

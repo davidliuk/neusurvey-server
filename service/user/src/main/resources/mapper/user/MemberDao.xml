@@ -26,6 +26,7 @@
         where user_id = #{user_id}
           and group_id = #{group_id}
     </update>
+
     <insert id="addGroupUser" parameterType="string">
         insert member(user_id,group_id)
         values (#{user_id}, #{group_id})

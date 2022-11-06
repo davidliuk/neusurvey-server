@@ -118,7 +118,13 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     public int addGroupUser(UserGroupOperateUserDTO dto) {
         String[] user_ids = dto.getUser_ids();
         for (int i = 0; i < user_ids.length; i++) {
-            memberDao.addGroupUser(user_ids[i],dto.getGroup_id());
+            MemberEntity memberEntity = new MemberEntity();
+            memberEntity.setGroupId(dto.getGroup_id());
+            memberEntity.setUserId(user_ids[i]);
+            memberEntity.setCreator(dto.getCreator());
+            memberEntity.setCreateDate(new Date(System.currentTimeMillis()));
+            memberDao.insert(memberEntity);
+//            memberDao.addGroupUser(user_ids[i],dto.getGroup_id());
         }
 
         return 0;
@@ -126,13 +132,15 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
 
     @Override
     public PageData<UserDTO> pageGroupUser(Map<String, Object> params) {
-        System.out.println("body"+params);
+//        System.out.println("body"+params);
         Integer page = (Integer) params.get("page");
         Integer size = (Integer) params.get("size");
+        //page从零开始
         params.put("page",page *size);
         List<UserDTO> list = userDao.pageGroupUser(params);
         String group_id = (String) params.get("group_id");
-        Integer total = userDao.countGroupUser(group_id);
+        String username = (String) params.get("username");
+        Integer total = userDao.countGroupUser(group_id,username);
         PageData<UserDTO> pageData = new PageData<>(list,total);
         return pageData;
     }
