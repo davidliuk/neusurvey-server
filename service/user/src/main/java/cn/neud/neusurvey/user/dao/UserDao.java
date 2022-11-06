@@ -28,5 +28,5 @@ public interface UserDao extends BaseDao<UserEntity> {
 
     List<UserDTO> pageGroupUser(Map<String, Object> params);
 
-    Integer countGroupUser(Object group_id);
+    Integer countGroupUser(String group_id,String username);
 }
