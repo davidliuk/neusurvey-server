@@ -105,14 +105,22 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
 
     @Override
     public int deleteUserByPrimary(UserGroupOperateUserDTO dto) {
-        memberDao.softDeleteByPrimary(dto.getUser_id(),dto.getGroup_id());
+        String[] user_ids = dto.getUser_ids();
+        for (int i = 0; i < user_ids.length; i++) {
+            memberDao.softDeleteByPrimary(user_ids[i],dto.getGroup_id());
+        }
+
 
         return 0;
     }
 
     @Override
     public int addGroupUser(UserGroupOperateUserDTO dto) {
-        memberDao.addGroupUser(dto.getUser_id(),dto.getGroup_id());
+        String[] user_ids = dto.getUser_ids();
+        for (int i = 0; i < user_ids.length; i++) {
+            memberDao.addGroupUser(user_ids[i],dto.getGroup_id());
+        }
+
         return 0;
     }
 
