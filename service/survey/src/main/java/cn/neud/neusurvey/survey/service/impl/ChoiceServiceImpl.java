@@ -24,10 +24,12 @@ public class ChoiceServiceImpl extends CrudServiceImpl<ChoiceDao, ChoiceEntity, 
     public QueryWrapper<ChoiceEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
         String orderBy = (String)params.get("orderBy");
+        String belongTo = (String)params.get("belongTo");
 
         QueryWrapper<ChoiceEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
         wrapper.orderBy(StringUtils.isNotBlank(orderBy), true, orderBy);
+        wrapper.eq(StringUtils.isNotBlank(belongTo), "belong_to", belongTo);
 
         return wrapper;
     }

@@ -18,6 +18,6 @@ public interface SMSFeignClient {
     @ApiOperation("邮箱获取验证码")
     @LogOperation("邮箱获取验证码")
     @RequiresPermissions("user:user:login")
-    public Result loginByEmail(@RequestBody UserEmailLoginDTO userEmailLoginDTO);
+    public Result loginByEmail(@RequestBody UserEmailDTO userEmailDTO);
 
 }

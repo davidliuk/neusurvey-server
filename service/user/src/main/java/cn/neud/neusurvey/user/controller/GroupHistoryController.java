@@ -73,9 +73,7 @@ public class GroupHistoryController {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
-        groupHistoryService.save(dto);
-
-        return new Result();
+        return groupHistoryService.saveGroupHistory(dto);
     }
 
     @PutMapping
@@ -86,9 +84,9 @@ public class GroupHistoryController {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        groupHistoryService.update(dto);
+        return  groupHistoryService.updateGroupHistory(dto);
 
-        return new Result();
+
     }
 
     @DeleteMapping
@@ -102,6 +100,18 @@ public class GroupHistoryController {
         groupHistoryService.delete(ids);
 
         return new Result();
+    }
+
+    @DeleteMapping("logic")
+    @ApiOperation("删除")
+    @LogOperation("删除")
+    @RequiresPermissions("user:grouphistory:deleteLogic")
+    public Result deleteLogic(@RequestBody String[] ids){
+        //效验数据
+        AssertUtils.isArrayEmpty(ids, "id");
+
+        return groupHistoryService.deleteLogic(ids);
+
     }
 
     @GetMapping("export")

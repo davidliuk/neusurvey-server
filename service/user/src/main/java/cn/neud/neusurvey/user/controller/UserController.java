@@ -10,10 +10,7 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
-import cn.neud.neusurvey.dto.user.UserDTO;
-import cn.neud.neusurvey.dto.user.UserEmailDTO;
-import cn.neud.neusurvey.dto.user.UserLoginDTO;
-import cn.neud.neusurvey.dto.user.UserRegisterDTO;
+import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.sms.client.SMSFeignClient;
 import cn.neud.neusurvey.user.excel.UserExcel;
 import cn.neud.neusurvey.user.service.UserService;
@@ -101,7 +98,7 @@ public class UserController {
     @ApiOperation("邮箱登录")
     @LogOperation("邮箱登录")
     @RequiresPermissions("user:user:login")
-    public Result loginByEmail(@RequestBody UserEmailLoginDTO userEmailLoginDTO) {
+    public Result loginByEmail(@RequestBody UserEmailDTO userEmailDTO) {
         //效验数据
         ValidatorUtils.validateEntity(userEmailDTO, AddGroup.class, DefaultGroup.class);
         return smsFeignClient.loginByEmail(userEmailDTO);
@@ -181,4 +178,26 @@ public class UserController {
         ExcelUtils.exportExcelToTarget(response, null, list, UserExcel.class);
     }
 
+    @PostMapping("verificationLogin")
+    @ApiOperation("验证码登录")
+    @LogOperation("验证码登录")
+    @RequiresPermissions("user:user:verificationLogin")
+    public Result verificationLogin(@RequestBody UserVerificationLoginDTO userVerificationLoginDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(userVerificationLoginDTO, AddGroup.class, DefaultGroup.class);
+        return userService.codeLoginValidate(userVerificationLoginDTO);
+    }
+
+    @PostMapping("sendCode")
+    @ApiOperation("发送验证码")
+    @LogOperation("发送验证码")
+    @RequiresPermissions("user:user:sendCode")
+    public Result sendCode(@RequestBody SendCodeDTO sendCodeDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(sendCodeDTO, AddGroup.class, DefaultGroup.class);
+        return userService.sendCode(sendCodeDTO);
+    }
+
+    private class UserEmailLoginDTO {
+    }
 }

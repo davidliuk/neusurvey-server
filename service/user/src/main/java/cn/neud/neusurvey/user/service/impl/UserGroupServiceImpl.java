@@ -121,7 +121,7 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
         System.out.println("body"+params);
         Integer page = (Integer) params.get("page");
         Integer size = (Integer) params.get("size");
-        params.put("page",(page - 1) * size);
+        params.put("page",page *size);
         List<UserDTO> list = userDao.pageGroupUser(params);
         String group_id = (String) params.get("group_id");
         Integer total = userDao.countGroupUser(group_id);

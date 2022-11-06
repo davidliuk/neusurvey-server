@@ -8,7 +8,7 @@
 
 package io.renren.modules.security.oauth2;
 
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 
 import java.security.MessageDigest;
 import java.util.UUID;
@@ -46,7 +46,7 @@ public class TokenGenerator {
             byte[] messageDigest = algorithm.digest();
             return toHexString(messageDigest);
         } catch (Exception e) {
-            throw new RenException("token invalid", e);
+            throw new NEUException("token invalid", e);
         }
     }
 }

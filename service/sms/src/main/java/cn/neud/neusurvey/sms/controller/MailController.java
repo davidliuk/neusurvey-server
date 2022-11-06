@@ -5,7 +5,8 @@ import cn.neud.common.utils.Result;
 import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
-import cn.neud.neusurvey.dto.user.UserEmailLoginDTO;
+import cn.neud.neusurvey.dto.user.UserEmailDTO;
+
 import cn.neud.neusurvey.sms.service.MailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,10 +27,10 @@ public class MailController {
     @ApiOperation("邮箱获取验证码")
     @LogOperation("邮箱获取验证码")
     @RequiresPermissions("user:user:login")
-    public Result loginByEmail(@RequestBody UserEmailLoginDTO userEmailLoginDTO) {
+    public Result loginByEmail(@RequestBody UserEmailDTO userEmailDTO) {
         //效验数据
-        ValidatorUtils.validateEntity(userEmailLoginDTO, AddGroup.class, DefaultGroup.class);
-        return mailService.emailLoginValidate(userEmailLoginDTO);
+        ValidatorUtils.validateEntity(userEmailDTO, AddGroup.class, DefaultGroup.class);
+        return mailService.emailLoginValidate(userEmailDTO);
     }
 
 }

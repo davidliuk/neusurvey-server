@@ -10,7 +10,7 @@ package io.renren.modules.oss.cloud;
 
 import com.aliyun.oss.OSSClient;
 import cn.neud.common.exception.ErrorCode;
-import cn.neud.common.exception.RenException;
+import cn.neud.common.exception.NEUException;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -39,7 +39,7 @@ public class AliyunCloudStorageService extends AbstractCloudStorageService {
             client.putObject(config.getAliyunBucketName(), path, inputStream);
             client.shutdown();
         } catch (Exception e){
-            throw new RenException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
+            throw new NEUException(ErrorCode.OSS_UPLOAD_FILE_ERROR, e, "");
         }
 
         return config.getAliyunDomain() + "/" + path;

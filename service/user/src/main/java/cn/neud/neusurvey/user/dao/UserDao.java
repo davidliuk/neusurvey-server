@@ -21,6 +21,9 @@ public interface UserDao extends BaseDao<UserEntity> {
     @Select("select * from user where username=#{username};")
     UserEntity selectByUsername(String username);
 
+    @Select("select * from user where mobile=#{mobile};")
+    UserEntity selectByMobile(String mobile);
+
     UserEntity selectByEmail(String email);
 
     List<UserDTO> pageGroupUser(Map<String, Object> params);
