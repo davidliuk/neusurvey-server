@@ -7,20 +7,19 @@ import cn.neud.neusurvey.dto.survey.QuestionCreateChoiceDTO;
 import cn.neud.neusurvey.dto.survey.QuestionCreateDTO;
 import cn.neud.neusurvey.entity.survey.ChoiceEntity;
 import cn.neud.neusurvey.entity.survey.GotoEntity;
-import cn.neud.neusurvey.entity.survey.HaveEntity;
-import cn.neud.neusurvey.survey.dao.ChoiceDao;
-import cn.neud.neusurvey.survey.dao.GotoDao;
-import cn.neud.neusurvey.survey.dao.QuestionDao;
+import cn.neud.neusurvey.entity.survey.QuestionInfoEntity;
+import cn.neud.neusurvey.entity.survey.questionInfoListItem.ChoiceContent_ChoiceItem;
+import cn.neud.neusurvey.entity.survey.questionInfoListItem.SurveyChoice_GotoItem;
+import cn.neud.neusurvey.entity.survey.questionInfoListItem.SurveyNext_HaveItem;
+import cn.neud.neusurvey.entity.survey.questionInfoListItem.SurveyUserContent_AnswerItem;
+import cn.neud.neusurvey.survey.dao.*;
 import cn.neud.neusurvey.dto.survey.QuestionDTO;
 import cn.neud.neusurvey.entity.survey.QuestionEntity;
 import cn.neud.neusurvey.survey.service.QuestionService;
-import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.ss.formula.functions.T;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -46,6 +45,12 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
 
     @Resource
     QuestionDao questionDao;
+
+    @Resource
+    HaveDao haveDao;
+
+    @Resource
+    AnswerDao answerDao;
 
     public List<QuestionDTO> in(String[] ids) {
         QueryWrapper<QuestionEntity> wrapper = new QueryWrapper<>();
@@ -171,6 +176,42 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
 
         if (ifOK) return result.ok(null);
         else return result.error(msg + "其余实体均操作完毕");
+    }
+
+    @Override
+    public Result getQuestion(String[] ids) {
+        Result<List<QuestionInfoEntity>> result=new Result();
+        List<QuestionInfoEntity> resEntities=new ArrayList<>();
+
+        for(int i=0;i< ids.length;i++)
+        {
+            QuestionInfoEntity tempEntity=new QuestionInfoEntity();
+
+            QuestionEntity questionEntity=questionDao.selectById(ids[i]);
+            if(questionEntity==null)
+                return result.error("找不到id为"+ids[i]+"的问题");
+            tempEntity.setId(ids[i]);
+            tempEntity.setStem(questionEntity.getStem());
+            tempEntity.setQuestionType(questionEntity.getQuestionType());
+            tempEntity.setNote(questionEntity.getNote());
+            tempEntity.setReserved(questionEntity.getReserved());
+
+            List<SurveyNext_HaveItem> haveItems=haveDao.getSurveyNextByQuestionId(ids[i]);
+            tempEntity.setHaveItems(haveItems);
+
+            List<SurveyChoice_GotoItem> gotoItems=gotoDao.getSurveyChoiceByQuestionId(ids[i]);
+            tempEntity.setGotoItems(gotoItems);
+
+            List<ChoiceContent_ChoiceItem> choiceItems=choiceDao.getChoiceContentByQuestionId(ids[i]);
+            tempEntity.setChoiceItems(choiceItems);
+
+            List<SurveyUserContent_AnswerItem> answerItems=answerDao.getSurveyUserContentByQuestionId(ids[i]);
+            tempEntity.setAnswerItems(answerItems);
+
+            resEntities.add(tempEntity);
+        }
+
+        return result.ok(resEntities);
     }
 
 //    @Override
