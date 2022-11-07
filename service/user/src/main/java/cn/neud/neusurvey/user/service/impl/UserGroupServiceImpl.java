@@ -144,4 +144,13 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
         PageData<UserDTO> pageData = new PageData<>(list,total);
         return pageData;
     }
+
+    @Override
+    public int countGroup(String id) {
+        List<MemberEntity> memberEntityList = memberDao.selectByGroupId(id);
+        Integer total = memberEntityList.size();
+        
+
+        return 0;
+    }
 }

@@ -170,6 +170,22 @@ public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestBody Map<Strin
     return new Result<PageData<UserDTO>>().ok(page);
 }
 
+
+//统计群组
+//    新增群组下的用户
+@GetMapping("/countGroup{id}")
+@ApiOperation("统计群组")
+@LogOperation("统计群组")
+@RequiresPermissions("user:usergroup:save")
+public Result countGroup(@PathVariable("id") String id){
+    //效验数据
+    ValidatorUtils.validateEntity(id, AddGroup.class, DefaultGroup.class);
+    Result result = new Result();
+    int result_code = userGroupService.countGroup(id);
+    result.setMsg("好耶");
+    return result;
+}
+
     @GetMapping("export")
     @ApiOperation("导出")
     @LogOperation("导出")
