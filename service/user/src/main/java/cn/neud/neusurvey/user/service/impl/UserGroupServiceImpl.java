@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.neud.common.page.PageData;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
+import cn.neud.neusurvey.entity.statistics.StatisticChartEntity;
 import cn.neud.neusurvey.entity.user.GroupHistoryEntity;
 import cn.neud.neusurvey.entity.user.MemberEntity;
 import cn.neud.neusurvey.entity.user.UserGroupEntity;
@@ -148,8 +149,11 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     @Override
     public int countGroup(String id) {
         List<MemberEntity> memberEntityList = memberDao.selectByGroupId(id);
-        Integer total = memberEntityList.size();
-        
+        String total = String.valueOf(memberEntityList.size());
+        String online = "99";
+        StatisticChartEntity heatmap = new StatisticChartEntity();
+        StatisticChartEntity graphs = new StatisticChartEntity();
+
 
         return 0;
     }
