@@ -107,6 +107,7 @@ public class QuestionController {
 
 //        return questionService.deleteQuestion(ids);
         questionService.delete(ids);
+
         return new Result();
     }
 
@@ -157,4 +158,20 @@ public class QuestionController {
 
     }
 
+    /*
+    创建人:雷世鹏
+    功能:得到问题所有信息
+    */
+    @PostMapping("getQuestions")
+    @ApiOperation("获取问题所有信息")
+    @LogOperation("获取问题所有信息")
+    @RequiresPermissions("survey:question:getQuestion")
+    public Result updateQuestion(@RequestBody String[] ids){
+        //效验数据
+        AssertUtils.isArrayEmpty(ids, "id");
+
+        //注意:这里只传了goto,因此跳转只局限于问卷内部,且choice的ID在全集唯一,因此一定能找到
+        return questionService.getQuestion(ids);
+
+    }
 }
