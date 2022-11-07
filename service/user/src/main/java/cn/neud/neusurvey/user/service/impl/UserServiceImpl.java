@@ -1,5 +1,6 @@
 package cn.neud.neusurvey.user.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.entity.user.UserEntity;
@@ -35,12 +36,13 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
     @Resource
     private UserDao userDao;
     public String Code;
+
     @Override
-    public QueryWrapper<UserEntity> getWrapper(Map<String, Object> params){
-        String id = (String)params.get("id");
-        String role = (String)params.get("role");
-        String username = (String)params.get("username");
-        String nickname = (String)params.get("nickname");
+    public QueryWrapper<UserEntity> getWrapper(Map<String, Object> params) {
+        String id = (String) params.get("id");
+        String role = (String) params.get("role");
+        String username = (String) params.get("username");
+        String nickname = (String) params.get("nickname");
 
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
         wrapper.like(StringUtils.isNotBlank(id), "id", id);
@@ -63,6 +65,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
             if (ifPasswordCorrect) {
                 result.ok(null);
+                StpUtil.login(user.getId());
             } else {
                 result.error("密码错误");
             }
@@ -76,20 +79,17 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
     @Override
     public Result register(UserRegisterDTO userRegisterDTO) {
 
-        Result result=new Result();
+        Result result = new Result();
 
         //用户名重复性检查
-        UserEntity user=userDao.selectByUsername(userRegisterDTO.getUsername());
-        if(user!=null)
-        {
+        UserEntity user = userDao.selectByUsername(userRegisterDTO.getUsername());
+        if (user != null) {
             result.error("该用户已存在");
-        }
-        else
-        {
-            UserEntity userEntity=new UserEntity();
-            BeanUtils.copyProperties(userRegisterDTO,userEntity);
+        } else {
+            UserEntity userEntity = new UserEntity();
+            BeanUtils.copyProperties(userRegisterDTO, userEntity);
 
-            String userId= UuidUtils.generateUuid();
+            String userId = UuidUtils.generateUuid();
             userEntity.setId(userId);
             userEntity.setCreator(userId);
             userEntity.setUpdater(userId);
@@ -106,18 +106,16 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
     @Override
     public Result deleteLogic(String[] ids) {
 
-        Result result=new Result();
-        boolean ifOK=true;
-        String msg=new String();
+        Result result = new Result();
+        boolean ifOK = true;
+        String msg = new String();
 
-        for(int i=0;i< ids.length;i++)
-        {
-            UserEntity userEntity=userDao.selectById(ids[i]);
+        for (int i = 0; i < ids.length; i++) {
+            UserEntity userEntity = userDao.selectById(ids[i]);
 
-            if(userEntity==null)
-            {
-                ifOK&=false;
-                msg+="未找到id为"+ids[i]+"的用户实体\n";
+            if (userEntity == null) {
+                ifOK &= false;
+                msg += "未找到id为" + ids[i] + "的用户实体\n";
                 continue;
             }
 
@@ -126,7 +124,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
         }
 
-        if(ifOK) return result.ok(null);
+        if (ifOK) return result.ok(null);
         else return result.error(msg);
     }
 
@@ -141,12 +139,12 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         if (userEntity == null)
             return result.error("未找到id为" + dto.getId() + "的用户实体");
 
-        UserEntity userEntity_username= userDao.selectByUsername(dto.getUsername());
+        UserEntity userEntity_username = userDao.selectByUsername(dto.getUsername());
 
         if (userEntity_username != null && !dto.getUsername().equals(userEntity.getUsername()))
-            return result.error("已存在用户名为"+dto.getUsername()+"的用户实体");
+            return result.error("已存在用户名为" + dto.getUsername() + "的用户实体");
 
-        BeanUtils.copyProperties(dto,userEntity);
+        BeanUtils.copyProperties(dto, userEntity);
 
         userDao.updateById(userEntity);
 
@@ -163,6 +161,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         result.setMsg("验证码已发送至指定邮箱，请注意查收！");
         return result;
     }
+
     @Override
     public Result codeLoginValidate(UserVerificationLoginDTO userVerificationLoginDTO) {
 
@@ -176,18 +175,16 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
         boolean ifHaveUser = user != null;
 
-        if (ifHaveUser == false){
+        if (ifHaveUser == false) {
             result.error("此号码未注册");
-        }
-        else {
+        } else {
             // 判断输入的验证码是否正确
-            boolean ifVerificationCorrect ;
-            System.out.println("给我的"+inputVerifationCode);
-            System.out.println("拥有的"+Code);
-            if (inputVerifationCode.equals(Code)){
+            boolean ifVerificationCorrect;
+            System.out.println("给我的" + inputVerifationCode);
+            System.out.println("拥有的" + Code);
+            if (inputVerifationCode.equals(Code)) {
                 ifVerificationCorrect = true;
-            }
-            else {
+            } else {
                 ifVerificationCorrect = false;
             }
 
@@ -214,9 +211,9 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         UserEntity user = userDao.selectByMobile(inputPhone);
         boolean ifHaveUser = user != null;
 
-        if (ifHaveUser == false){
+        if (ifHaveUser == false) {
             result.error("此号码未注册");
-        }else {
+        } else {
             // 根据手机号发送验证码
             send(inputPhone);
             boolean ifSendCodeCorrect = true;
@@ -231,7 +228,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         return result;
     }
 
-    public void send(String mobile){
+    public void send(String mobile) {
 
 //        Random r = new Random( System.currentTimeMillis() );
 //
@@ -246,10 +243,10 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
         querys.put("mobile", mobile);
-        Random r = new Random( System.currentTimeMillis() );
+        Random r = new Random(System.currentTimeMillis());
         int a = 10000 + r.nextInt(20000);
         Code = String.valueOf(a);
-        querys.put("param", "**code**:"+Code+",**minute**:5");
+        querys.put("param", "**code**:" + Code + ",**minute**:5");
         querys.put("smsSignId", "2e65b1bb3d054466b82f0c9d125465e2");
         querys.put("templateId", "908e94ccf08b4476ba6c876d13f084ad");
         Map<String, String> bodys = new HashMap<String, String>();
@@ -273,6 +270,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
         String host = "https://gyytz.market.alicloudapi.com";
         String path = "/sms/smsSend";
@@ -283,10 +281,10 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         headers.put("Authorization", "APPCODE " + appcode);
         Map<String, String> querys = new HashMap<String, String>();
         querys.put("mobile", "18866106307");
-        Random r = new Random( System.currentTimeMillis() );
+        Random r = new Random(System.currentTimeMillis());
         int a = 10000 + r.nextInt(20000);
         String Code = String.valueOf(a);
-        querys.put("param", "**code**:"+Code+",**minute**:5");
+        querys.put("param", "**code**:" + Code + ",**minute**:5");
         querys.put("smsSignId", "2e65b1bb3d054466b82f0c9d125465e2");
         querys.put("templateId", "908e94ccf08b4476ba6c876d13f084ad");
         Map<String, String> bodys = new HashMap<String, String>();

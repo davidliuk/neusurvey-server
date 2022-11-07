@@ -36,7 +36,6 @@
     </properties>
 
     <dependencies>
-
         <dependency>
             <groupId>cn.neud</groupId>
             <artifactId>common</artifactId>
@@ -58,6 +57,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- Sa-Token 权限认证，在线文档：https://sa-token.cc -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot-starter</artifactId>
+            <version>1.32.0</version>
         </dependency>
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
