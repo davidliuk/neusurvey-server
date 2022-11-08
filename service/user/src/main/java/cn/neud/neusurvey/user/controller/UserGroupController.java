@@ -71,10 +71,11 @@ public class UserGroupController {
 //        PageData<UserGroupDTO> page = userGroupService.pageAnswerUser(params);
 //        return new Result<PageData<UserGroupDTO>>().ok(page);
 //    }
-    @GetMapping("{id}")
+    @GetMapping("/getGroupInfo")
     @ApiOperation("信息")
     @RequiresPermissions("user:usergroup:info")
-    public Result<UserGroupDTO> get(@PathVariable("id") String id){
+    public Result<UserGroupDTO> get(@ApiIgnore @RequestParam String id){
+ 
         UserGroupDTO data = userGroupService.get(id);
 
         return new Result<UserGroupDTO>().ok(data);
