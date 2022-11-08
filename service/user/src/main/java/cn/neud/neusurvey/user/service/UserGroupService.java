@@ -5,7 +5,6 @@ import cn.neud.common.service.CrudService;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
-import cn.neud.neusurvey.dto.user.UserGroupPageUserDTO;
 import cn.neud.neusurvey.entity.user.UserGroupEntity;
 
 import java.util.Map;
@@ -30,5 +29,7 @@ public interface UserGroupService extends CrudService<UserGroupEntity, UserGroup
 
     PageData<UserDTO> pageGroupUser(Map<String, Object> params);
 
-    int countGroup(String id);
+    int StatisticGroup(String id);
+
+    PageData<UserGroupDTO> pageAnswerUser(Map<String, Object> params);
 }

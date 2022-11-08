@@ -6,7 +6,6 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@TableName("statistic")
 public class StatisticChartEntity {
     /**
      * 数量

@@ -13,7 +13,6 @@ import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
-import cn.neud.neusurvey.dto.user.UserGroupPageUserDTO;
 import cn.neud.neusurvey.user.excel.UserGroupExcel;
 import cn.neud.neusurvey.user.service.UserGroupService;
 import io.swagger.annotations.Api;
@@ -21,7 +20,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -58,7 +56,21 @@ public class UserGroupController {
 
         return new Result<PageData<UserGroupDTO>>().ok(page);
     }
+//    pageAnswerUser
 
+    @GetMapping("pageAnswerUser")
+    @ApiOperation("分页")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
+            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
+            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
+            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
+    })
+    @RequiresPermissions("user:usergroup:page")
+    public Result<PageData<UserGroupDTO>> pageAnswerUser(@ApiIgnore @RequestParam Map<String, Object> params){
+        PageData<UserGroupDTO> page = userGroupService.pageAnswerUser(params);
+        return new Result<PageData<UserGroupDTO>>().ok(page);
+    }
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:usergroup:info")
@@ -173,15 +185,15 @@ public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestBody Map<Strin
 
 //统计群组
 //    新增群组下的用户
-@GetMapping("/countGroup{id}")
+@GetMapping("/StatisticGroup{id}")
 @ApiOperation("统计群组")
 @LogOperation("统计群组")
 @RequiresPermissions("user:usergroup:save")
-public Result countGroup(@PathVariable("id") String id){
+public Result StatisticGroup(@PathVariable("id") String id){
     //效验数据
     ValidatorUtils.validateEntity(id, AddGroup.class, DefaultGroup.class);
     Result result = new Result();
-    int result_code = userGroupService.countGroup(id);
+    int result_code = userGroupService.StatisticGroup(id);
     result.setMsg("好耶");
     return result;
 }

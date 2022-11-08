@@ -2,9 +2,11 @@ package cn.neud.neusurvey.user.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.neud.common.page.PageData;
+import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
 import cn.neud.neusurvey.entity.statistics.StatisticChartEntity;
+import cn.neud.neusurvey.entity.statistics.StatisticUserEntity;
 import cn.neud.neusurvey.entity.user.GroupHistoryEntity;
 import cn.neud.neusurvey.entity.user.MemberEntity;
 import cn.neud.neusurvey.entity.user.UserGroupEntity;
@@ -147,14 +149,32 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     }
 
     @Override
-    public int countGroup(String id) {
+    public int StatisticGroup(String id) {
         List<MemberEntity> memberEntityList = memberDao.selectByGroupId(id);
         String total = String.valueOf(memberEntityList.size());
         String online = "99";
         StatisticChartEntity heatmap = new StatisticChartEntity();
         StatisticChartEntity graphs = new StatisticChartEntity();
-
+        StatisticUserEntity users = new StatisticUserEntity();
+        heatmap.setList(userDao.statisticHeatmap(id));
 
         return 0;
+    }
+
+    @Override
+    public PageData<UserGroupDTO> pageAnswerUser(Map<String, Object> params) {
+        System.out.println(params);
+        Integer page = Integer.parseInt(String.valueOf(params.get("page")));
+        Integer size = Integer.parseInt(String.valueOf(params.get("size")));
+        //page从零开始
+        params.put("page",page * size);
+        params.put("size",size);
+        params.put("username","");
+        List<UserDTO> list = userDao.pageAnswerUser(params);
+
+//        String username = (String) params.get("username");
+        Integer total = userDao.countAnswerUser();
+        PageData pageData = new PageData<>(list,total);
+        return pageData;
     }
 }

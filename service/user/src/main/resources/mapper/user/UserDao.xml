@@ -39,11 +39,30 @@
         order by  #{orderField}  #{order}
         limit #{page}, #{size}
     </select>
+    <select id="pageAnswerUser" parameterType="map" resultType="cn.neud.neusurvey.dto.user.UserDTO">
+        select  *
+        from user where role = 3
+                    and username like '%' #{username} '%'
+        order by  id  asc
+        limit #{page}, #{size}
+    </select>
+    <select id="countAnswerUser" resultType="integer">
+        select  count(*)
+        from user where role = 3
+    </select>
+
     <select id="countGroupUser" parameterType="string" resultType="integer">
         select count(*)
         from member
         where group_id = #{group_id}
           and user_id in (select u.id from user u where u.username like '%' #{username} '%')
+    </select>
+
+    <select id="statisticHeatmap" parameterType="string" resultType="cn.neud.neusurvey.entity.statistics.StatisticItemEntity">
+        select city as name, count(*) as value,  count(*)  as percentage
+        from user
+        where id in (select user_id from member where group_id = #{group_id} and member.is_deleted != '1')
+        group by city
     </select>
 
 

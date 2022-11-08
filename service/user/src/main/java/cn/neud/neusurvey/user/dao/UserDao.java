@@ -2,6 +2,7 @@ package cn.neud.neusurvey.user.dao;
 
 import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.dto.user.UserDTO;
+import cn.neud.neusurvey.entity.statistics.StatisticItemEntity;
 import cn.neud.neusurvey.entity.user.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -29,4 +30,10 @@ public interface UserDao extends BaseDao<UserEntity> {
     List<UserDTO> pageGroupUser(Map<String, Object> params);
 
     Integer countGroupUser(String group_id,String username);
+
+    List<StatisticItemEntity> statisticHeatmap(String group_id);
+
+    List<UserDTO> pageAnswerUser(Map<String, Object> params);
+
+    Integer countAnswerUser();
 }
