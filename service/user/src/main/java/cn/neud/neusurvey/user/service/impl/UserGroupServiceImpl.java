@@ -149,17 +149,11 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     }
 
     @Override
-    public int StatisticGroup(String id) {
-        List<MemberEntity> memberEntityList = memberDao.selectByGroupId(id);
-        String total = String.valueOf(memberEntityList.size());
-        String online = "99";
-        StatisticChartEntity heatmap = new StatisticChartEntity();
-        StatisticChartEntity graphs = new StatisticChartEntity();
-        StatisticUserEntity users = new StatisticUserEntity();
-        heatmap.setList(userDao.statisticHeatmap(id));
-
+    public int countGroup(String id) {
         return 0;
     }
+
+
 
     @Override
     public Result addGroup(UserGroupDTO dto) {

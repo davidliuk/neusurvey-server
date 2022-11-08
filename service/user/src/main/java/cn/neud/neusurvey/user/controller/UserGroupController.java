@@ -58,19 +58,19 @@ public class UserGroupController {
     }
 //    pageAnswerUser
 
-    @GetMapping("pageAnswerUser")
-    @ApiOperation("分页")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
-    })
-    @RequiresPermissions("user:usergroup:page")
-    public Result<PageData<UserGroupDTO>> pageAnswerUser(@ApiIgnore @RequestParam Map<String, Object> params){
-        PageData<UserGroupDTO> page = userGroupService.pageAnswerUser(params);
-        return new Result<PageData<UserGroupDTO>>().ok(page);
-    }
+//    @GetMapping("pageAnswerUser")
+//    @ApiOperation("分页")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
+//            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
+//            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
+//            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
+//    })
+//    @RequiresPermissions("user:usergroup:page")
+//    public Result<PageData<UserGroupDTO>> pageAnswerUser(@ApiIgnore @RequestParam Map<String, Object> params){
+//        PageData<UserGroupDTO> page = userGroupService.pageAnswerUser(params);
+//        return new Result<PageData<UserGroupDTO>>().ok(page);
+//    }
     @GetMapping("{id}")
     @ApiOperation("信息")
     @RequiresPermissions("user:usergroup:info")
@@ -197,20 +197,20 @@ public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestBody Map<Strin
 }
 
 
-//统计群组
-//    新增群组下的用户
-@GetMapping("/StatisticGroup{id}")
-@ApiOperation("统计群组")
-@LogOperation("统计群组")
-@RequiresPermissions("user:usergroup:save")
-public Result StatisticGroup(@PathVariable("id") String id){
-    //效验数据
-    ValidatorUtils.validateEntity(id, AddGroup.class, DefaultGroup.class);
-    Result result = new Result();
-    int result_code = userGroupService.StatisticGroup(id);
-    result.setMsg("好耶");
-    return result;
-}
+////统计群组
+////    新增群组下的用户
+//@GetMapping("/StatisticGroup{id}")
+//@ApiOperation("统计群组")
+//@LogOperation("统计群组")
+//@RequiresPermissions("user:usergroup:save")
+//public Result StatisticGroup(@PathVariable("id") String id){
+//    //效验数据
+//    ValidatorUtils.validateEntity(id, AddGroup.class, DefaultGroup.class);
+//    Result result = new Result();
+//    int result_code = userGroupService.StatisticGroup(id);
+//    result.setMsg("好耶");
+//    return result;
+//}
 
     @GetMapping("export")
     @ApiOperation("导出")
