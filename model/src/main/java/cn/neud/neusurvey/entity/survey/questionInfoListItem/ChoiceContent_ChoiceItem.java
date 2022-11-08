@@ -16,4 +16,10 @@ public class ChoiceContent_ChoiceItem {
      */
     private String content;
 
+    /*
+    跳转到了哪一题
+     */
+    private String goTo;
+
+
 }

@@ -162,19 +162,49 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     }
 
     @Override
-    public PageData<UserGroupDTO> pageAnswerUser(Map<String, Object> params) {
-        System.out.println(params);
-        Integer page = Integer.parseInt(String.valueOf(params.get("page")));
-        Integer size = Integer.parseInt(String.valueOf(params.get("size")));
-        //page从零开始
-        params.put("page",page * size);
-        params.put("size",size);
-        params.put("username","");
-        List<UserDTO> list = userDao.pageAnswerUser(params);
+    public Result addGroup(UserGroupDTO dto) {
 
-//        String username = (String) params.get("username");
-        Integer total = userDao.countAnswerUser();
-        PageData pageData = new PageData<>(list,total);
-        return pageData;
+        Result result=new Result();
+
+        if(userGroupDao.selectById(dto.getId())!=null)
+            return result.error("该id的群组已存在");
+
+        //创建群组
+        UserGroupEntity userGroupEntity=new UserGroupEntity();
+        userGroupEntity.setId(dto.getId());
+        userGroupEntity.setGroupname(dto.getGroupname());
+        userGroupEntity.setDescription(dto.getDescription());
+        userGroupEntity.setAvatar(dto.getAvatar());
+        userGroupEntity.setCreator(dto.getCreator());
+        userGroupEntity.setCreateDate(new Date((System.currentTimeMillis())));
+        userGroupEntity.setUpdater(dto.getCreator());
+        userGroupEntity.setUpdateDate(new Date((System.currentTimeMillis())));
+        userGroupEntity.setIsDeleted("0");
+        userGroupDao.insert(userGroupEntity);
+
+
+        //创建归属关系
+        String[] ids=dto.getUserIds();
+        for(int i=0;i< ids.length;i++)
+        {
+            QueryWrapper<MemberEntity> tempQ=new QueryWrapper<MemberEntity>()
+                    .eq("user_id",ids[i])
+                    .eq("group_id",userGroupEntity.getId());
+            if(memberDao.exists(tempQ))
+                return result.error("该群组下已经存在id为"+ids[i]+"的答者");
+
+            MemberEntity memberEntity=new MemberEntity();
+            memberEntity.setUserId(ids[i]);
+            memberEntity.setGroupId(userGroupEntity.getId());
+            memberEntity.setCreator(userGroupEntity.getCreator());
+            memberEntity.setCreateDate(new Date((System.currentTimeMillis())));
+            memberEntity.setUpdater(userGroupEntity.getCreator());
+            memberEntity.setUpdateDate(new Date((System.currentTimeMillis())));
+            memberEntity.setIsDeleted("0");
+            memberDao.insert(memberEntity);
+        }
+
+
+        return result.ok(null);
     }
 }

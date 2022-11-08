@@ -52,7 +52,7 @@ public class QuestionInfoEntity {
 
     /**
      * choice表中的信息, 以belong_to搜索
-     * 表示该问题有啥选项
+     * 表示该问题有啥选项, 它们都跳转到了哪里去
      */
     private List<ChoiceContent_ChoiceItem> choiceItems;
 

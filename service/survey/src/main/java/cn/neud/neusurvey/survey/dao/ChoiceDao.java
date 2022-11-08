@@ -17,6 +17,6 @@ import java.util.List;
 @Mapper
 public interface ChoiceDao extends BaseDao<ChoiceEntity> {
 
-    @Select("select id,content from choice where belong_to=#{id}")
+    @Select("select id,content,question_id as go_to from choice left join goto on id=choice_id where belong_to=#{id}")
     List<ChoiceContent_ChoiceItem> getChoiceContentByQuestionId(String id);
 }

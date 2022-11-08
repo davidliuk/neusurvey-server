@@ -2,6 +2,7 @@ package cn.neud.neusurvey.user.service;
 
 import cn.neud.common.page.PageData;
 import cn.neud.common.service.CrudService;
+import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
@@ -29,7 +30,8 @@ public interface UserGroupService extends CrudService<UserGroupEntity, UserGroup
 
     PageData<UserDTO> pageGroupUser(Map<String, Object> params);
 
-    int StatisticGroup(String id);
+    int countGroup(String id);
 
-    PageData<UserGroupDTO> pageAnswerUser(Map<String, Object> params);
+    Result addGroup(UserGroupDTO dto);
+
 }
