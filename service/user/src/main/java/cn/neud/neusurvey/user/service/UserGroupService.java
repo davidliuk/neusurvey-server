@@ -29,4 +29,6 @@ public interface UserGroupService extends CrudService<UserGroupEntity, UserGroup
     int addGroupUser(UserGroupOperateUserDTO dto);
 
     PageData<UserDTO> pageGroupUser(Map<String, Object> params);
+
+    int countGroup(String id);
 }

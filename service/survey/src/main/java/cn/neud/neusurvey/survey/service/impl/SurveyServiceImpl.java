@@ -138,13 +138,26 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         if (questionList.size() == 0) {
             return survey;
         }
+        Set<String> allQuestion = new HashSet<>();
+        Set<String> otherQuestion = new HashSet<>();
         String[] questionIds = new String[questionList.size()];
         Map<String, String> questionsMap = new HashMap<>();
         for (int i = 0; i < questionList.size(); i++) {
             questionIds[i] = questionList.get(i).getQuestionId();
+            allQuestion.add(questionIds[i]);
+            otherQuestion.add(questionList.get(i).getNextId());
             questionsMap.put(questionList.get(i).getQuestionId(), questionList.get(i).getNextId());
         }
+        allQuestion.removeAll(otherQuestion);
+        String rootId = (String) allQuestion.toArray()[0];
         List<QuestionDTO> questions = questionService.in(questionIds);
+        for (int i = 0; i < questions.size(); i++) {
+            if (questions.get(i).getId().equals(rootId)) {
+                QuestionDTO root = questions.get(i);
+                questions.set(i, questions.get(0));
+                questions.set(0, root);
+            }
+        }
         survey.setQuestions(questions);
 
         // survey 中所有选项跳转信息
@@ -161,7 +174,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             choiceParams.put("belongTo", question.getId());
             List<ChoiceDTO> choiceList = choiceService.list(choiceParams);
             question.setChoices(choiceList);
-            for (ChoiceDTO choice: choiceList) {
+            for (ChoiceDTO choice : choiceList) {
                 choice.setGoTo(choices.get(choice.getId()));
             }
         }
