@@ -67,19 +67,19 @@ public class UserGroupController {
 
         return new Result<UserGroupDTO>().ok(data);
     }
-
-    @PostMapping
-    @ApiOperation("保存")
-    @LogOperation("保存")
-    @RequiresPermissions("user:usergroup:save")
-    public Result save(@RequestBody UserGroupDTO dto){
-        //效验数据
-        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-
-        userGroupService.save(dto);
-
-        return new Result();
-    }
+// 雷世鹏: 下面已经有这个的接口了
+//    @PostMapping
+//    @ApiOperation("保存")
+//    @LogOperation("保存")
+//    @RequiresPermissions("user:usergroup:save")
+//    public Result save(@RequestBody UserGroupDTO dto){
+//        //效验数据
+//        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+//
+//        userGroupService.save(dto);
+//
+//        return new Result();
+//    }
 
     @PutMapping
     @ApiOperation("修改")
@@ -153,6 +153,20 @@ public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto){
     result.setMsg("好耶");
     return result;
 }
+
+
+    //雷世鹏:  新增群组
+    @PostMapping()
+    @ApiOperation("保存")
+    @LogOperation("保存")
+    @RequiresPermissions("user:usergroup:addGroup")
+    public Result addGroup(@RequestBody UserGroupDTO dto){
+        //效验数据
+        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+
+        return userGroupService.addGroup(dto);
+    }
+
 //    查找群组下的用户
 @GetMapping("pageGroupUser")
 @ApiOperation("分页")
