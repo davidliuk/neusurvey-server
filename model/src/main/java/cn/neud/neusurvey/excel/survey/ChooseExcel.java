@@ -1,4 +1,4 @@
-package cn.neud.neusurvey.survey.excel;
+package cn.neud.neusurvey.excel.survey;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;

@@ -1,6 +1,5 @@
 package cn.neud.neusurvey.entity.statistics;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.List;
@@ -14,7 +13,6 @@ public class StatisticChartEntity {
     /**
      * 统计项
      */
-    private List<StatisticItemEntity> list;
-
+    private List<StatisticItemEntity> items;
 
 }
