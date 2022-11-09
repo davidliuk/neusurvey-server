@@ -34,11 +34,20 @@
         from user where id in
                         (select u.id
                          from user u, member m
-                         where u.id = m.user_id and m.group_id = #{group_id})
+                         where u.id = m.user_id and m.group_id = #{group_id} and m.is_deleted  = '0')
                     and username like '%' #{username} '%'
+                    and user.is_deleted  = '0'
         order by  #{orderField}  #{order}
         limit #{page}, #{size}
     </select>
+    <select id="countGroupUser" parameterType="string" resultType="integer">
+        select count(*)
+        from member
+        where group_id = #{group_id}
+          and user_id in (select u.id from user u where u.username like '%' #{username} '%' and u.is_deleted = '0')
+          and member.is_deleted = '0'
+    </select>
+
     <select id="pageAnswerUser" parameterType="map" resultType="cn.neud.neusurvey.dto.user.UserDTO">
         select  *
         from user where role = 3
@@ -51,19 +60,38 @@
         from user where role = 3
     </select>
 
-    <select id="countGroupUser" parameterType="string" resultType="integer">
-        select count(*)
-        from member
-        where group_id = #{group_id}
-          and user_id in (select u.id from user u where u.username like '%' #{username} '%')
-    </select>
+
 
     <select id="statisticHeatmap" parameterType="string" resultType="cn.neud.neusurvey.entity.statistics.StatisticItemEntity">
         select city as name, count(*) as value,  count(*)  as percentage
         from user
-        where id in (select user_id from member where group_id = #{group_id} and member.is_deleted != '1')
+        where id in (select user_id from member where group_id = #{group_id} and member.is_deleted  = '0') and user.is_deleted = '0'
         group by city
     </select>
+
+<!--    statisticByGender-->
+    <select id="statisticByGender" parameterType="string" resultType="cn.neud.neusurvey.entity.statistics.StatisticItemEntity">
+        select gender as name, count(*) as value,  count(*)  as percentage
+        from user
+        where id in (select user_id from member where group_id = #{group_id} and member.is_deleted  = '0') and user.is_deleted = '0'
+        group by gender
+    </select>
+
+
+    <select id="statisticByBirth" parameterType="string" resultType="cn.neud.neusurvey.entity.statistics.StatisticItemEntity">
+        select '00后' as name, count(id) as value,  count(id)  as percentage
+        from user
+        where id in (select user_id from member where group_id = #{group_id} and member.is_deleted  = '0') and user.is_deleted = '0'
+          and CAST(birth AS Datetime) >= '2000-01-01'
+    </select>
+
+    <select id="statisticByJob" parameterType="string" resultType="cn.neud.neusurvey.entity.statistics.StatisticItemEntity">
+        select job as name, count(*) as value,  count(*)  as percentage
+        from user
+        where id in (select user_id from member where group_id = #{group_id} and member.is_deleted  = '0') and user.is_deleted = '0'
+        group by job
+    </select>
+
 
 
 </mapper>
