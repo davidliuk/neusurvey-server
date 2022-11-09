@@ -36,4 +36,11 @@ public interface UserDao extends BaseDao<UserEntity> {
     List<UserDTO> pageAnswerUser(Map<String, Object> params);
 
     Integer countAnswerUser();
+
+
+    List<StatisticItemEntity> statisticByGender(String group_id);
+
+    List<StatisticItemEntity> statisticByBirth(String group_id);
+
+    List<StatisticItemEntity> statisticByJob(String group_id);
 }

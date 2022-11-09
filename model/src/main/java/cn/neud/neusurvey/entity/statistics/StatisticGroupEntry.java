@@ -2,12 +2,14 @@ package cn.neud.neusurvey.entity.statistics;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class StatisticGroupEntry {
 
    private String total;
    private String online;
    private StatisticChartEntity heatmap;
-   private StatisticChartEntity graphs ;
+   private List<StatisticChartEntity> graphs ;
    private StatisticUserEntity users;
 }
