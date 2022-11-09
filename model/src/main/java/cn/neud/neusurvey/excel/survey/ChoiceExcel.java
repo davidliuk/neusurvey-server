@@ -1,4 +1,4 @@
-package cn.neud.neusurvey.survey.excel;
+package cn.neud.neusurvey.excel.survey;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
@@ -6,19 +6,21 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * have
+ * choice
  *
  * @author David l729641074@163.com
  * @since 1.0.0 2022-10-29
  */
 @Data
-public class HaveExcel {
-    @Excel(name = "问卷id")
-    private String surveyId;
-    @Excel(name = "问题id")
-    private String questionId;
-    @Excel(name = "下一个问题id")
-    private String nextId;
+public class ChoiceExcel {
+    @Excel(name = "主键id")
+    private String id;
+    @Excel(name = "内容")
+    private String content;
+    @Excel(name = "题目id")
+    private String belongTo;
+    @Excel(name = "顺序")
+    private Integer order;
     @Excel(name = "创建人")
     private String creator;
     @Excel(name = "创建时间")
@@ -31,5 +33,4 @@ public class HaveExcel {
     private String isDeleted;
     @Excel(name = "保留项json")
     private String reserved;
-
 }

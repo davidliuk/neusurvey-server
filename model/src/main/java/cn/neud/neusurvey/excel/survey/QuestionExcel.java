@@ -1,4 +1,4 @@
-package cn.neud.neusurvey.survey.excel;
+package cn.neud.neusurvey.excel.survey;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
@@ -6,29 +6,21 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * survey
+ * question
  *
  * @author David l729641074@163.com
  * @since 1.0.0 2022-10-29
  */
 @Data
-public class SurveyExcel {
+public class QuestionExcel {
     @Excel(name = "主键id")
     private String id;
-    @Excel(name = "问卷名字")
-    private String name;
-    @Excel(name = "管理人id")
-    private String managedBy;
-    @Excel(name = "描述")
-    private String description;
-    @Excel(name = "问卷开始时间")
-    private Date startTime;
-    @Excel(name = "问卷结束时间")
-    private Date endTime;
-    @Excel(name = "答卷次数限制")
-    private Integer answerLimit;
-    @Excel(name = "问卷类型")
-    private String typeId;
+    @Excel(name = "题干")
+    private String stem;
+    @Excel(name = "问题类型")
+    private Integer questionType;
+    @Excel(name = "备注json")
+    private String note;
     @Excel(name = "创建人")
     private String creator;
     @Excel(name = "创建时间")

@@ -35,7 +35,7 @@ public class StatisticGroupServiceImpl implements StatisticGroupService {
         StatisticGroupEntry statisticGroupEntry = new StatisticGroupEntry();
         StatisticChartEntity heatmap = new StatisticChartEntity();
         List<StatisticChartEntity> graphs = new ArrayList<>();
-        StatisticUserEntity users = new StatisticUserEntity();
+        List<StatisticUserEntity >users = new ArrayList<>();
 
         List<StatisticItemEntity> heatmapList =  userDao.statisticHeatmap(id);;
         for (int i = 0; i < heatmapList.size(); i++) {
@@ -43,7 +43,7 @@ public class StatisticGroupServiceImpl implements StatisticGroupService {
         }
         System.out.println(heatmapList);
         heatmap.setTotal(total);
-        heatmap.setList(heatmapList);
+        heatmap.setItems(heatmapList);
 
         StatisticChartEntity genderChartEntity  = new StatisticChartEntity();
         List<StatisticItemEntity> genderList =userDao.statisticByGender(id);
@@ -52,7 +52,7 @@ public class StatisticGroupServiceImpl implements StatisticGroupService {
         }
         System.out.println(genderList);
         genderChartEntity.setTotal(total);
-        genderChartEntity.setList(genderList);
+        genderChartEntity.setItems(genderList);
         graphs.add(genderChartEntity);
 
         StatisticChartEntity birthChartEntity  = new StatisticChartEntity();
@@ -63,7 +63,7 @@ public class StatisticGroupServiceImpl implements StatisticGroupService {
         }
         System.out.println(birthList);
         birthChartEntity.setTotal(total);
-        birthChartEntity.setList(birthList);
+        birthChartEntity.setItems(birthList);
         graphs.add(birthChartEntity);
 
         StatisticChartEntity jobChartEntity  = new StatisticChartEntity();
@@ -73,7 +73,7 @@ public class StatisticGroupServiceImpl implements StatisticGroupService {
         }
         System.out.println(jobList);
         jobChartEntity.setTotal(total);
-        jobChartEntity.setList(jobList);
+        jobChartEntity.setItems(jobList);
         graphs.add(jobChartEntity);
 
 

@@ -10,14 +10,15 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
-import cn.neud.neusurvey.dto.survey.SurveyTypeDTO;
-import cn.neud.neusurvey.excel.survey.SurveyTypeExcel;
-import cn.neud.neusurvey.survey.service.SurveyTypeService;
+import cn.neud.neusurvey.dto.survey.RespondDTO;
+import cn.neud.neusurvey.excel.survey.RespondExcel;
+import cn.neud.neusurvey.survey.service.RespondService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -28,17 +29,17 @@ import java.util.Map;
 
 
 /**
- * survey_type
+ * 
  *
  * @author David l729641074@163.com
- * @since 1.0.0 2022-10-29
+ * @since 1.0.0 2022-11-09
  */
 @RestController
-@RequestMapping("survey/surveytype")
-@Api(tags="survey_type")
-public class SurveyTypeController {
+@RequestMapping("survey/respond")
+@Api(tags="")
+public class RespondController {
     @Resource
-    private SurveyTypeService surveyTypeService;
+    private RespondService respondService;
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -48,31 +49,31 @@ public class SurveyTypeController {
         @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
         @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
     })
-    @RequiresPermissions("survey:surveytype:page")
-    public Result<PageData<SurveyTypeDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
-        PageData<SurveyTypeDTO> page = surveyTypeService.page(params);
+    @RequiresPermissions("survey:respond:page")
+    public Result<PageData<RespondDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
+        PageData<RespondDTO> page = respondService.page(params);
 
-        return new Result<PageData<SurveyTypeDTO>>().ok(page);
+        return new Result<PageData<RespondDTO>>().ok(page);
     }
 
     @GetMapping("{id}")
     @ApiOperation("信息")
-    @RequiresPermissions("survey:surveytype:info")
-    public Result<SurveyTypeDTO> get(@PathVariable("id") String id){
-        SurveyTypeDTO data = surveyTypeService.get(id);
+    @RequiresPermissions("survey:respond:info")
+    public Result<RespondDTO> get(@PathVariable("id") String id){
+        RespondDTO data = respondService.get(id);
 
-        return new Result<SurveyTypeDTO>().ok(data);
+        return new Result<RespondDTO>().ok(data);
     }
 
     @PostMapping
     @ApiOperation("保存")
     @LogOperation("保存")
-    @RequiresPermissions("survey:surveytype:save")
-    public Result save(@RequestBody SurveyTypeDTO dto){
+    @RequiresPermissions("survey:respond:save")
+    public Result save(@RequestBody RespondDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
-        surveyTypeService.save(dto);
+        respondService.save(dto);
 
         return new Result();
     }
@@ -80,12 +81,12 @@ public class SurveyTypeController {
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
-    @RequiresPermissions("survey:surveytype:update")
-    public Result update(@RequestBody SurveyTypeDTO dto){
+    @RequiresPermissions("survey:respond:update")
+    public Result update(@RequestBody RespondDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        surveyTypeService.update(dto);
+        respondService.update(dto);
 
         return new Result();
     }
@@ -93,12 +94,12 @@ public class SurveyTypeController {
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")
-    @RequiresPermissions("survey:surveytype:delete")
+    @RequiresPermissions("survey:respond:delete")
     public Result delete(@RequestBody String[] ids){
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
-        surveyTypeService.delete(ids);
+        respondService.delete(ids);
 
         return new Result();
     }
@@ -106,11 +107,11 @@ public class SurveyTypeController {
     @GetMapping("export")
     @ApiOperation("导出")
     @LogOperation("导出")
-    @RequiresPermissions("survey:surveytype:export")
+    @RequiresPermissions("survey:respond:export")
     public void export(@ApiIgnore @RequestParam Map<String, Object> params, HttpServletResponse response) throws Exception {
-        List<SurveyTypeDTO> list = surveyTypeService.list(params);
+        List<RespondDTO> list = respondService.list(params);
 
-        ExcelUtils.exportExcelToTarget(response, null, list, SurveyTypeExcel.class);
+        ExcelUtils.exportExcelToTarget(response, null, list, RespondExcel.class);
     }
 
 }

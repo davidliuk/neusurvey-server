@@ -11,14 +11,13 @@ import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.SecretQuestionDTO;
-import cn.neud.neusurvey.user.excel.SecretQuestionExcel;
+import cn.neud.neusurvey.excel.user.SecretQuestionExcel;
 import cn.neud.neusurvey.user.service.SecretQuestionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 

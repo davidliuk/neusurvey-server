@@ -13,7 +13,7 @@ import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
-import cn.neud.neusurvey.user.excel.UserGroupExcel;
+import cn.neud.neusurvey.excel.user.UserGroupExcel;
 import cn.neud.neusurvey.user.service.UserGroupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
