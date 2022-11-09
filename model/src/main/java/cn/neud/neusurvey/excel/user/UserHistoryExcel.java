@@ -1,4 +1,4 @@
-package cn.neud.neusurvey.user.excel;
+package cn.neud.neusurvey.excel.user;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
@@ -6,17 +6,17 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * user
+ * user_history
  *
  * @author David l729641074@163.com
  * @since 1.0.0 2022-10-29
  */
 @Data
-public class UserExcel {
-    @Excel(name = "用户id")
+public class UserHistoryExcel {
+    @Excel(name = "主键id")
     private String id;
-    @Excel(name = "用户名")
-    private String username;
+    @Excel(name = "用户id")
+    private String userId;
     @Excel(name = "密码")
     private String password;
     @Excel(name = "角色")

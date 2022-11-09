@@ -12,14 +12,13 @@ import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.sms.client.SMSFeignClient;
-import cn.neud.neusurvey.user.excel.UserExcel;
+import cn.neud.neusurvey.excel.user.UserExcel;
 import cn.neud.neusurvey.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -83,7 +82,6 @@ public class UserController {
         return new Result();
     }
 
-
     @PostMapping("login")
     @ApiOperation("登录")
     @LogOperation("登录")
@@ -103,7 +101,6 @@ public class UserController {
         ValidatorUtils.validateEntity(userEmailDTO, AddGroup.class, DefaultGroup.class);
         return smsFeignClient.loginByEmail(userEmailDTO);
     }
-
 
     @PostMapping("register")
     @ApiOperation("注册")
@@ -197,6 +194,5 @@ public class UserController {
         ValidatorUtils.validateEntity(sendCodeDTO, AddGroup.class, DefaultGroup.class);
         return userService.sendCode(sendCodeDTO);
     }
-
 
 }

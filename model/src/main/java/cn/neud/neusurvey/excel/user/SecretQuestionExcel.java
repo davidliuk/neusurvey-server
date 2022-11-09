@@ -1,4 +1,4 @@
-package cn.neud.neusurvey.survey.excel;
+package cn.neud.neusurvey.excel.user;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import lombok.Data;
@@ -6,21 +6,21 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * question
+ * secret_question
  *
  * @author David l729641074@163.com
  * @since 1.0.0 2022-10-29
  */
 @Data
-public class QuestionExcel {
+public class SecretQuestionExcel {
     @Excel(name = "主键id")
     private String id;
     @Excel(name = "题干")
     private String stem;
-    @Excel(name = "问题类型")
-    private Integer questionType;
-    @Excel(name = "备注json")
-    private String note;
+    @Excel(name = "答案")
+    private String answer;
+    @Excel(name = "用户id")
+    private String userId;
     @Excel(name = "创建人")
     private String creator;
     @Excel(name = "创建时间")
