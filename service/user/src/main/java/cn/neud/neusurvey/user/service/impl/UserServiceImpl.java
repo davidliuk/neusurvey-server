@@ -89,8 +89,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
         if (user.getMobile().equals(userRegisterDTO.getMobile()))
             return result.error("该手机号已存在");
-
-
+        
         UserEntity userEntity = new UserEntity();
             BeanUtils.copyProperties(userRegisterDTO, userEntity);
 
