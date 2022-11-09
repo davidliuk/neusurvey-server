@@ -11,5 +11,5 @@ public class StatisticGroupEntry {
    private String online;
    private StatisticChartEntity heatmap;
    private List<StatisticChartEntity> graphs ;
-   private StatisticUserEntity users;
+   private List<StatisticUserEntity> users;
 }
