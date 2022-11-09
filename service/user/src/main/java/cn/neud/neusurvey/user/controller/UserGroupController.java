@@ -75,6 +75,12 @@ public class UserGroupController {
     @ApiOperation("信息")
     @RequiresPermissions("user:usergroup:info")
     public Result<UserGroupDTO> get(@ApiIgnore @RequestParam String id){
+
+        //雷世鹏:软删除判定和存在性检测
+        if(!userGroupService.ifExists(id))
+            return new Result().error("该群组不存在");
+        if(userGroupService.ifDeleted(id))
+            return new Result().error("该群组已经被删除");
  
         UserGroupDTO data = userGroupService.get(id);
 
@@ -140,17 +146,14 @@ public class UserGroupController {
     }
 
 //    删除群组下的特定用户 软删除
-@DeleteMapping("/deleteUserById")
+@DeleteMapping("deleteUserById")
 @ApiOperation("删除")
 @LogOperation("删除")
 @RequiresPermissions("user:usergroup:delete")
 public Result deleteUserById(@RequestBody UserGroupOperateUserDTO dto){
 
     Result result = new Result();
-    int result_code = userGroupService.deleteUserByPrimary(dto);
-    result.setMsg("删除成功");
-    return result;
-
+    return userGroupService.deleteUserByPrimary(dto);
 }
 
 //    新增群组下的用户
@@ -161,10 +164,9 @@ public Result deleteUserById(@RequestBody UserGroupOperateUserDTO dto){
 public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto){
     //效验数据
     ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
-    Result result = new Result();
-    int result_code = userGroupService.addGroupUser(dto);
-    result.setMsg("好耶");
-    return result;
+
+    return userGroupService.addGroupUser(dto);
+
 }
 
 

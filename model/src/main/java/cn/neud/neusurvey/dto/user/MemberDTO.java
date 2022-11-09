@@ -28,20 +28,7 @@ public class MemberDTO implements Serializable {
 	@ApiModelProperty(value = "创建人")
 	private String creator;
 
-	@ApiModelProperty(value = "创建时间")
-	private Date createDate;
-
-	@ApiModelProperty(value = "更新人")
-	private String updater;
-
-	@ApiModelProperty(value = "更新时间")
-	private Date updateDate;
-
-	@ApiModelProperty(value = "软删除")
-	private String isDeleted;
-
 	@ApiModelProperty(value = "保留项json")
 	private String reserved;
-
 
 }

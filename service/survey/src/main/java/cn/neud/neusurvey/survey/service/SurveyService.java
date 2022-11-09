@@ -14,4 +14,11 @@ import cn.neud.neusurvey.entity.survey.SurveyEntity;
  */
 public interface SurveyService extends CrudService<SurveyEntity, SurveyDTO> {
 
+    boolean ifExists(String id);
+
+    boolean ifDeleted(String id);
+
+    Result deleteSurvey(String[] ids);
+
+    Result deleteSurveyLogic(String[] ids);
 }

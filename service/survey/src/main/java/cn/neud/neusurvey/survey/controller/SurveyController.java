@@ -63,6 +63,14 @@ public class SurveyController {
     @ApiOperation("信息")
     @RequiresPermissions("survey:survey:info")
     public Result<SurveyDTO> get(@PathVariable("id") String id) {
+
+        //雷世鹏:软删除判定和存在性检测
+        if(!surveyService.ifExists(id))
+            return new Result().error("该问卷不存在");
+        if(surveyService.ifDeleted(id))
+            return new Result().error("该问卷已经被删除");
+
+
         SurveyDTO data = surveyService.get(id);
         return new Result<SurveyDTO>().ok(data);
     }
@@ -97,16 +105,28 @@ public class SurveyController {
     }
 
     @DeleteMapping
-    @ApiOperation("删除")
-    @LogOperation("删除")
+    @ApiOperation("硬删除")
+    @LogOperation("硬删除")
     @RequiresPermissions("survey:survey:delete")
     public Result delete(@RequestBody String[] ids) {
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
 
-        surveyService.delete(ids);
 
-        return new Result();
+        return surveyService.deleteSurvey(ids);
+
+    }
+
+    @DeleteMapping("logic")
+    @ApiOperation("软删除")
+    @LogOperation("软删除")
+    @RequiresPermissions("survey:survey:deleteLogic")
+    public Result deleteLogic(@RequestBody String[] ids) {
+        //效验数据
+        AssertUtils.isArrayEmpty(ids, "id");
+
+        return surveyService.deleteSurveyLogic(ids);
+
     }
 
     @GetMapping("export")

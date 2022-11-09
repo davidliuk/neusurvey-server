@@ -33,6 +33,7 @@ import java.util.*;
 @Service
 public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, SurveyDTO> implements SurveyService {
 
+
     @Resource
     HaveService haveService;
 
@@ -50,6 +51,9 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
 
     @Resource
     ChoiceDao choiceDao;
+
+    @Resource
+    SurveyDao surveyDao;
 
     @Override
     public QueryWrapper<SurveyEntity> getWrapper(Map<String, Object> params) {
@@ -181,4 +185,68 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
 
         return survey;
     }
+
+    @Override
+    public boolean ifExists(String id) {
+        return surveyDao.selectById(id)!=null;
+    }
+
+    @Override
+    public boolean ifDeleted(String id) {
+        return surveyDao.selectById(id).getIsDeleted()!=null
+                &&surveyDao.selectById(id).getIsDeleted().equals("1");
+    }
+
+    @Override
+    public Result deleteSurvey(String[] ids) {
+
+        Result result=new Result();
+
+        String msg=new String();
+
+        for(int i=0;i<ids.length;i++)
+        {
+
+            SurveyEntity surveyEntity=surveyDao.selectById(ids[i]);
+
+            if(surveyDao.selectById(ids[i])==null) {
+                msg += "问卷" + ids[i] + "不存在\n";
+                continue;
+            }
+
+            surveyDao.deleteById(surveyEntity);
+
+        }
+        result.setMsg(msg);
+        return result.ok(null);
+    }
+
+    @Override
+    public Result deleteSurveyLogic(String[] ids) {
+
+        Result result=new Result();
+
+        String msg=new String();
+
+        for(int i=0;i<ids.length;i++)
+        {
+
+            SurveyEntity surveyEntity=surveyDao.selectById(ids[i]);
+
+            if(surveyDao.selectById(ids[i])==null) {
+                msg += "问卷" + ids[i] + "不存在\n";
+                continue;
+            }
+            surveyEntity.setUpdater("admin");
+            surveyEntity.setIsDeleted("1");
+            surveyEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+            surveyDao.updateById(surveyEntity);
+
+        }
+        result.setMsg(msg);
+        return result.ok(null);
+
+    }
+
+
 }

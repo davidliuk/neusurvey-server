@@ -3,6 +3,7 @@ package cn.neud.neusurvey.user.dao;
 import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.entity.user.MemberEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -15,9 +16,11 @@ import java.util.List;
 @Mapper
 public interface MemberDao extends BaseDao<MemberEntity> {
 
-
-
     List<MemberEntity> selectByGroupId(String group_id);
+
+    //雷世鹏: 增加对成员的判定,供返回值使用
+    @Select("select * from member where user_id=#{userId} and group_id=#{groupId}")
+    MemberEntity selectByPrimaryKey(String userId,String groupId);
 
     void softDeleteByPrimary(String user_id, String group_id);
 

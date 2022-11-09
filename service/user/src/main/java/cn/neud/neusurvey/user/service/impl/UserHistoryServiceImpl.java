@@ -74,7 +74,7 @@ public class UserHistoryServiceImpl extends CrudServiceImpl<UserHistoryDao, User
             return result.error("该id不存在");
 
         BeanUtils.copyProperties(dto,userHistoryEntity);
-        userHistoryEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+        userHistoryEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
 
         userHistoryDao.updateById(userHistoryEntity);
 

@@ -62,11 +62,18 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
         String updater = "admin";
         for (int i = 0; i < ids.length; i++) {
             List<MemberEntity> memberEntityList = memberDao.selectByGroupId(ids[i]);
-            if (memberEntityList.size() == 0){
+            //雷世鹏:两种情况下可以删除:一是member没有,二是有但全部已经软删除了
+            boolean flag=memberEntityList.size()!=0;
+            for(int j=0;j<memberEntityList.size();j++)
+            {
+                flag &= memberEntityList.get(j).getIsDeleted()!=null&&memberEntityList.get(j).getIsDeleted().equals("1");
+            }
+
+            if (flag){
                 UserGroupEntity userGroupEntity = userGroupDao.selectById(ids[i]);
-                System.out.println(userGroupEntity);
                 userGroupEntity.setIsDeleted("1");
                 userGroupDao.updateById(userGroupEntity);
+
                 GroupHistoryEntity groupHistoryEntity = new GroupHistoryEntity();
                 groupHistoryEntity.setGroupId(userGroupEntity.getId());
                 groupHistoryEntity.setIsDeleted("0");
@@ -107,30 +114,81 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     }
 
     @Override
-    public int deleteUserByPrimary(UserGroupOperateUserDTO dto) {
+    public Result deleteUserByPrimary(UserGroupOperateUserDTO dto) {
         String[] user_ids = dto.getUser_ids();
+
+        Result result=new Result();
+        String msg=new String();
+
+        if(userGroupDao.selectById(dto.getGroup_id())==null)
+            return result.error("没有这个群");
+        if(userGroupDao.selectById(dto.getGroup_id()).getIsDeleted().equals("1"))
+            return result.error("该群已经被删除");
+
+
         for (int i = 0; i < user_ids.length; i++) {
+            if(memberDao.selectByPrimaryKey(user_ids[i], dto.getGroup_id())==null)
+            {
+                msg+="群里没有找到id为"+user_ids[i]+"的用户\n";
+                continue;
+            }
+
+            if(memberDao.selectByPrimaryKey(user_ids[i], dto.getGroup_id()).getIsDeleted()!=null
+                    &&memberDao.selectByPrimaryKey(user_ids[i], dto.getGroup_id()).getIsDeleted().equals("1"))
+            {
+                msg+="群里id为"+user_ids[i]+"的用户早已被删除了\n";
+                continue;
+            }
+
             memberDao.softDeleteByPrimary(user_ids[i],dto.getGroup_id());
         }
 
+        result.setMsg(msg);
 
-        return 0;
+        return result.ok(null);
     }
 
     @Override
-    public int addGroupUser(UserGroupOperateUserDTO dto) {
+    public Result addGroupUser(UserGroupOperateUserDTO dto) {
+
+        Result result=new Result();
+
+        if(userGroupDao.selectById(dto.getGroup_id())==null)
+            return result.error("没有这个群组");
+
+        if(userGroupDao.selectById(dto.getGroup_id()).getIsDeleted()!=null
+                &&userGroupDao.selectById(dto.getGroup_id()).getIsDeleted().equals("1"))
+            return result.error("该群组已被删除");
+
         String[] user_ids = dto.getUser_ids();
+        String msg=new String();
         for (int i = 0; i < user_ids.length; i++) {
+
+            if(userDao.selectById(user_ids[i])==null)
+            {
+                msg+="没有id为"+user_ids[i]+"的用户\n";
+                continue;
+            }
+
+            if(userDao.selectById(user_ids[i]).getIsDeleted()!=null
+                    &&userDao.selectById(user_ids[i]).getIsDeleted().equals("1"))
+            {
+                msg+="用户"+user_ids[i]+"已注销\n";
+                continue;
+            }
+
             MemberEntity memberEntity = new MemberEntity();
             memberEntity.setGroupId(dto.getGroup_id());
             memberEntity.setUserId(user_ids[i]);
             memberEntity.setCreator(dto.getCreator());
             memberEntity.setCreateDate(new Date(System.currentTimeMillis()));
+            memberEntity.setUpdater(dto.getCreator());
+            memberEntity.setUpdateDate(new Date(System.currentTimeMillis()));
             memberDao.insert(memberEntity);
-//            memberDao.addGroupUser(user_ids[i],dto.getGroup_id());
         }
 
-        return 0;
+        result.setMsg(msg);
+        return result.ok(null);
     }
 
     @Override
@@ -200,5 +258,16 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
 
 
         return result.ok(null);
+    }
+
+    @Override
+    public boolean ifExists(String id) {
+        return userGroupDao.selectById(id)!=null;
+    }
+
+    @Override
+    public boolean ifDeleted(String id) {
+        return userGroupDao.selectById(id).getIsDeleted()!=null
+                &&userGroupDao.selectById(id).getIsDeleted().equals("1");
     }
 }

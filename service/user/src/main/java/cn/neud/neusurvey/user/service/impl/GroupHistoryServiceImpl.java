@@ -14,7 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -53,9 +53,9 @@ public class GroupHistoryServiceImpl extends CrudServiceImpl<GroupHistoryDao, Gr
 
         System.out.println(groupHistoryEntity);
         groupHistoryEntity.setCreator(dto.getCreator());
-        groupHistoryEntity.setCreateDate(new Date(System.currentTimeMillis()));
+        groupHistoryEntity.setCreateDate(new java.util.Date(System.currentTimeMillis()));
         groupHistoryEntity.setUpdater(dto.getCreator());
-        groupHistoryEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+        groupHistoryEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
         groupHistoryEntity.setIsDeleted("0");
 
         System.out.println(groupHistoryEntity);
@@ -75,7 +75,7 @@ public class GroupHistoryServiceImpl extends CrudServiceImpl<GroupHistoryDao, Gr
             return result.error("该id不存在");
 
         BeanUtils.copyProperties(dto,groupHistoryEntity);
-        groupHistoryEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+        groupHistoryEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
 
         groupHistoryDao.updateById(groupHistoryEntity);
 

@@ -198,6 +198,5 @@ public class UserController {
         return userService.sendCode(sendCodeDTO);
     }
 
-    private class UserEmailLoginDTO {
-    }
+
 }

@@ -24,14 +24,18 @@ public interface UserGroupService extends CrudService<UserGroupEntity, UserGroup
 
     int deleteUserById(String id);
 
-    int deleteUserByPrimary(UserGroupOperateUserDTO dto);
+    Result deleteUserByPrimary(UserGroupOperateUserDTO dto);
 
-    int addGroupUser(UserGroupOperateUserDTO dto);
+    Result addGroupUser(UserGroupOperateUserDTO dto);
 
     PageData<UserDTO> pageGroupUser(Map<String, Object> params);
 
     int countGroup(String id);
 
     Result addGroup(UserGroupDTO dto);
+
+    boolean ifExists(String id);
+
+    boolean ifDeleted(String id);
 
 }
