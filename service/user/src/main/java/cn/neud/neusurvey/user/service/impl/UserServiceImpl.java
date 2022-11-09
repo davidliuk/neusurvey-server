@@ -83,10 +83,15 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
 
         //用户名重复性检查
         UserEntity user = userDao.selectByUsername(userRegisterDTO.getUsername());
-        if (user != null) {
-            result.error("该用户已存在");
-        } else {
-            UserEntity userEntity = new UserEntity();
+
+        if (user != null)
+            return result.error("该用户已存在");
+
+        if (user.getMobile().equals(userRegisterDTO.getMobile()))
+            return result.error("该手机号已存在");
+
+
+        UserEntity userEntity = new UserEntity();
             BeanUtils.copyProperties(userRegisterDTO, userEntity);
 
             String userId = UuidUtils.generateUuid();
@@ -97,10 +102,10 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
             userEntity.setUpdateDate(new Date(System.currentTimeMillis()));
             userEntity.setIsDeleted(String.valueOf(0));
 
-            userDao.insert(userEntity);
-            result.ok(null);
-        }
-        return result;
+        userDao.insert(userEntity);
+
+        return result.ok(null);
+
     }
 
     @Override
