@@ -202,8 +202,6 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
         return result;
         }
 
-}
-
     @Override
     public boolean saveSecret(SecretDTO dto) {
         List<SecretQuestionDTO> list = list(dto.getUsername());
