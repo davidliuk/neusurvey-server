@@ -1,5 +1,7 @@
 package cn.neud.neusurvey.user.controller;
 
+import cn.afterturn.easypoi.excel.ExcelImportUtil;
+import cn.afterturn.easypoi.excel.entity.ImportParams;
 import cn.neud.common.annotation.LogOperation;
 import cn.neud.common.constant.Constant;
 import cn.neud.common.page.PageData;
@@ -11,6 +13,8 @@ import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.*;
+import cn.neud.neusurvey.entity.user.UserEntity;
+import cn.neud.neusurvey.mapper.user.UserMapper;
 import cn.neud.neusurvey.sms.client.SMSFeignClient;
 import cn.neud.neusurvey.excel.user.UserExcel;
 import cn.neud.neusurvey.user.service.UserService;
@@ -19,7 +23,9 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
@@ -175,11 +181,50 @@ public class UserController {
         ExcelUtils.exportExcelToTarget(response, null, list, UserExcel.class);
     }
 
+    @PostMapping("import/user")
+    @ApiOperation("导入")
+    @LogOperation("导入")
+//    @RequiresPermissions("questionnaire:teacher:save")
+    public Result importUser(@RequestBody MultipartFile file) throws Exception {
+        ImportParams importParams = new ImportParams();
+        List<UserExcel> list = ExcelImportUtil.importExcel(file.getInputStream(), UserExcel.class, importParams);
+        for (UserExcel userExcel : list) {
+            UserEntity user = UserMapper.INSTANCE.fromExcel(userExcel);
+//            UserEntity user = new UserEntity();
+//            BeanUtils.copyProperties(user, userExcel);
+            System.out.println(userExcel);
+            System.out.println(user);
+            user.setId(null);
+            user.setRole(2);
+            userService.insert(user);
+        }
+        return new Result();
+    }
+
+    @PostMapping("import/respondent")
+    @ApiOperation("导入")
+    @LogOperation("导入")
+//    @RequiresPermissions("questionnaire:teacher:save")
+    public Result importRespondent(@RequestBody MultipartFile file) throws Exception {
+        ImportParams importParams = new ImportParams();
+        List<UserExcel> list = ExcelImportUtil.importExcel(file.getInputStream(), UserExcel.class, importParams);
+        for (UserExcel userExcel : list) {
+            UserEntity user = new UserEntity();
+            BeanUtils.copyProperties(user, userExcel);
+            System.out.println(userExcel);
+            System.out.println(user);
+            user.setId(null);
+            user.setRole(3);
+            userService.insert(user);
+        }
+        return new Result();
+    }
+
     @PostMapping("verificationLogin")
     @ApiOperation("验证码登录")
     @LogOperation("验证码登录")
     @RequiresPermissions("user:user:verificationLogin")
-    public Result verificationLogin(@RequestBody UserVerificationLoginDTO userVerificationLoginDTO){
+    public Result verificationLogin(@RequestBody UserVerificationLoginDTO userVerificationLoginDTO) {
         //效验数据
         ValidatorUtils.validateEntity(userVerificationLoginDTO, AddGroup.class, DefaultGroup.class);
         return userService.codeLoginValidate(userVerificationLoginDTO);
@@ -189,7 +234,7 @@ public class UserController {
     @ApiOperation("发送验证码")
     @LogOperation("发送验证码")
     @RequiresPermissions("user:user:sendCode")
-    public Result sendCode(@RequestBody SendCodeDTO sendCodeDTO){
+    public Result sendCode(@RequestBody SendCodeDTO sendCodeDTO) {
         //效验数据
         ValidatorUtils.validateEntity(sendCodeDTO, AddGroup.class, DefaultGroup.class);
         return userService.sendCode(sendCodeDTO);

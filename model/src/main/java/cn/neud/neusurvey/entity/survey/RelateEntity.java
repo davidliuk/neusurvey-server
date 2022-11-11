@@ -9,11 +9,12 @@ import java.util.Date;
  * 
  *
  * @author David l729641074@163.com
- * @since 1.0.0 2022-11-05
+ * @since 1.0.0 2022-11-11
  */
 @Data
-@TableName("choose")
-public class ChooseEntity {
+@TableName("relate")
+public class RelateEntity {
+
     /**
      * 
      */
@@ -21,15 +22,7 @@ public class ChooseEntity {
     /**
      * 
      */
-	private String userId;
-    /**
-     * 
-     */
-	private String choiceId;
-    /**
-     *
-     */
-    private String questionId;
+	private String groupId;
     /**
      * 
      */

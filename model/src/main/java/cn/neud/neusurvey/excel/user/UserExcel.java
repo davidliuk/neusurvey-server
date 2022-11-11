@@ -13,14 +13,14 @@ import java.util.Date;
  */
 @Data
 public class UserExcel {
-    @Excel(name = "用户id")
-    private String id;
+//    @Excel(name = "用户id")
+//    private String id;
     @Excel(name = "用户名")
     private String username;
     @Excel(name = "密码")
     private String password;
-    @Excel(name = "角色")
-    private Integer role;
+//    @Excel(name = "角色")
+//    private Integer role;
     @Excel(name = "昵称")
     private String nickname;
     @Excel(name = "手机号码")
@@ -39,21 +39,21 @@ public class UserExcel {
     private String job;
     @Excel(name = "个性签名")
     private String sign;
-    @Excel(name = "用户来源")
-    private Integer sourceType;
-    @Excel(name = "管理人id")
-    private String managedBy;
-    @Excel(name = "创建人")
-    private String creator;
-    @Excel(name = "创建时间")
-    private Date createDate;
-    @Excel(name = "更新人")
-    private String updater;
-    @Excel(name = "更新时间")
-    private Date updateDate;
-    @Excel(name = "软删除")
-    private String isDeleted;
-    @Excel(name = "保留项json")
-    private String reserved;
+//    @Excel(name = "用户来源")
+//    private Integer sourceType;
+//    @Excel(name = "管理人id")
+//    private String managedBy;
+//    @Excel(name = "创建人")
+//    private String creator;
+//    @Excel(name = "创建时间")
+//    private Date createDate;
+//    @Excel(name = "更新人")
+//    private String updater;
+//    @Excel(name = "更新时间")
+//    private Date updateDate;
+//    @Excel(name = "软删除")
+//    private String isDeleted;
+//    @Excel(name = "保留项json")
+//    private String reserved;
 
 }

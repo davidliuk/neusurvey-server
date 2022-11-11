@@ -6,31 +6,24 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 
 /**
  * 
  *
  * @author David l729641074@163.com
- * @since 1.0.0 2022-11-05
+ * @since 1.0.0 2022-11-11
  */
 @Data
 @ApiModel(value = "")
-public class ChooseDTO implements Serializable {
+public class RelateDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
 	@ApiModelProperty(value = "")
 	private String surveyId;
 
 	@ApiModelProperty(value = "")
-	private String userId;
-
-	@ApiModelProperty(value = "")
-	private String choiceId;
-
-	@ApiModelProperty(value = "")
-	private String questionId;
+	private String groupId;
 
 	@ApiModelProperty(value = "")
 	private Integer isDeleted;

@@ -13,25 +13,25 @@ import java.util.Date;
  */
 @Data
 public class QuestionExcel {
-    @Excel(name = "主键id")
-    private String id;
+//    @Excel(name = "主键id")
+//    private String id;
     @Excel(name = "题干")
     private String stem;
-    @Excel(name = "问题类型")
-    private Integer questionType;
-    @Excel(name = "备注json")
-    private String note;
-    @Excel(name = "创建人")
-    private String creator;
-    @Excel(name = "创建时间")
-    private Date createDate;
-    @Excel(name = "更新人")
-    private String updater;
-    @Excel(name = "更新时间")
-    private Date updateDate;
-    @Excel(name = "软删除")
-    private String isDeleted;
-    @Excel(name = "保留项json")
-    private String reserved;
+//    @Excel(name = "问题类型")
+//    private Integer questionType;
+//    @Excel(name = "备注json")
+//    private String note;
+//    @Excel(name = "创建人")
+//    private String creator;
+//    @Excel(name = "创建时间")
+//    private Date createDate;
+//    @Excel(name = "更新人")
+//    private String updater;
+//    @Excel(name = "更新时间")
+//    private Date updateDate;
+//    @Excel(name = "软删除")
+//    private String isDeleted;
+//    @Excel(name = "保留项json")
+//    private String reserved;
 
 }
