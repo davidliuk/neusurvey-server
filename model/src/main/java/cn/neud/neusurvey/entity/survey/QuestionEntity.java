@@ -1,9 +1,6 @@
 package cn.neud.neusurvey.entity.survey;
 
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -22,7 +19,7 @@ public class QuestionEntity {
     /**
      * 主键id
      */
-    @TableId
+    @TableId(type = IdType.ASSIGN_ID)
 	private String id;
     /**
      * 题干

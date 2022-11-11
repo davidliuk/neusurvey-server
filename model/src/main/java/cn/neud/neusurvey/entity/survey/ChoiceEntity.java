@@ -1,6 +1,8 @@
 package cn.neud.neusurvey.entity.survey;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -20,6 +22,7 @@ public class ChoiceEntity {
     /**
      * 主键id
      */
+    @TableId(type = IdType.ASSIGN_ID)
 	private String id;
     /**
      * 内容

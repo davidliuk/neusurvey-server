@@ -1,9 +1,12 @@
 package cn.neud.neusurvey.excel.survey;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
+import cn.neud.neusurvey.dto.survey.ChoiceDTO;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * question
@@ -17,8 +20,24 @@ public class QuestionExcel {
 //    private String id;
     @Excel(name = "题干")
     private String stem;
-//    @Excel(name = "问题类型")
-//    private Integer questionType;
+
+    @Excel(name = "正确选项个数")
+    private Integer questionType;
+
+    @Excel(name = "选项1")
+    private String choice1;
+
+    @Excel(name = "选项2")
+    private String choice2;
+
+    @Excel(name = "选项3")
+    private String choice3;
+
+    @Excel(name = "选项4")
+    private String choice4;
+
+    @Excel(name = "选项5")
+    private String choice5;
 //    @Excel(name = "备注json")
 //    private String note;
 //    @Excel(name = "创建人")
