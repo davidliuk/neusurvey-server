@@ -41,6 +41,7 @@ public interface UserDao extends BaseDao<UserEntity> {
 
     Integer countAnswerUser();
 
+    void changePassword(Map<String, Object> params);
 
     List<StatisticItemEntity> statisticByGender(String group_id);
 

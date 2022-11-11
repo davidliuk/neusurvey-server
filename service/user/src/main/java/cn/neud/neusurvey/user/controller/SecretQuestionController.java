@@ -1,5 +1,6 @@
 package cn.neud.neusurvey.user.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import cn.neud.common.annotation.LogOperation;
 import cn.neud.common.constant.Constant;
 import cn.neud.common.page.PageData;
@@ -15,6 +16,7 @@ import cn.neud.neusurvey.dto.user.SendCodeDTO;
 import cn.neud.neusurvey.dto.user.UserPasswordResetDTO;
 import cn.neud.neusurvey.dto.user.UserVerificationLoginDTO;
 import cn.neud.neusurvey.excel.user.SecretQuestionExcel;
+import cn.neud.neusurvey.mapper.user.SecretMapper;
 import cn.neud.neusurvey.user.service.SecretQuestionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -26,6 +28,8 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,24 +63,63 @@ public class SecretQuestionController {
         return new Result<PageData<SecretQuestionDTO>>().ok(page);
     }
 
-    @GetMapping("{id}")
+//    @GetMapping("{id}")
+//    @ApiOperation("信息")
+//    @RequiresPermissions("user:secretquestion:info")
+//    public Result<SecretQuestionDTO> get(@PathVariable("id") String id){
+//        SecretQuestionDTO data = secretQuestionService.get(id);
+//
+//        return new Result<SecretQuestionDTO>().ok(data);
+//    }
+
+    @GetMapping("{username}")
     @ApiOperation("信息")
     @RequiresPermissions("user:secretquestion:info")
-    public Result<SecretQuestionDTO> get(@PathVariable("id") String id){
-        SecretQuestionDTO data = secretQuestionService.get(id);
-
-        return new Result<SecretQuestionDTO>().ok(data);
+    public Result<List<SecretStemDTO>> get(@PathVariable("username") String username){
+//        SecretQuestionDTO data = secretQuestionService.get(id);
+        List<SecretQuestionDTO> data = secretQuestionService.list(username);
+        List<SecretStemDTO> stemDTOs = new ArrayList<>();
+        for (SecretQuestionDTO dto: data) {
+            stemDTOs.add(SecretMapper.INSTANCE.fromSecret(dto));
+        }
+        return new Result<List<SecretStemDTO>>().ok(stemDTOs);
     }
 
-    @PostMapping
-    @ApiOperation("保存")
-    @LogOperation("保存")
+//    @PostMapping
+//    @ApiOperation("保存")
+//    @LogOperation("保存")
+//    @RequiresPermissions("user:secretquestion:save")
+//    public Result save(@RequestBody SecretQuestionDTO dto){
+//        //效验数据
+//        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+//
+//        secretQuestionService.save(dto);
+//
+//        return new Result();
+//    }
+
+    @PostMapping("/secret/retrieve")
+    @ApiOperation("找回")
+    @LogOperation("找回")
     @RequiresPermissions("user:secretquestion:save")
-    public Result save(@RequestBody SecretQuestionDTO dto){
+    public Result save(@RequestBody SecretDTO dto){
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
-        secretQuestionService.save(dto);
+        secretQuestionService.saveSecret(dto);
+
+        return new Result();
+    }
+
+    @PostMapping("")
+    @ApiOperation("保存")
+    @LogOperation("保存")
+    @RequiresPermissions("user:secretquestion:save")
+    public Result add(@RequestBody SecretChangeDTO[] dtos){
+        //效验数据
+//        ValidatorUtils.validateEntity(dtos, AddGroup.class, DefaultGroup.class);
+
+        secretQuestionService.add(dtos);
 
         return new Result();
     }
@@ -85,11 +128,11 @@ public class SecretQuestionController {
     @ApiOperation("修改")
     @LogOperation("修改")
     @RequiresPermissions("user:secretquestion:update")
-    public Result update(@RequestBody SecretQuestionDTO dto){
+    public Result update(@RequestBody SecretChangeDTO[] dtos){
         //效验数据
-        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
+//        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        secretQuestionService.update(dto);
+        secretQuestionService.update(dtos);
 
         return new Result();
     }

@@ -24,7 +24,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "cn.neud.neusurvey")
 @ComponentScan({"springfox.documentation.schema"})
 @ComponentScan(basePackages = "cn.neud.neusurvey")
 public class SurveyApplication extends SpringBootServletInitializer {

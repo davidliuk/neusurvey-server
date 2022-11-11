@@ -16,6 +16,8 @@
     <modules>
         <module>sms-client</module>
         <module>oss-client</module>
+        <module>user-client</module>
+        <module>survey-client</module>
     </modules>
 
     <properties>

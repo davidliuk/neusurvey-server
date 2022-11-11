@@ -35,7 +35,7 @@ public class StatisticGroupServiceImpl implements StatisticGroupService {
         StatisticGroupEntry statisticGroupEntry = new StatisticGroupEntry();
         StatisticChartEntity heatmap = new StatisticChartEntity();
         List<StatisticChartEntity> graphs = new ArrayList<>();
-        List<StatisticUserEntity >users = new ArrayList<>();
+        List<StatisticUserEntity>users = new ArrayList<>();
 
         List<StatisticItemEntity> heatmapList =  userDao.statisticHeatmap(id);;
         for (int i = 0; i < heatmapList.size(); i++) {

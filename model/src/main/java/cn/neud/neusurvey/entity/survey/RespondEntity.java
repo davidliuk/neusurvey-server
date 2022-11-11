@@ -31,8 +31,8 @@ public class RespondEntity {
      * 结束答卷时间
      */
 	private Date endTime;
-    /**
-     * 回答次数
-     */
-	private Date answerTime;
+//    /**
+//     * 回答次数
+//     */
+//	private Date answerTime;
 }
