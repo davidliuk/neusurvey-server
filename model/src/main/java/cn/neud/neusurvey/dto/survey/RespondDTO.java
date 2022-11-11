@@ -31,8 +31,8 @@ public class RespondDTO implements Serializable {
 	@ApiModelProperty(value = "结束答卷时间")
 	private Date endTime;
 
-	@ApiModelProperty(value = "回答次数")
-	private Date answerTime;
+//	@ApiModelProperty(value = "回答次数")
+//	private Date answerTime;
 
 
 }

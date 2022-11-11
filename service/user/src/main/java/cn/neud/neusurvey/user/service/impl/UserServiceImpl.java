@@ -84,11 +84,11 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         //用户名重复性检查
         UserEntity user = userDao.selectByUsername(userRegisterDTO.getUsername());
 
-        if (user != null)
+        if (user != null) {
+            if (user.getMobile().equals(userRegisterDTO.getMobile()))
+                return result.error("该手机号已存在");
             return result.error("该用户已存在");
-
-        if (user.getMobile().equals(userRegisterDTO.getMobile()))
-            return result.error("该手机号已存在");
+        }
 
         UserEntity userEntity = new UserEntity();
             BeanUtils.copyProperties(userRegisterDTO, userEntity);
@@ -199,7 +199,6 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
             } else {
                 result.error("验证码错误");
             }
-
         }
 
         return result;

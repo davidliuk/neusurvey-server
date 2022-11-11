@@ -1,8 +1,9 @@
 package cn.neud.neusurvey.user.service.impl;
 
+import cn.dev33.satoken.stp.StpUtil;
+import cn.hutool.core.lang.hash.Hash;
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.dto.user.SendCodeDTO;
-import cn.neud.neusurvey.dto.user.UserVerificationLoginDTO;
+import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.entity.user.UserEntity;
 import cn.neud.neusurvey.user.dao.SecretQuestionDao;
 import cn.neud.neusurvey.entity.user.SecretQuestionEntity;
@@ -11,13 +12,13 @@ import cn.neud.neusurvey.user.service.HttpUtils;
 import cn.neud.neusurvey.user.service.SecretQuestionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
-import cn.neud.neusurvey.dto.user.SecretQuestionDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -44,6 +45,33 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
     }
 
     @Override
+    public List<SecretQuestionDTO> list(String username) {
+        UserEntity user = userDao.selectByUsername(username);
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", user.getId());
+        return super.list(map);
+    }
+
+    @Override
+    public boolean saveSecret(SecretDTO dto) {
+        List<SecretQuestionDTO> list = list(dto.getUsername());
+        Map<String, SecretQuestionDTO> map = new HashMap<>();
+        for (SecretQuestionDTO questionDTO : list) {
+            map.put(questionDTO.getId(), questionDTO);
+        }
+        for (int i = 0; i < dto.getAnswers().size(); i++) {
+            Answer answer = dto.getAnswers().get(i);
+            if (answer.getAnswer().equals(map.get(answer.getId()).getAnswer())) {
+                return false;
+            }
+        }
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", dto.getUsername());
+        params.put("password", dto.getPassword());
+        userDao.changePassword(params);
+        return true;
+    }
+
     public Result retrieve(UserVerificationLoginDTO userVerificationLoginDTO) {
 
         Result result = new Result();
@@ -82,6 +110,26 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
         return result;
     }
 
+    @Override
+    public void add(SecretChangeDTO[] dtos) {
+        SecretQuestionDTO questionDTO = new SecretQuestionDTO();
+        String userId = StpUtil.getLoginIdAsString();
+        questionDTO.setUserId(userId);
+        for (SecretChangeDTO dto: dtos) {
+            questionDTO.setAnswer(dto.getAnswer());
+            questionDTO.setStem(dto.getStem());
+            this.save(questionDTO);
+        }
+    }
+
+    @Override
+    public void update(SecretChangeDTO[] dtos) {
+        Map<String, Object> params = new HashMap<>();
+        String userId = StpUtil.getLoginIdAsString();
+        params.put("userId", userId);
+        this.delete(params);
+        this.add(dtos);
+    }
 
     @Override
     public Result sendCode(SendCodeDTO sendCodeDTO) {
@@ -130,7 +178,6 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
         querys.put("templateId", "908e94ccf08b4476ba6c876d13f084ad");
         Map<String, String> bodys = new HashMap<String, String>();
 
-
         try {
             /**
              * 重要提示如下:
@@ -149,5 +196,4 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
             e.printStackTrace();
         }
     }
-
 }

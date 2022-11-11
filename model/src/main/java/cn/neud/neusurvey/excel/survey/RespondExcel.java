@@ -21,7 +21,7 @@ public class RespondExcel {
     private Date startTime;
     @Excel(name = "结束答卷时间")
     private Date endTime;
-    @Excel(name = "回答次数")
-    private Date answerTime;
+//    @Excel(name = "回答次数")
+//    private Date answerTime;
 
 }
