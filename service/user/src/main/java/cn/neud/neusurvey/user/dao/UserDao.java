@@ -6,6 +6,7 @@ import cn.neud.neusurvey.entity.statistics.StatisticItemEntity;
 import cn.neud.neusurvey.entity.user.UserEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,9 @@ public interface UserDao extends BaseDao<UserEntity> {
 
     @Select("select * from user where mobile=#{mobile};")
     UserEntity selectByMobile(String mobile);
+
+    @Update("update user set password=#{password} where mobile=#{mobile}")
+    void reset(String mobile, String password);
 
     UserEntity selectByEmail(String email);
 

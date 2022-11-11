@@ -11,6 +11,9 @@ import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
 import cn.neud.neusurvey.dto.user.SecretQuestionDTO;
+import cn.neud.neusurvey.dto.user.SendCodeDTO;
+import cn.neud.neusurvey.dto.user.UserPasswordResetDTO;
+import cn.neud.neusurvey.dto.user.UserVerificationLoginDTO;
 import cn.neud.neusurvey.excel.user.SecretQuestionExcel;
 import cn.neud.neusurvey.user.service.SecretQuestionService;
 import io.swagger.annotations.Api;
@@ -37,6 +40,7 @@ import java.util.Map;
 @RequestMapping("user/secretquestion")
 @Api(tags="secret_question")
 public class SecretQuestionController {
+
     @Resource
     private SecretQuestionService secretQuestionService;
 
@@ -112,5 +116,36 @@ public class SecretQuestionController {
 
         ExcelUtils.exportExcelToTarget(response, null, list, SecretQuestionExcel.class);
     }
+
+    @PostMapping("retrieve")
+    @ApiOperation("手机号+验证码找回密码")
+    @LogOperation("手机号+验证码找回密码")
+    @RequiresPermissions("user:user:retrieve")
+    public Result retrieve(@RequestBody UserVerificationLoginDTO userVerificationLoginDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(userVerificationLoginDTO, AddGroup.class, DefaultGroup.class);
+        return secretQuestionService.retrieve(userVerificationLoginDTO);
+    }
+
+    @PostMapping("sendCode")
+    @ApiOperation("发送验证码")
+    @LogOperation("发送验证码")
+    @RequiresPermissions("user:user:sendCode")
+    public Result sendCode(@RequestBody SendCodeDTO sendCodeDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(sendCodeDTO, AddGroup.class, DefaultGroup.class);
+        return secretQuestionService.sendCode(sendCodeDTO);
+    }
+
+    @PostMapping("reset")
+    @ApiOperation("手机号+验证码重置密码")
+    @LogOperation("手机号+验证码重置密码")
+    @RequiresPermissions("user:user:retrieve")
+    public Result reset(@RequestBody UserPasswordResetDTO userPasswordResetDTO){
+        //效验数据
+        ValidatorUtils.validateEntity(userPasswordResetDTO, AddGroup.class, DefaultGroup.class);
+        return secretQuestionService.reset(userPasswordResetDTO);
+    }
+
 
 }
