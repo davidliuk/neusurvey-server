@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 //@DataSource("slave1")
 public class DynamicDataSourceTestService {
-    @Resource
+    @Autowired
     private SysUserDao sysUserDao;
 
     //@Transactional

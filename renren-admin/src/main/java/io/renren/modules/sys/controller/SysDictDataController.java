@@ -38,7 +38,7 @@ import java.util.Map;
 @RequestMapping("sys/dict/data")
 @Api(tags="字典数据")
 public class SysDictDataController {
-    @Resource
+    @Autowired
     private SysDictDataService sysDictDataService;
 
     @GetMapping("page")

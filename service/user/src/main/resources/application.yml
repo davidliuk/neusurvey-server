@@ -49,12 +49,11 @@ spring:
         max-idle: 10      # 连接池中的最大空闲连接
         min-idle: 5       # 连接池中的最小空闲连接
   application:
-    name: user
+    name: neusurvey-user
   cloud:
     nacos:
       discovery:
         server-addr: 101.43.31.212:8849
-
 
 # 是否开启redis缓存  true开启   false关闭
 renren:

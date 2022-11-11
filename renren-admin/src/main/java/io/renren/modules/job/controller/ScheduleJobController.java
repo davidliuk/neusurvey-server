@@ -38,7 +38,7 @@ import java.util.Map;
 @RequestMapping("/sys/schedule")
 @Api(tags="定时任务")
 public class ScheduleJobController {
-	@Resource
+	@Autowired
 	private ScheduleJobService scheduleJobService;
 
 	@GetMapping("page")

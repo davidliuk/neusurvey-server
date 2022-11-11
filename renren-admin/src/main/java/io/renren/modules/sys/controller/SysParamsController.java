@@ -45,7 +45,7 @@ import java.util.Map;
 @RequestMapping("sys/params")
 @Api(tags="参数管理")
 public class SysParamsController {
-    @Resource
+    @Autowired
     private SysParamsService sysParamsService;
 
     @GetMapping("page")

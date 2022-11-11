@@ -43,7 +43,7 @@ import java.util.Map;
 @RequestMapping("sys/log/login")
 @Api(tags="登录日志")
 public class SysLogLoginController {
-    @Resource
+    @Autowired
     private SysLogLoginService sysLogLoginService;
 
     @GetMapping("page")

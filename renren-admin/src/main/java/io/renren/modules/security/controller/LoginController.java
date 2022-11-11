@@ -49,13 +49,13 @@ import java.util.Date;
 @RestController
 @Api(tags="登录管理")
 public class LoginController {
-	@Resource
+	@Autowired
 	private SysUserService sysUserService;
-	@Resource
+	@Autowired
 	private SysUserTokenService sysUserTokenService;
-	@Resource
+	@Autowired
 	private CaptchaService captchaService;
-	@Resource
+	@Autowired
 	private SysLogLoginService sysLogLoginService;
 
 	@GetMapping("captcha")

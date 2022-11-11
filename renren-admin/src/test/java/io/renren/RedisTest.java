@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RedisTest {
-    @Resource
+    @Autowired
     private RedisUtils redisUtils;
 
     @Test

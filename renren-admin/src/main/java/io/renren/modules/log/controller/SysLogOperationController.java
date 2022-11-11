@@ -43,7 +43,7 @@ import java.util.Map;
 @RequestMapping("sys/log/operation")
 @Api(tags="操作日志")
 public class SysLogOperationController {
-    @Resource
+    @Autowired
     private SysLogOperationService sysLogOperationService;
 
     @GetMapping("page")

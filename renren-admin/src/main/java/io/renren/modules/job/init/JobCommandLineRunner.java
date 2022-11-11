@@ -26,9 +26,9 @@ import java.util.List;
  */
 @Component
 public class JobCommandLineRunner implements CommandLineRunner {
-    @Resource
+    @Autowired
     private Scheduler scheduler;
-    @Resource
+    @Autowired
     private ScheduleJobDao scheduleJobDao;
 
     @Override

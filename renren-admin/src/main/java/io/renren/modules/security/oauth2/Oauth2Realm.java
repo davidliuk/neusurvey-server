@@ -33,7 +33,7 @@ import java.util.Set;
  */
 @Component
 public class Oauth2Realm extends AuthorizingRealm {
-    @Resource
+    @Autowired
     private ShiroService shiroService;
 
     @Override

@@ -46,9 +46,9 @@ import java.util.Map;
 @RequestMapping("sys/oss")
 @Api(tags="文件上传")
 public class SysOssController {
-	@Resource
+	@Autowired
 	private SysOssService sysOssService;
-    @Resource
+    @Autowired
     private SysParamsService sysParamsService;
 
     private final static String KEY = Constant.CLOUD_STORAGE_CONFIG_KEY;

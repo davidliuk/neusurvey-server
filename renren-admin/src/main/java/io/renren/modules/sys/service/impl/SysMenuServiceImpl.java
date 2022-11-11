@@ -28,7 +28,7 @@ import java.util.List;
 
 @Service
 public class SysMenuServiceImpl extends BaseServiceImpl<SysMenuDao, SysMenuEntity> implements SysMenuService {
-	@Resource
+	@Autowired
 	private SysRoleMenuService sysRoleMenuService;
 
 	@Override

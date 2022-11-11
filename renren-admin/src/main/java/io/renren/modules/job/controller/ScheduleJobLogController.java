@@ -33,7 +33,7 @@ import java.util.Map;
 @RequestMapping("/sys/scheduleLog")
 @Api(tags="定时任务日志")
 public class ScheduleJobLogController {
-	@Resource
+	@Autowired
 	private ScheduleJobLogService scheduleJobLogService;
 
 	@GetMapping("page")

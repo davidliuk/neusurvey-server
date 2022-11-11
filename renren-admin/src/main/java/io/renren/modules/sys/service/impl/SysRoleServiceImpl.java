@@ -37,13 +37,13 @@ import java.util.Map;
  */
 @Service
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRoleDao, SysRoleEntity> implements SysRoleService {
-	@Resource
+	@Autowired
 	private SysRoleMenuService sysRoleMenuService;
-	@Resource
+	@Autowired
 	private SysRoleDataScopeService sysRoleDataScopeService;
-	@Resource
+	@Autowired
 	private SysRoleUserService sysRoleUserService;
-	@Resource
+	@Autowired
 	private SysDeptService sysDeptService;
 
 	@Override

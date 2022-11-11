@@ -51,9 +51,9 @@ import java.util.Map;
 @RequestMapping("/sys/user")
 @Api(tags="用户管理")
 public class SysUserController {
-	@Resource
+	@Autowired
 	private SysUserService sysUserService;
-	@Resource
+	@Autowired
 	private SysRoleUserService sysRoleUserService;
 
 	@GetMapping("page")
