@@ -7,6 +7,7 @@
         <groupId>cn.neud</groupId>
         <version>5.0.0</version>
     </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>user-client</artifactId>
@@ -15,6 +16,17 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-openfeign-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.neud</groupId>
+            <artifactId>common</artifactId>
+            <version>5.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+        </dependency>
+
     </dependencies>
 
     <properties>

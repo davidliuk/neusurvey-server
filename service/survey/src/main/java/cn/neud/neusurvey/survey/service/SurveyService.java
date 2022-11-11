@@ -2,7 +2,7 @@ package cn.neud.neusurvey.survey.service;
 
 import cn.neud.common.service.CrudService;
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.dto.survey.QuestionDTO;
+import cn.neud.neusurvey.dto.survey.AnsweredSurveyDTO;
 import cn.neud.neusurvey.dto.survey.SurveyDTO;
 import cn.neud.neusurvey.entity.survey.SurveyEntity;
 
@@ -21,4 +21,6 @@ public interface SurveyService extends CrudService<SurveyEntity, SurveyDTO> {
     Result deleteSurvey(String[] ids);
 
     Result deleteSurveyLogic(String[] ids);
+
+    AnsweredSurveyDTO getUserAnswerDerail(String id, String userId);
 }

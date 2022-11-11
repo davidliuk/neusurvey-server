@@ -11,6 +11,10 @@ public class StatisticChartEntity {
      */
     private String total;
     /**
+     * 统计图类型
+     */
+    private String chartType;
+    /**
      * 统计项
      */
     private List<StatisticItemEntity> items;

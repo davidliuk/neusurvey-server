@@ -10,6 +10,7 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
+import cn.neud.neusurvey.dto.survey.AnsweredSurveyDTO;
 import cn.neud.neusurvey.dto.survey.SurveyDTO;
 import cn.neud.neusurvey.excel.survey.SurveyExcel;
 import cn.neud.neusurvey.survey.service.SurveyService;
@@ -69,6 +70,22 @@ public class SurveyController {
 
         SurveyDTO data = surveyService.get(id);
         return new Result<SurveyDTO>().ok(data);
+    }
+
+
+    @GetMapping("/getUserAnswerDerail")
+    @ApiOperation("信息")
+    @RequiresPermissions("survey:survey:info")
+    public Result<AnsweredSurveyDTO> getUserAnswerDerail(@RequestParam String id, @RequestParam String userId) {
+
+        //雷世鹏:软删除判定和存在性检测
+//        if(!surveyService.ifExists(id))
+//            return new Result().error("该问卷不存在");
+//        if(surveyService.ifDeleted(id))
+//            return new Result().error("该问卷已经被删除");
+     
+        AnsweredSurveyDTO data = surveyService.getUserAnswerDerail(id,userId);
+        return new Result<AnsweredSurveyDTO>().ok(data);
     }
 
 

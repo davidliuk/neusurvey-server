@@ -1,24 +1,19 @@
 package cn.neud.neusurvey.survey.service.impl;
 
-import cn.hutool.core.lang.hash.Hash;
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.dto.survey.QuestionCreateChoiceDTO;
 import cn.neud.neusurvey.dto.survey.QuestionDTO;
 import cn.neud.neusurvey.entity.survey.ChoiceEntity;
 import cn.neud.neusurvey.entity.survey.QuestionEntity;
 import cn.neud.neusurvey.entity.survey.SurveyEntity;
-import cn.neud.neusurvey.survey.dao.ChoiceDao;
-import cn.neud.neusurvey.survey.dao.QuestionDao;
-import com.alibaba.nacos.common.utils.UuidUtils;
+import cn.neud.neusurvey.entity.survey.questionInfoListItem.SurveyUserContent_AnswerItem;
+import cn.neud.neusurvey.survey.dao.*;
 import cn.neud.neusurvey.dto.survey.*;
 import cn.neud.neusurvey.entity.survey.*;
 import cn.neud.neusurvey.mapper.survey.SurveyMapper;
 import cn.neud.neusurvey.survey.service.*;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
-import cn.neud.neusurvey.survey.dao.SurveyDao;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -51,6 +46,12 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
 
     @Resource
     ChoiceDao choiceDao;
+
+    @Resource
+    AnswerDao answerDao;
+
+    @Resource
+    ChooseDao chooseDao;
 
     @Resource
     SurveyDao surveyDao;
@@ -248,6 +249,89 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         result.setMsg(msg);
         return result.ok(null);
 
+    }
+
+    @Override
+    public AnsweredSurveyDTO getUserAnswerDerail(String id, String userId) {
+        AnsweredSurveyDTO answeredSurveyDTO = new AnsweredSurveyDTO();
+
+        // survey 基本内容
+        SurveyDTO survey = SurveyMapper.INSTANCE.fromSurvey(super.selectById(id));
+
+        // survey 所有题目及下一题信息
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("surveyId", id);
+        List<HaveDTO> questionList = haveService.list(map);
+        System.out.println(questionList);
+
+        if (questionList.size() == 0) {
+            answeredSurveyDTO.setSurvey(survey);
+            return answeredSurveyDTO;
+        }
+
+        Set<String> allQuestion = new HashSet<>();
+        Set<String> otherQuestion = new HashSet<>();
+        String[] questionIds = new String[questionList.size()];
+        Map<String, String> questionsMap = new HashMap<>();
+
+        for (int i = 0; i < questionList.size(); i++) {
+            questionIds[i] = questionList.get(i).getQuestionId();
+            allQuestion.add(questionIds[i]);
+            otherQuestion.add(questionList.get(i).getNextId());
+            questionsMap.put(questionList.get(i).getQuestionId(), questionList.get(i).getNextId());
+        }
+
+        allQuestion.removeAll(otherQuestion);
+        String rootId = (String) allQuestion.toArray()[0];
+        List<QuestionDTO> questions = questionService.in(questionIds);
+
+        for (int i = 0; i < questions.size(); i++) {
+            if (questions.get(i).getId().equals(rootId)) {
+                QuestionDTO root = questions.get(i);
+                questions.set(i, questions.get(0));
+                questions.set(0, root);
+            }
+        }
+        survey.setQuestions(questions);
+
+        // survey 中所有选项跳转信息
+        List<GotoDTO> goToList = gotoService.list(map);
+        Map<String, String> choices = new HashMap<>();
+        for (GotoDTO gotoDTO : goToList) {
+            choices.put(gotoDTO.getChoiceId(), gotoDTO.getQuestionId());
+        }
+
+        List<AnswerDTO> answerList = new ArrayList<>();
+        // questions 所有的选项
+        Map<String, Object> choiceParams = new HashMap<>(1);
+
+        for (QuestionDTO question : questions) {
+            question.setNextId(questionsMap.get(question.getId()));
+            choiceParams.put("belongTo", question.getId());
+            List<ChoiceDTO> choiceList = choiceService.list(choiceParams);
+            question.setChoices(choiceList);
+            for (ChoiceDTO choice : choiceList) {
+                choice.setGoTo(choices.get(choice.getId()));
+            }
+
+            //答题选项
+            AnswerDTO answerDTO = new AnswerDTO();
+            System.out.println(userId + id + question.getId());
+            List<String> chooseList = chooseDao.selectByUserAndSurveyId(userId,id,question.getId());
+            answerDTO.setQuestionId(question.getId());
+            answerDTO.setSurveyId(id);
+            answerDTO.setChoices(chooseList);
+            if (chooseList == null || choiceList.size() == 0){
+               String content = answerDao.selectContentByByUserAndSurveyId(userId,id,question.getId());
+               answerDTO.setContent(content);
+            }
+            answerList.add(answerDTO);
+
+        }
+
+        answeredSurveyDTO.setSurvey(survey);
+        answeredSurveyDTO.setAnswerList(answerList);
+        return answeredSurveyDTO;
     }
 
 

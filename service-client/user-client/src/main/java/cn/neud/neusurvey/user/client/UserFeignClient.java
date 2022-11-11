@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(value = "neusurvey-user")
+@FeignClient(value = "neusurvey-user", name = "neusurvey-user")
 //@RequestMapping("/oss")
 @Repository
 public interface UserFeignClient {

@@ -4,6 +4,7 @@ import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.entity.survey.AnswerEntity;
 import cn.neud.neusurvey.entity.survey.questionInfoListItem.SurveyUserContent_AnswerItem;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -19,4 +20,11 @@ public interface AnswerDao extends BaseDao<AnswerEntity> {
 
     @Select("select survey_id,user_id,content from answer where question_id=#{id}")
     List<SurveyUserContent_AnswerItem> getSurveyUserContentByQuestionId(String id);
+
+    @Select("select content " +
+            "from answer " +
+            "where survey_id = #{surveyId} " +
+            "and user_id = #{userId} " +
+            "and question_id = #{questionId}")
+    String selectContentByByUserAndSurveyId(@Param("userId") String userId,@Param("surveyId") String surveyId, @Param("questionId") String questionId);
 }
