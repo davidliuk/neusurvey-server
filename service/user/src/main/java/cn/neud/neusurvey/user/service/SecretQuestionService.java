@@ -26,8 +26,9 @@ public interface SecretQuestionService extends CrudService<SecretQuestionEntity,
     Result sendCode(SendCodeDTO sendCodeDTO) ;
     Result retrieve(UserVerificationLoginDTO userVerificationLoginDTO) ;
 
-    void add(SecretChangeDTO[] dtos);
+    void add(String username, SecretChangeDTO[] dtos);
 
+    void update(String username, SecretChangeDTO[] dtos);
     void update(SecretChangeDTO[] dtos);
     Result sendCode(SendCodeDTO sendCodeDTO) ;
     Result retrieve(UserVerificationLoginDTO userVerificationLoginDTO) ;

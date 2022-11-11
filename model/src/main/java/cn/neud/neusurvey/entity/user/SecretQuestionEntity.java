@@ -1,5 +1,7 @@
 package cn.neud.neusurvey.entity.user;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -18,6 +20,7 @@ public class SecretQuestionEntity {
     /**
      * 主键id
      */
+    @TableId(type = IdType.ASSIGN_ID)
 	private String id;
     /**
      * 题干
