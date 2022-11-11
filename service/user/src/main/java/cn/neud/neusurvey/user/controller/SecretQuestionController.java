@@ -70,10 +70,10 @@ public class SecretQuestionController {
 //        return new Result<SecretQuestionDTO>().ok(data);
 //    }
 
-    @GetMapping("{username}")
+    @GetMapping
     @ApiOperation("信息")
     @RequiresPermissions("user:secretquestion:info")
-    public Result<List<SecretStemDTO>> get(@PathVariable("username") String username){
+    public Result<List<SecretStemDTO>> get(@RequestParam("username") String username){
 //        SecretQuestionDTO data = secretQuestionService.get(id);
         List<SecretQuestionDTO> data = secretQuestionService.list(username);
         List<SecretStemDTO> stemDTOs = new ArrayList<>();
@@ -104,20 +104,22 @@ public class SecretQuestionController {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
-        secretQuestionService.saveSecret(dto);
+        if (secretQuestionService.saveSecret(dto)) {
+            return new Result();
+        }
 
-        return new Result();
+        return new Result().error("密保错误");
     }
 
     @PostMapping("")
     @ApiOperation("保存")
     @LogOperation("保存")
     @RequiresPermissions("user:secretquestion:save")
-    public Result add(@RequestBody SecretChangeDTO[] dtos){
+    public Result add(@RequestParam("username") String username ,@RequestBody SecretChangeDTO[] dtos){
         //效验数据
 //        ValidatorUtils.validateEntity(dtos, AddGroup.class, DefaultGroup.class);
 
-        secretQuestionService.add(dtos);
+        secretQuestionService.add(username, dtos);
 
         return new Result();
     }
@@ -126,11 +128,11 @@ public class SecretQuestionController {
     @ApiOperation("修改")
     @LogOperation("修改")
     @RequiresPermissions("user:secretquestion:update")
-    public Result update(@RequestBody SecretChangeDTO[] dtos){
+    public Result update(@RequestParam("username") String username, @RequestBody SecretChangeDTO[] dtos){
         //效验数据
 //        ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        secretQuestionService.update(dtos);
+        secretQuestionService.update(username, dtos);
 
         return new Result();
     }

@@ -37,9 +37,11 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
     @Override
     public QueryWrapper<SecretQuestionEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
+        String userId = (String)params.get("userId");
 
         QueryWrapper<SecretQuestionEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.eq(StringUtils.isNotBlank(userId), "user_id", userId);
 
         return wrapper;
     }
@@ -47,6 +49,8 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
     @Override
     public List<SecretQuestionDTO> list(String username) {
         UserEntity user = userDao.selectByUsername(username);
+        System.out.println(user);
+        System.out.println(user.getId());
         Map<String, Object> map = new HashMap<>();
         map.put("userId", user.getId());
         return super.list(map);
@@ -55,20 +59,24 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
     @Override
     public boolean saveSecret(SecretDTO dto) {
         List<SecretQuestionDTO> list = list(dto.getUsername());
+        System.out.println(list);
         Map<String, SecretQuestionDTO> map = new HashMap<>();
         for (SecretQuestionDTO questionDTO : list) {
             map.put(questionDTO.getId(), questionDTO);
         }
         for (int i = 0; i < dto.getAnswers().size(); i++) {
             Answer answer = dto.getAnswers().get(i);
-            if (answer.getAnswer().equals(map.get(answer.getId()).getAnswer())) {
+            if (!answer.getAnswer().equals(map.get(answer.getId()).getAnswer())) {
                 return false;
             }
         }
-        Map<String, Object> params = new HashMap<>();
-        params.put("username", dto.getUsername());
-        params.put("password", dto.getPassword());
-        userDao.changePassword(params);
+        UserEntity user = userDao.selectByUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
+//        Map<String, Object> params = new HashMap<>();
+//        params.put("username", dto.getUsername());
+//        params.put("password", dto.getPassword());
+        userDao.updateById(user);
+        System.out.println(user);
         return true;
     }
 
@@ -111,24 +119,33 @@ public class SecretQuestionServiceImpl extends CrudServiceImpl<SecretQuestionDao
     }
 
     @Override
-    public void add(SecretChangeDTO[] dtos) {
-        SecretQuestionDTO questionDTO = new SecretQuestionDTO();
-        String userId = StpUtil.getLoginIdAsString();
-        questionDTO.setUserId(userId);
+    public void add(String username, SecretChangeDTO[] dtos) {
+//        String userId = StpUtil.getLoginIdAsString();
+        UserEntity user = userDao.selectByUsername(username);
+        System.out.println(user);
+        System.out.println(user.getId());
+        String userId = user.getId();
         for (SecretChangeDTO dto: dtos) {
+            SecretQuestionDTO questionDTO = new SecretQuestionDTO();
+            questionDTO.setUserId(userId);
             questionDTO.setAnswer(dto.getAnswer());
             questionDTO.setStem(dto.getStem());
+            System.out.println(questionDTO);
             this.save(questionDTO);
         }
     }
 
     @Override
-    public void update(SecretChangeDTO[] dtos) {
+    public void update(String username, SecretChangeDTO[] dtos) {
         Map<String, Object> params = new HashMap<>();
-        String userId = StpUtil.getLoginIdAsString();
+//        String userId = StpUtil.getLoginIdAsString();
+        UserEntity user = userDao.selectByUsername(username);
+        System.out.println(user);
+        System.out.println(user.getId());
+        String userId = user.getId();
         params.put("userId", userId);
         this.delete(params);
-        this.add(dtos);
+        this.add(username, dtos);
     }
 
     @Override

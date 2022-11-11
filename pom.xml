@@ -24,8 +24,6 @@
         <module>service</module>
         <module>service-client</module>
         <module>service-gateway</module>
-        <module>service-client/user-client</module>
-        <module>service-client/survey-client</module>
     </modules>
 
     <properties>
