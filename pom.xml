@@ -17,7 +17,6 @@
     </parent>
 
     <modules>
-        <module>renren-generator</module>
         <module>model</module>
         <module>common</module>
         <module>service</module>

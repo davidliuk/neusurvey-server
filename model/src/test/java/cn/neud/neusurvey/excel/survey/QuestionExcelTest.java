@@ -17,7 +17,6 @@ class QuestionExcelTest {
         choiceDTO.setContent("sss");
         ChoiceDTO choiceDTO1 = new ChoiceDTO();
         choiceDTO.setContent("sass");
-        excel.setChoices(Arrays.asList(choiceDTO, choiceDTO1));
     }
 
 }

@@ -1,7 +1,7 @@
 FROM java:8
-EXPOSE 8080
+EXPOSE 8081
 
 VOLUME /tmp
-ADD gateway.jar /app.jar
+ADD service-user.jar /app.jar
 RUN bash -c 'touch /app.jar'
 ENTRYPOINT ["java","-jar","/app.jar"]

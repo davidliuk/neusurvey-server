@@ -1,14 +1,38 @@
 version: '2'
 services:
-  renren-admin:
-    image: renren/renren-admin
+  gateway:
+    image: neud/gateway
     ports:
     - "8080:8080"
     environment:
     - spring.profiles.active=dev
-  renren-api:
-    image: renren/renren-api
+  service-user:
+    image: neud/service-user
     ports:
     - "8081:8081"
     environment:
     - spring.profiles.active=dev
+  service-survey:
+    image: neud/service-survey
+    ports:
+      - "8082:8082"
+    environment:
+      - spring.profiles.active=dev
+  service-oss:
+    image: neud/service-oss
+    ports:
+      - "8083:8083"
+    environment:
+      - spring.profiles.active=dev
+  service-sms:
+    image: neud/service-sms
+    ports:
+      - "8084:8084"
+    environment:
+      - spring.profiles.active=dev
+  service-statistics:
+    image: neud/service-statistics
+    ports:
+      - "8085:8085"
+    environment:
+      - spring.profiles.active=dev
