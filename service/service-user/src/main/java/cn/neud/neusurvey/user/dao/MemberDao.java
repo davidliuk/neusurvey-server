@@ -3,6 +3,7 @@ package cn.neud.neusurvey.user.dao;
 import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.entity.user.MemberEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface MemberDao extends BaseDao<MemberEntity> {
     void softDeleteByPrimary(String user_id, String group_id);
 
     void addGroupUser(String user_id, String group_id);
+
+    @Select("select user_id from member where group_id=#{groupId}")
+    String[] selectUserIdsByGroupId(@Param("groupId") String groupId);
 }

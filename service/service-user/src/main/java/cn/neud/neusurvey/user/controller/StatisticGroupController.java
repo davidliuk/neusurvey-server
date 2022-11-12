@@ -2,6 +2,7 @@ package cn.neud.neusurvey.user.controller;
 
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.entity.statistics.StatisticGroupEntry;
+import cn.neud.neusurvey.user.client.SurveyFeignClient;
 import cn.neud.neusurvey.user.service.StatisticGroupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,8 @@ public class StatisticGroupController {
 
     @Resource
     StatisticGroupService statisticGroupService;
+
+
 
     @GetMapping("{id}")
     @ApiOperation("群组统计数据")

@@ -192,8 +192,9 @@ public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto){
         @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
 })
 @RequiresPermissions("user:usergroup:page")
-public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestBody Map<String, Object> params){
+public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestParam Map<String, Object> params){
 
+    System.out.println(params);
     PageData<UserDTO> page = userGroupService.pageGroupUser(params);
 
     return new Result<PageData<UserDTO>>().ok(page);

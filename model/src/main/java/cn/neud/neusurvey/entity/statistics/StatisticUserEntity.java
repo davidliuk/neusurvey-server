@@ -1,6 +1,5 @@
 package cn.neud.neusurvey.entity.statistics;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
@@ -17,11 +16,11 @@ public class StatisticUserEntity {
     /**
      * 每类问卷百分比的情况
      */
-    private StatisticChartEntity questionTypes;
+    private StatisticChartEntiey questionTypes;
     /**
      * 每个用户发的问卷的百分比的问卷的情况
      */
-    private StatisticChartEntity questionUsers;
+    private StatisticChartEntiey questionUsers;
 
 
 

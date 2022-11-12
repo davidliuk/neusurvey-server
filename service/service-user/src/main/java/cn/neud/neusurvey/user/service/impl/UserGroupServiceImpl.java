@@ -5,8 +5,6 @@ import cn.neud.common.page.PageData;
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
-import cn.neud.neusurvey.entity.statistics.StatisticChartEntity;
-import cn.neud.neusurvey.entity.statistics.StatisticUserEntity;
 import cn.neud.neusurvey.entity.user.GroupHistoryEntity;
 import cn.neud.neusurvey.entity.user.MemberEntity;
 import cn.neud.neusurvey.entity.user.UserGroupEntity;
@@ -194,13 +192,16 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     @Override
     public PageData<UserDTO> pageGroupUser(Map<String, Object> params) {
 //        System.out.println("body"+params);
-        Integer page = (Integer) params.get("page");
-        Integer size = (Integer) params.get("size");
+        Integer page = Integer.parseInt(String.valueOf(params.get("page")));
+        Integer size = Integer.parseInt((String) params.get("size"));
         //page从零开始
-        params.put("page",page *size);
-        List<UserDTO> list = userDao.pageGroupUser(params);
+        params.put("page",page * size);
+        params.put("size", size);
         String group_id = (String) params.get("group_id");
         String username = (String) params.get("username");
+        if (username == null)
+            username = "";
+        List<UserDTO> list = userDao.pageGroupUser(params);
         Integer total = userDao.countGroupUser(group_id,username);
         PageData<UserDTO> pageData = new PageData<>(list,total);
         return pageData;

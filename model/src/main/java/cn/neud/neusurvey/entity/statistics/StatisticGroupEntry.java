@@ -1,4 +1,5 @@
 package cn.neud.neusurvey.entity.statistics;
+import cn.neud.neusurvey.entity.statistics.StatisticUserEntity;
 
 import lombok.Data;
 
@@ -9,7 +10,7 @@ public class StatisticGroupEntry {
 
    private String total;
    private String online;
-   private StatisticChartEntity heatmap;
-   private List<StatisticChartEntity> graphs ;
+   private StatisticChartEntiey heatmap;
+   private List<StatisticChartEntiey> graphs ;
    private List<StatisticUserEntity> users;
 }

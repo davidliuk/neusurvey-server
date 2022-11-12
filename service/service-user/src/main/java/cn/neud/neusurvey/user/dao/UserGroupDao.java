@@ -3,6 +3,7 @@ package cn.neud.neusurvey.user.dao;
 import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.entity.user.UserGroupEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * user_group
@@ -12,5 +13,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface UserGroupDao extends BaseDao<UserGroupEntity> {
-	
+
+
 }
