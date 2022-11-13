@@ -20,7 +20,7 @@ public interface UserGroupService extends CrudService<UserGroupEntity, UserGroup
 
     int deleteGroup(String[] ids);
 
-    int updateGroup(UserGroupDTO dto);
+    Result updateGroup(UserGroupDTO dto);
 
     int deleteUserById(String id);
 

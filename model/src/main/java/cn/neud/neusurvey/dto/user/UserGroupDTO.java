@@ -37,4 +37,9 @@ public class UserGroupDTO implements Serializable {
 	@ApiModelProperty(value = "创建人")
 	private String creator;
 
+	@ApiModelProperty(value = "保留字段")
+	private String reserved;
+
+
+
 }

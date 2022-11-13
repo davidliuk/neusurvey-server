@@ -112,16 +112,8 @@ public class UserGroupController {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        int result_code = userGroupService.updateGroup(dto);
+        return userGroupService.updateGroup(dto);
 
-        Result result = new Result();
-        if (result_code == 444){
-            result.setMsg("群组内含有用户无法修改！");
-        }else {
-            result.setMsg("修改成功！");
-        }
-
-        return result;
     }
 
 

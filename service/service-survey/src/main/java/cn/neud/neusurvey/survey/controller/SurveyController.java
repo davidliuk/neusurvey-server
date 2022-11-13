@@ -21,7 +21,6 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;

@@ -354,5 +354,25 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         return answeredSurveyDTO;
     }
 
+    @Override
+    public Result updateSurvey(SurveyDTO dto) {
+
+        SurveyEntity surveyEntity= surveyDao.selectById(dto.getId());
+
+        if(surveyEntity==null)
+            return new Result().error("没有找到该问卷");
+        if(surveyEntity.getIsDeleted()!=null
+                &&surveyEntity.getIsDeleted().equals("1"))
+            return new Result().error("该问卷已经被删除");
+
+        if(System.currentTimeMillis()>=surveyEntity.getStartTime().getTime()
+                &&System.currentTimeMillis()<=surveyEntity.getEndTime().getTime())
+            return new Result().error("该问卷正在进行中,无法修改");
+
+        update(dto);
+
+        return new Result().ok(null);
+    }
+
 
 }

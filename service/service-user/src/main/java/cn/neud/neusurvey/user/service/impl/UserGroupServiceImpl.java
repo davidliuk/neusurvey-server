@@ -3,12 +3,14 @@ package cn.neud.neusurvey.user.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.neud.common.page.PageData;
 import cn.neud.common.utils.Result;
+import cn.neud.common.utils.UUIDUtil;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
 import cn.neud.neusurvey.entity.user.GroupHistoryEntity;
 import cn.neud.neusurvey.entity.user.MemberEntity;
 import cn.neud.neusurvey.entity.user.UserGroupEntity;
 import cn.neud.neusurvey.user.dao.*;
+import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
 import cn.neud.neusurvey.dto.user.UserGroupDTO;
@@ -90,19 +92,40 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     }
 
     @Override
-    public int updateGroup(UserGroupDTO dto) {
-        List<MemberEntity> memberEntityList = memberDao.selectByGroupId(dto.getId());
-        if (memberEntityList.size() == 0){
-            UserGroupEntity userGroupEntity = userGroupDao.selectById(dto.getId());
-            if (dto != null && userGroupEntity != null){
-                BeanUtil.copyProperties(dto,userGroupEntity);
-                System.out.println(userGroupEntity);
-                userGroupDao.updateById(userGroupEntity);
-            }
-        }else {
-            return 444;
+    public Result updateGroup(UserGroupDTO dto) {
+
+
+        Result result=new Result();
+
+        UserGroupEntity userGroupEntity = userGroupDao.selectById(dto.getId());
+        if (userGroupEntity == null) {
+            return result.error("未找到该群组");
         }
-        return 111;
+        if(userGroupEntity.getIsDeleted()!=null
+                &&userGroupEntity.getIsDeleted().equals("1"))
+        {
+            return result.error("该群组已被删除");
+        }
+
+        //保存数值
+        String creator=userGroupEntity.getCreator();
+        BeanUtil.copyProperties(dto,userGroupEntity);
+        userGroupEntity.setCreator(creator);
+        userGroupEntity.setUpdater(dto.getCreator());
+        userGroupEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+        userGroupDao.updateById(userGroupEntity);
+
+        //保存历史
+        GroupHistoryEntity groupHistoryEntity=new GroupHistoryEntity();
+        BeanUtil.copyProperties(userGroupEntity,groupHistoryEntity);
+        groupHistoryEntity.setId(UuidUtils.generateUuid());
+        groupHistoryEntity.setGroupId(dto.getId());
+        groupHistoryDao.insert(groupHistoryEntity);
+
+        //更新成员
+        List<MemberEntity> memberEntityList = memberDao.selectByGroupId(dto.getId());
+
+        return new Result().error("雷世鹏还在设计");
     }
 
     @Override

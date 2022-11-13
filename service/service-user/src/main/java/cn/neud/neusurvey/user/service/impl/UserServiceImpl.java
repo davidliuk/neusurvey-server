@@ -4,7 +4,10 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.neud.common.utils.Result;
 import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.entity.user.UserEntity;
+import cn.neud.neusurvey.entity.user.UserHistoryEntity;
+import cn.neud.neusurvey.user.dao.UserHistoryDao;
 import cn.neud.neusurvey.user.service.HttpUtils;
+import cn.neud.neusurvey.user.service.UserHistoryService;
 import cn.neud.neusurvey.user.utils.MailUtils;
 import com.alibaba.nacos.common.utils.UuidUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -36,6 +39,9 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
     @Resource
     private UserDao userDao;
     public String Code;
+
+    @Resource
+    private UserHistoryDao userHistoryDao;
 
     @Override
     public QueryWrapper<UserEntity> getWrapper(Map<String, Object> params) {
@@ -148,8 +154,17 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         if (userEntity_username != null && !dto.getUsername().equals(userEntity.getUsername()))
             return result.error("已存在用户名为" + dto.getUsername() + "的用户实体");
 
+        //自动存盘
+
+
         BeanUtils.copyProperties(dto, userEntity);
         userEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
+
+        UserHistoryEntity historyEntity=new UserHistoryEntity();
+        BeanUtils.copyProperties(userEntity, historyEntity);
+        historyEntity.setUserId(userEntity.getId());
+        historyEntity.setId(UuidUtils.generateUuid());
+        userHistoryDao.insert(historyEntity);
 
         userDao.updateById(userEntity);
 

@@ -23,6 +23,19 @@ public class GroupHistoryEntity {
      * 群组id
      */
 	private String groupId;
+	/**
+     * 群组名字
+     */
+	private String groupname;
+	/**
+     * 描述
+     */
+	private String description;
+	/**
+     * 头像
+     */
+	private String avatar;
+
     /**
      * 创建人
      */

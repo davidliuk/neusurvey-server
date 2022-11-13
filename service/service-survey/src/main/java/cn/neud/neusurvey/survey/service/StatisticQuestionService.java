@@ -1,9 +1,9 @@
 package cn.neud.neusurvey.survey.service;
 
-import cn.neud.neusurvey.entity.statistics.StatisticGroupEntry;
+import cn.neud.common.utils.Result;
 
 public interface StatisticQuestionService{
 
-    StatisticGroupEntry questionStatistic(String id);
+    Result questionStatistic(String id);
 
 }

@@ -1,7 +1,7 @@
 package cn.neud.neusurvey.survey.controller;
 
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.entity.statistics.StatisticGroupEntry;
+import cn.neud.neusurvey.entity.statistics.StatisticSurveyEntity;
 import cn.neud.neusurvey.survey.service.StatisticQuestionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,9 +28,8 @@ public class StatisticQuestionController {
     public Result groupStatistic(@ApiIgnore @RequestParam String id){
         Result result = new Result();
 
-        StatisticGroupEntry statisticQuestionEntry = statisticQuestionService.questionStatistic(id);
+        return statisticQuestionService.questionStatistic(id);
 
-        return result.ok(statisticQuestionEntry);
     }
 
 

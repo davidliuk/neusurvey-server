@@ -214,29 +214,31 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
         return result.ok(resEntities);
     }
 
-//    @Override
-//    public Result deleteQuestion(String[] ids) {
-//
-//        Result result = new Result();
-//
-//        boolean ifOK = true;
-//        String msg = new String();
-//
-//        for (int i = 0; i < ids.length; i++) {
-//            QuestionEntity questionEntity = questionDao.selectById(ids[i]);
-//
-//            if (questionEntity == null) {
-//                ifOK &= false;
-//                msg += "找不到id为" + ids[i] + "的question实体\n";
-//                continue;
-//            }
-//
-//            questionEntity.setIsDeleted("1");
-//
-//            questionDao.updateById(questionEntity);
-//        }
-//
-//        if (ifOK) return result.ok(null);
-//        else return result.error(msg + "其余实体均操作完毕");
-//    }
+
+    @Override
+    public Result deleteQuestion(String[] ids) {
+
+        Result result = new Result();
+
+        boolean ifOK = true;
+        String msg = new String();
+
+        for (int i = 0; i < ids.length; i++) {
+            QuestionEntity questionEntity = questionDao.selectById(ids[i]);
+
+            if (questionEntity == null) {
+                ifOK &= false;
+                msg += "找不到id为" + ids[i] + "的question实体\n";
+                continue;
+            }
+
+            questionEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+            questionEntity.setIsDeleted(1);
+
+            questionDao.updateById(questionEntity);
+        }
+
+        if (ifOK) return result.ok(null);
+        else return result.error(msg + "其余实体均操作完毕");
+    }
 }
