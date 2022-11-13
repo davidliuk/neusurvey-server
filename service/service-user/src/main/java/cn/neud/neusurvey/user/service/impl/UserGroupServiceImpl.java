@@ -4,10 +4,12 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.neud.common.page.PageData;
 import cn.neud.common.utils.Result;
 import cn.neud.common.utils.UUIDUtil;
+import cn.neud.neusurvey.dto.user.MemberHistoryDTO;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
 import cn.neud.neusurvey.entity.user.GroupHistoryEntity;
 import cn.neud.neusurvey.entity.user.MemberEntity;
+import cn.neud.neusurvey.entity.user.MemberHistoryEntity;
 import cn.neud.neusurvey.entity.user.UserGroupEntity;
 import cn.neud.neusurvey.user.dao.*;
 import com.alibaba.nacos.common.utils.UuidUtils;
@@ -39,6 +41,9 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     GroupHistoryDao groupHistoryDao;
 
     @Autowired
+    MemberHistoryDao memberHistoryDao;
+
+    @Autowired
     UserDao userDao;
 
     @Autowired
@@ -62,14 +67,16 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
         String updater = "admin";
         for (int i = 0; i < ids.length; i++) {
             List<MemberEntity> memberEntityList = memberDao.selectByGroupId(ids[i]);
+
             //雷世鹏:两种情况下可以删除:一是member没有,二是有但全部已经软删除了
             boolean flag=memberEntityList.size()!=0;
             for(int j=0;j<memberEntityList.size();j++)
             {
-                flag &= memberEntityList.get(j).getIsDeleted()!=null&&memberEntityList.get(j).getIsDeleted().equals("1");
+                flag &= memberEntityList.get(j).getIsDeleted()!=null
+                        &&memberEntityList.get(j).getIsDeleted().equals("1");
             }
 
-            if (flag){
+            if (flag||memberEntityList.size()==0){
                 UserGroupEntity userGroupEntity = userGroupDao.selectById(ids[i]);
                 userGroupEntity.setIsDeleted("1");
                 userGroupDao.updateById(userGroupEntity);
@@ -110,6 +117,7 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
         //保存数值
         String creator=userGroupEntity.getCreator();
         BeanUtil.copyProperties(dto,userGroupEntity);
+        UserGroupEntity copyUserGroupEntity=userGroupEntity;
         userGroupEntity.setCreator(creator);
         userGroupEntity.setUpdater(dto.getCreator());
         userGroupEntity.setUpdateDate(new Date(System.currentTimeMillis()));
@@ -117,15 +125,43 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
 
         //保存历史
         GroupHistoryEntity groupHistoryEntity=new GroupHistoryEntity();
-        BeanUtil.copyProperties(userGroupEntity,groupHistoryEntity);
+        BeanUtil.copyProperties(copyUserGroupEntity,groupHistoryEntity);
         groupHistoryEntity.setId(UuidUtils.generateUuid());
         groupHistoryEntity.setGroupId(dto.getId());
         groupHistoryDao.insert(groupHistoryEntity);
 
         //更新成员
         List<MemberEntity> memberEntityList = memberDao.selectByGroupId(dto.getId());
+        String group_history_id= groupHistoryEntity.getId();
+        String group_id=groupHistoryEntity.getGroupId();
+        for(int i=0;i<memberEntityList.size();i++)
+        {
+            //插入到memberHistory里面
+            String user_id=memberEntityList.get(i).getUserId();
+            MemberHistoryEntity memberHistoryEntity=new MemberHistoryEntity();
+            BeanUtil.copyProperties(memberEntityList.get(i),memberHistoryEntity);
+            memberHistoryEntity.setGroupHistoryId(group_history_id);
+            memberHistoryEntity.setUserId(user_id);
+            memberHistoryEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+            memberHistoryDao.insert(memberHistoryEntity);
 
-        return new Result().error("雷世鹏还在设计");
+            //从member里面删除
+            memberDao.deleteByPrimaryKey(user_id,group_id);
+        }
+
+        String[] ids=dto.getUserIds();
+
+        for(int i=0;i< ids.length;i++)
+        {
+            MemberEntity memberEntity=new MemberEntity();
+            BeanUtil.copyProperties(groupHistoryEntity,memberEntity);
+            memberEntity.setUserId(ids[i]);
+            memberEntity.setGroupId(group_id);
+
+            memberDao.insert(memberEntity);
+        }
+
+        return new Result().ok(null);
     }
 
     @Override

@@ -31,9 +31,12 @@ public class GroupHistoryServiceImpl extends CrudServiceImpl<GroupHistoryDao, Gr
     @Override
     public QueryWrapper<GroupHistoryEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
+        String groupId = (String)params.get("groupId");
+
 
         QueryWrapper<GroupHistoryEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.eq( "group_id", groupId);
 
         return wrapper;
     }

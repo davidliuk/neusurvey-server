@@ -132,23 +132,24 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         this.save(dto);
     }
 
-    public Result updateSurvey(SurveyDTO dto) {
-        Result result = new Result();
-//        super.update(dto);
-        SurveyEntity surveyEntity = surveyDao.selectById(dto.getId());
-        ;
-
-        if ( surveyEntity.getStartTime().getTime() > System.currentTimeMillis()
-                &&surveyEntity.getEndTime().getTime() < System.currentTimeMillis())
-        {
-            result.setMsg("问卷正在进行，请稍后操作");
-            return result;
-        }
-        this.delete(new String[]{dto.getId()});
-        this.save(dto);
-        result.setMsg("修改成功");
-        return result;
-    }
+//
+//    public Result updateSurvey(SurveyDTO dto) {
+//        Result result = new Result();
+////        super.update(dto);
+//        SurveyEntity surveyEntity = surveyDao.selectById(dto.getId());
+//        ;
+//
+//        if ( surveyEntity.getStartTime().getTime() > System.currentTimeMillis()
+//                &&surveyEntity.getEndTime().getTime() < System.currentTimeMillis())
+//        {
+//            result.setMsg("问卷正在进行，请稍后操作");
+//            return result;
+//        }
+//        this.delete(new String[]{dto.getId()});
+//        this.save(dto);
+//        result.setMsg("修改成功");
+//        return result;
+//    }
 
 
     @Override

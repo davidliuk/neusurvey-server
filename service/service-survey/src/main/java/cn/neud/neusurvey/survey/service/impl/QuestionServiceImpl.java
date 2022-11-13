@@ -231,11 +231,13 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
                 msg += "找不到id为" + ids[i] + "的question实体\n";
                 continue;
             }
-
-            questionEntity.setUpdateDate(new Date(System.currentTimeMillis()));
-            questionEntity.setIsDeleted(1);
-
-            questionDao.updateById(questionEntity);
+//
+//            questionEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+//            questionEntity.setIsDeleted(1);
+//
+//            questionDao.updateById(questionEntity);
+//
+            questionDao.deleteById(questionEntity);
         }
 
         if (ifOK) return result.ok(null);

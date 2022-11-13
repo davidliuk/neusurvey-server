@@ -32,9 +32,11 @@ public class UserHistoryServiceImpl extends CrudServiceImpl<UserHistoryDao, User
     @Override
     public QueryWrapper<UserHistoryEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
+        String userId = (String)params.get("userId");
 
         QueryWrapper<UserHistoryEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+        wrapper.eq( "user_id", userId);
 
         return wrapper;
     }

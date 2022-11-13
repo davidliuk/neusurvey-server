@@ -155,16 +155,16 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
             return result.error("已存在用户名为" + dto.getUsername() + "的用户实体");
 
         //自动存盘
-
-
-        BeanUtils.copyProperties(dto, userEntity);
-        userEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
-
         UserHistoryEntity historyEntity=new UserHistoryEntity();
         BeanUtils.copyProperties(userEntity, historyEntity);
         historyEntity.setUserId(userEntity.getId());
         historyEntity.setId(UuidUtils.generateUuid());
+        historyEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
         userHistoryDao.insert(historyEntity);
+
+        BeanUtils.copyProperties(dto, userEntity);
+        userEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
+
 
         userDao.updateById(userEntity);
 

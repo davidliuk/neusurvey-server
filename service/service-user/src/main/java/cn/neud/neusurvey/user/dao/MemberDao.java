@@ -2,10 +2,8 @@ package cn.neud.neusurvey.user.dao;
 
 import cn.neud.common.dao.BaseDao;
 import cn.neud.neusurvey.entity.user.MemberEntity;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import lombok.Data;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -36,4 +34,7 @@ public interface MemberDao extends BaseDao<MemberEntity> {
             "where user_id = #{user_id} " +
             "and group_id = #{group_id}")
     void activeUser(String user_id, String group_id);
+
+    @Delete("delete from member where user_id=#{userId} AND group_id=#{groupId}")
+    void deleteByPrimaryKey(String userId, String groupId);
 }
