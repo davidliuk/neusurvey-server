@@ -117,7 +117,6 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
 
         Result result=new Result();
         String msg=new String();
-
         if(userGroupDao.selectById(dto.getGroup_id())==null)
             return result.error("没有这个群");
         if(userGroupDao.selectById(dto.getGroup_id()).getIsDeleted().equals("1"))
@@ -270,5 +269,59 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     public boolean ifDeleted(String id) {
         return userGroupDao.selectById(id).getIsDeleted()!=null
                 &&userGroupDao.selectById(id).getIsDeleted().equals("1");
+    }
+
+    @Override
+    public Result updateGroupUsers(UserGroupOperateUserDTO dto) {
+        Result result=new Result();
+
+        if(userGroupDao.selectById(dto.getGroup_id())==null)
+            return result.error("没有这个群组");
+
+        if(userGroupDao.selectById(dto.getGroup_id()).getIsDeleted()!=null
+                &&userGroupDao.selectById(dto.getGroup_id()).getIsDeleted().equals("1"))
+            return result.error("该群组已被删除");
+
+        String[] old_ids = memberDao.selectUserIdsByGroupId(dto.getGroup_id());
+        UserGroupOperateUserDTO temp = new UserGroupOperateUserDTO();
+        temp.setGroup_id(dto.getGroup_id());
+        temp.setUser_ids(old_ids);
+        temp.setCreator(dto.getCreator());
+
+        deleteUserByPrimary(dto);
+
+        String[] user_ids = dto.getUser_ids();
+        String msg=new String();
+        for (int i = 0; i < user_ids.length; i++) {
+
+            if(userDao.selectById(user_ids[i])==null)
+            {
+                msg+="没有id为"+user_ids[i]+"的用户\n";
+                continue;
+            }
+
+            if(userDao.selectById(user_ids[i]).getIsDeleted()!=null
+                    &&userDao.selectById(user_ids[i]).getIsDeleted().equals("1"))
+            {
+                msg+="用户"+user_ids[i]+"已注销\n";
+                continue;
+            }
+            if (memberDao.selectByPrimaryKey(user_ids[i],dto.getGroup_id()) != null){
+                memberDao.activeUser(user_ids[i],dto.getGroup_id());
+            }else {
+                MemberEntity memberEntity = new MemberEntity();
+                memberEntity.setGroupId(dto.getGroup_id());
+                memberEntity.setUserId(user_ids[i]);
+                memberEntity.setCreator(dto.getCreator());
+                memberEntity.setCreateDate(new Date(System.currentTimeMillis()));
+                memberEntity.setUpdater(dto.getCreator());
+                memberEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+                memberEntity.setIsDeleted("0");
+                memberDao.insert(memberEntity);
+            }
+        }
+        msg = "操作成功了哩^_^";
+        result.setMsg(msg);
+        return result.ok(null);
     }
 }

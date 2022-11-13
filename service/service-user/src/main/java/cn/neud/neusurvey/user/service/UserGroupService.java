@@ -38,4 +38,5 @@ public interface UserGroupService extends CrudService<UserGroupEntity, UserGroup
 
     boolean ifDeleted(String id);
 
+    Result updateGroupUsers(UserGroupOperateUserDTO dto);
 }

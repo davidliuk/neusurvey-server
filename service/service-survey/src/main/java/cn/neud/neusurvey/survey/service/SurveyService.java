@@ -23,4 +23,6 @@ public interface SurveyService extends CrudService<SurveyEntity, SurveyDTO> {
     Result deleteSurveyLogic(String[] ids);
 
     AnsweredSurveyDTO getUserAnswerDerail(String id, String userId);
+
+    Result updateSurvey(SurveyDTO dto);
 }

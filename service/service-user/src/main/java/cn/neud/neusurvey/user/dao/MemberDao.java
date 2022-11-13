@@ -5,6 +5,7 @@ import cn.neud.neusurvey.entity.user.MemberEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -29,4 +30,10 @@ public interface MemberDao extends BaseDao<MemberEntity> {
 
     @Select("select user_id from member where group_id=#{groupId}")
     String[] selectUserIdsByGroupId(@Param("groupId") String groupId);
+
+    @Update("update member " +
+            "set is_deleted = '0' " +
+            "where user_id = #{user_id} " +
+            "and group_id = #{group_id}")
+    void activeUser(String user_id, String group_id);
 }

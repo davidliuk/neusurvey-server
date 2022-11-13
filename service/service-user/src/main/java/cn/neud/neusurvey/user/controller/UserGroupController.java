@@ -100,6 +100,8 @@ public class UserGroupController {
 //        return new Result();
 //    }
 
+
+
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
@@ -169,6 +171,17 @@ public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto){
 
 }
 
+//新增&删除
+
+    @PostMapping("updateGroupUsers")
+    @RequiresPermissions("user:usergroup:update")
+    public Result updateGroupUsers(@RequestBody UserGroupOperateUserDTO dto){
+        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+
+        return userGroupService.updateGroupUsers(dto);
+
+    }
+
 
     //雷世鹏:  新增群组
     @PostMapping()
@@ -202,7 +215,6 @@ public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestParam Map<Stri
 
 
 ////统计群组
-////    新增群组下的用户
 //@GetMapping("/StatisticGroup{id}")
 //@ApiOperation("统计群组")
 //@LogOperation("统计群组")

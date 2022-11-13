@@ -113,9 +113,9 @@ public class SurveyController {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
 
-        surveyService.update(dto);
+        Result result = surveyService.updateSurvey(dto);
 
-        return new Result();
+        return result;
     }
 
     @DeleteMapping

@@ -15,4 +15,5 @@ import org.apache.ibatis.annotations.Select;
 public interface UserGroupDao extends BaseDao<UserGroupEntity> {
 
 
+
 }

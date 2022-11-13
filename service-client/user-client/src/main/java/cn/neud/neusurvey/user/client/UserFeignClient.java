@@ -16,4 +16,5 @@ public interface UserFeignClient {
     @ApiOperation("群组统计数据")
     public Result groupStatistic(@PathVariable("id") String id);
 
+
 }
