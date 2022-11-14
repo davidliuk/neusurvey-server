@@ -90,6 +90,27 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
                 groupHistoryEntity.setUpdater(updater);
                 groupHistoryEntity.setUpdateDate(new Date(System.currentTimeMillis()));
                 groupHistoryDao.insert(groupHistoryEntity);
+
+
+                //更新成员
+                String group_history_id= groupHistoryEntity.getId();
+                String group_id=groupHistoryEntity.getGroupId();
+                for(int j=0;j<memberEntityList.size();j++)
+                {
+                    //插入到memberHistory里面
+                    String user_id=memberEntityList.get(j).getUserId();
+                    MemberHistoryEntity memberHistoryEntity=new MemberHistoryEntity();
+                    BeanUtil.copyProperties(memberEntityList.get(j),memberHistoryEntity);
+                    memberHistoryEntity.setGroupHistoryId(group_history_id);
+                    memberHistoryEntity.setUserId(user_id);
+                    memberHistoryEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+                    memberHistoryDao.insert(memberHistoryEntity);
+
+                    //从member里面删除
+                    memberDao.deleteByPrimaryKey(user_id,group_id);
+                }
+
+
             }else {
                 return 444;
             }

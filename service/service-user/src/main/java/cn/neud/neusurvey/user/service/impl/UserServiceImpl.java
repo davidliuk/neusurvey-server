@@ -129,6 +129,16 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
                 continue;
             }
 
+
+            //自动存盘
+            UserHistoryEntity historyEntity=new UserHistoryEntity();
+            BeanUtils.copyProperties(userEntity, historyEntity);
+            historyEntity.setUserId(userEntity.getId());
+            historyEntity.setId(UuidUtils.generateUuid());
+            historyEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
+            userHistoryDao.insert(historyEntity);
+
+
             userEntity.setIsDeleted("1");
             userDao.updateById(userEntity);
 
