@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.neud.common.page.PageData;
 import cn.neud.common.utils.Result;
 import cn.neud.common.utils.UUIDUtil;
+import cn.neud.neusurvey.dto.survey.InvitationDTO;
 import cn.neud.neusurvey.dto.user.MemberHistoryDTO;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
