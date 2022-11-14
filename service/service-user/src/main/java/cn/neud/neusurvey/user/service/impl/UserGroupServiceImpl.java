@@ -383,4 +383,41 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
         result.setMsg(msg);
         return result.ok(null);
     }
+
+    @Override
+    public Result invitationCodeAddGroup(InvitationDTO dto) {
+        Result result = new Result();
+
+        String groupId = userGroupDao.selectByReserve(dto.getInvitationCode());
+        if (groupId == null ){
+            return result.error(404,"该群组不存在，请检查您的邀请码输入是否正确！");
+        }
+        MemberEntity m = memberDao.selectByPrimaryKey(dto.getUserId(), groupId);
+        if ( m != null ){
+            System.out.println(m);
+            if (m.getIsDeleted().equals("1")){
+                m.setIsDeleted("0");
+                memberDao.activeUser(m.getUserId(),groupId);
+                result.setCode(200);
+                result.setMsg("添加成功");
+                return result;
+            }else {
+                return result.error(555,"该用户已经添加，请勿重复添加！");
+            }
+        }
+
+        MemberEntity memberEntity = new MemberEntity();
+        memberEntity.setGroupId(groupId);
+        memberEntity.setUserId(groupId);
+        memberEntity.setCreator(dto.getCreator());
+        memberEntity.setCreateDate(new Date(System.currentTimeMillis()));
+        memberEntity.setUpdater(dto.getCreator());
+        memberEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+        memberEntity.setIsDeleted("0");
+        memberDao.insert(memberEntity);
+        result.setCode(200);
+        result.setMsg("添加成功");
+
+        return result;
+    }
 }

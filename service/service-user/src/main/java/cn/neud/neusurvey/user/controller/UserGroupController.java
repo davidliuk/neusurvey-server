@@ -10,6 +10,7 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
+import cn.neud.neusurvey.dto.survey.InvitationDTO;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
@@ -187,6 +188,18 @@ public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto){
         return userGroupService.addGroup(dto);
     }
 
+
+    @PostMapping("/invitationCodeAddGroup")
+    @ApiOperation("保存")
+    @LogOperation("保存")
+    @RequiresPermissions("user:usergroup:addGroup")
+    public Result invitationCodeAddGroup(@RequestBody InvitationDTO dto){
+        //效验数据
+        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+
+        return userGroupService.invitationCodeAddGroup(dto);
+    }
+
 //    查找群组下的用户
 @GetMapping("pageGroupUser")
 @ApiOperation("分页")
@@ -204,6 +217,8 @@ public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestParam Map<Stri
 
     return new Result<PageData<UserDTO>>().ok(page);
 }
+
+
 
 
 ////统计群组

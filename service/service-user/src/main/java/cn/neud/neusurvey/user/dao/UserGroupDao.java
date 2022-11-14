@@ -15,5 +15,6 @@ import org.apache.ibatis.annotations.Select;
 public interface UserGroupDao extends BaseDao<UserGroupEntity> {
 
 
-
+    @Select("select  id from user_group where reserved = #{reserved}")
+    String selectByReserve(String reserved);
 }
