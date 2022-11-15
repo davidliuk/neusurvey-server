@@ -31,5 +31,14 @@ public class GroupHistoryDTO implements Serializable {
 	@ApiModelProperty(value = "保留项json")
 	private String reserved;
 
+	@ApiModelProperty(value = "头像")
+	private String avatar;
+
+	@ApiModelProperty(value = "描述")
+	private String description;
+
+	@ApiModelProperty(value = "组名")
+	private String groupname;
+
 
 }

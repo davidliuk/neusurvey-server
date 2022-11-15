@@ -60,6 +60,8 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
 
         if(isDeleted!=null&&isDeleted.equals("1"))
             wrapper.eq(StringUtils.isNotBlank(isDeleted),"is_deleted", isDeleted);
+        if(isDeleted!=null&&isDeleted.equals("0"))
+            wrapper.ne("is_deleted", "1");
 
         return wrapper;
     }
@@ -286,6 +288,7 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
         if (username == null)
             username = "";
         List<UserDTO> list = userDao.pageGroupUser(params);
+
         Integer total = userDao.countGroupUser(group_id,username);
         PageData<UserDTO> pageData = new PageData<>(list,total);
         return pageData;
