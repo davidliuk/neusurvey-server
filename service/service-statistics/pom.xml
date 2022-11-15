@@ -13,7 +13,7 @@
     <dependencies>
         <dependency>
             <groupId>cn.neud</groupId>
-            <artifactId>service-user</artifactId>
+            <artifactId>user-client</artifactId>
             <version>5.0.0</version>
             <scope>compile</scope>
         </dependency>
