@@ -53,9 +53,13 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     @Override
     public QueryWrapper<UserGroupEntity> getWrapper(Map<String, Object> params){
         String id = (String)params.get("id");
+        String isDeleted = (String)params.get("isDeleted");
 
         QueryWrapper<UserGroupEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
+
+        if(isDeleted!=null&&isDeleted.equals("1"))
+            wrapper.eq(StringUtils.isNotBlank(isDeleted),"is_deleted", isDeleted);
 
         return wrapper;
     }

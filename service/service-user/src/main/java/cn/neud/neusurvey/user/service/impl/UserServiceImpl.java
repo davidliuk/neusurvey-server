@@ -49,12 +49,16 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         String role = (String) params.get("role");
         String username = (String) params.get("username");
         String nickname = (String) params.get("nickname");
+        String isDeleted = (String) params.get("isDeleted");
 
         QueryWrapper<UserEntity> wrapper = new QueryWrapper<>();
         wrapper.like(StringUtils.isNotBlank(id), "id", id);
         wrapper.eq(StringUtils.isNotBlank(role), "role", role);
         wrapper.like(StringUtils.isNotBlank(username), "username", username);
         wrapper.like(StringUtils.isNotBlank(nickname), "nickname", nickname);
+
+        if(isDeleted!=null&&isDeleted.equals("1"))
+            wrapper.like(StringUtils.isNotBlank(isDeleted),"is_deleted", isDeleted);
 
         return wrapper;
     }
