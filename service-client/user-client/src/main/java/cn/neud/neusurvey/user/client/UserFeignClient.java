@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Repository
 public interface UserFeignClient {
 
-    @GetMapping("/statistics/group{id}")
+    @GetMapping("/statistics/group/{id}")
     @ApiOperation("群组统计数据")
     public Result groupStatistic(@PathVariable("id") String id);
 
