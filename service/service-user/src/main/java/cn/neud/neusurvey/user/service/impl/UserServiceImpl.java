@@ -62,7 +62,6 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         if(isDeleted!=null&&isDeleted.equals("0"))
             wrapper.ne("is_deleted", "1");
 
-
             return wrapper;
     }
 
