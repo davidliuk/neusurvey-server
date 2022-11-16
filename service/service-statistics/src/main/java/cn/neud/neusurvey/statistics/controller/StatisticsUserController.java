@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("statistics/respondent")
-@Api(tags="user_group")                           // ?
+@Api(tags = "user_group")                           // ?
 public class StatisticsUserController {
     @Resource
     SurveyFeignClient surveyFeignClient;
@@ -25,7 +25,7 @@ public class StatisticsUserController {
     public Result respondentStatistic(@PathVariable("id") String id) {
         Result result = new Result();
 
-       result = surveyFeignClient.respondentStatistic(id);
+        result = surveyFeignClient.respondentStatistic(id);
 
         return result;
     }

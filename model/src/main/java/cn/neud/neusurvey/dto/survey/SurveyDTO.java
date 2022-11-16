@@ -49,5 +49,13 @@ public class SurveyDTO implements Serializable {
 
 	@ApiModelProperty(value = "问题")
 	private List<QuestionDTO> questions;
+	/**
+	 * 更新人，存群组id
+	 */
+	private String updater;
+	/**
+	 * 保留项json，存是否开启
+	 */
+	private String reserved;
 
 }

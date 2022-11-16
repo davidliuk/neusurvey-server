@@ -12,11 +12,15 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
+import cn.neud.neusurvey.dto.survey.SurveyDTO;
 import cn.neud.neusurvey.dto.user.*;
 import cn.neud.neusurvey.entity.user.UserEntity;
 import cn.neud.neusurvey.mapper.user.UserMapper;
 import cn.neud.neusurvey.sms.client.SMSFeignClient;
 import cn.neud.neusurvey.excel.user.UserExcel;
+import cn.neud.neusurvey.user.client.SurveyFeignClient;
+import cn.neud.neusurvey.user.service.MemberService;
+import cn.neud.neusurvey.user.service.UserGroupService;
 import cn.neud.neusurvey.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -30,6 +34,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,6 +54,12 @@ public class UserController {
 
     @Resource
     private SMSFeignClient smsFeignClient;
+
+    @Resource
+    private SurveyFeignClient surveyFeignClient;
+
+    @Resource
+    private MemberService memberService;
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -138,7 +149,6 @@ public class UserController {
     public Result update(@RequestBody UserDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, UpdateGroup.class, DefaultGroup.class);
-
         return userService.updateUser(dto);
 
     }
@@ -263,6 +273,25 @@ public class UserController {
         //效验数据
         ValidatorUtils.validateEntity(sendCodeDTO, AddGroup.class, DefaultGroup.class);
         return userService.sendCode(sendCodeDTO);
+    }
+
+    @GetMapping("answerRight")
+    public Result answerRight(@RequestParam("userId") String userId, @RequestParam("surveyId") String surveyId) {
+        Result<SurveyDTO> group = surveyFeignClient.getGroup(surveyId);
+
+        if (group.getData() == null) {
+            return new Result().error("该问卷不存在");
+        }
+        if (group.getData().getReserved() == null || !(group.getData().getReserved().equals("1"))) {
+            return new Result().error("该问卷暂未开始进行");
+        }
+        if ((group.getData().getStartTime() != null && group.getData().getStartTime().after(new Date())) || (group.getData().getEndTime() != null && group.getData().getEndTime().after(new Date()))) {
+            return new Result().error("未处于该问卷的答题时间");
+        }
+        if (group.getData().getUpdater() == null || memberService.have(userId, group.getData().getUpdater())) {
+            return new Result().ok("成功");
+        }
+        return new Result().error("用户不在问卷面向的群组中！");
     }
 
 }

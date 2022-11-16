@@ -1,6 +1,7 @@
 package cn.neud.neusurvey.user.client;
 
 import cn.neud.common.utils.Result;
+import cn.neud.neusurvey.dto.survey.SurveyDTO;
 import cn.neud.neusurvey.entity.statistics.StatisticUserEntity;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -23,9 +24,12 @@ public interface SurveyFeignClient {
     @ApiOperation("答者统计数据")
     public StatisticUserEntity getStatisticUserEntity(@PathVariable("id") String id);
 
-
     @GetMapping("/statistics/survey/{id}")
     @ApiOperation("问卷统计数据")
     public Result surveyStatistic(@PathVariable("id") String id);
+
+    @GetMapping("/survey/survey/group/{id}")
+    @ApiOperation("")
+    public Result<SurveyDTO> getGroup(@PathVariable("id") String id);
 
 }

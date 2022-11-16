@@ -78,7 +78,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
     public void save(SurveyDTO dto) {
         SurveyEntity survey = SurveyMapper.INSTANCE.toSurvey(dto);
         survey.setCreator(survey.getManagedBy());
-        survey.setUpdater(survey.getManagedBy());
+//        survey.setUpdater(survey.getManagedBy());
         survey.setCreateDate(new Date());
         survey.setUpdateDate(new Date());
         super.insert(survey);
@@ -87,7 +87,6 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
         have.setSurveyId(survey.getId());
         GotoEntity goTo = new GotoEntity();
         goTo.setSurveyId(survey.getId());
-//        Set<String> oldQuestion = new HashSet<>(questionService.list());
 
         for (QuestionEntity question : survey.getQuestions()) {
             if (questionService.get(question.getId()) != null) {
@@ -151,11 +150,11 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
 //        return result;
 //    }
 
-
     @Override
     public SurveyDTO get(String id) {
         // survey 基本内容
         SurveyDTO survey = SurveyMapper.INSTANCE.fromSurvey(super.selectById(id));
+        System.out.println(survey);
         // survey 所有题目及下一题信息
         Map<String, Object> map = new HashMap<>(1);
         map.put("surveyId", id);
@@ -212,28 +211,27 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
 
     @Override
     public boolean ifExists(String id) {
-        return surveyDao.selectById(id)!=null;
+        return surveyDao.selectById(id) != null;
     }
 
     @Override
     public boolean ifDeleted(String id) {
-        return surveyDao.selectById(id).getIsDeleted()!=null
-                &&surveyDao.selectById(id).getIsDeleted().equals("1");
+        return surveyDao.selectById(id).getIsDeleted() != null
+                && surveyDao.selectById(id).getIsDeleted().equals("1");
     }
 
     @Override
     public Result deleteSurvey(String[] ids) {
 
-        Result result=new Result();
+        Result result = new Result();
 
-        String msg=new String();
+        String msg = new String();
 
-        for(int i=0;i<ids.length;i++)
-        {
+        for (int i = 0; i < ids.length; i++) {
 
-            SurveyEntity surveyEntity=surveyDao.selectById(ids[i]);
+            SurveyEntity surveyEntity = surveyDao.selectById(ids[i]);
 
-            if(surveyDao.selectById(ids[i])==null) {
+            if (surveyDao.selectById(ids[i]) == null) {
                 msg += "问卷" + ids[i] + "不存在\n";
                 continue;
             }
@@ -248,24 +246,22 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
     @Override
     public Result deleteSurveyLogic(String[] ids) {
 
-        Result result=new Result();
+        Result result = new Result();
 
-        String msg=new String();
+        String msg = new String();
 
-        for(int i=0;i<ids.length;i++)
-        {
+        for (int i = 0; i < ids.length; i++) {
 
-            SurveyEntity surveyEntity=surveyDao.selectById(ids[i]);
+            SurveyEntity surveyEntity = surveyDao.selectById(ids[i]);
 
-            if(surveyDao.selectById(ids[i])==null) {
+            if (surveyDao.selectById(ids[i]) == null) {
                 msg += "问卷" + ids[i] + "不存在\n";
                 continue;
             }
-            surveyEntity.setUpdater("admin");
+//            surveyEntity.setUpdater("admin");
             surveyEntity.setIsDeleted("1");
             surveyEntity.setUpdateDate(new Date(System.currentTimeMillis()));
             surveyDao.updateById(surveyEntity);
-
         }
         result.setMsg(msg);
         return result.ok(null);
@@ -338,13 +334,13 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             //答题选项
             AnswerDTO answerDTO = new AnswerDTO();
             System.out.println(userId + id + question.getId());
-            List<String> chooseList = chooseDao.selectByUserAndSurveyId(userId,id,question.getId());
+            List<String> chooseList = chooseDao.selectByUserAndSurveyId(userId, id, question.getId());
             answerDTO.setQuestionId(question.getId());
             answerDTO.setSurveyId(id);
             answerDTO.setChoices(chooseList);
-            if (chooseList == null || choiceList.size() == 0){
-               String content = answerDao.selectContentByByUserAndSurveyId(userId,id,question.getId());
-               answerDTO.setContent(content);
+            if (chooseList == null || choiceList.size() == 0) {
+                String content = answerDao.selectContentByByUserAndSurveyId(userId, id, question.getId());
+                answerDTO.setContent(content);
             }
             answerList.add(answerDTO);
 
@@ -358,22 +354,27 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
     @Override
     public Result updateSurvey(SurveyDTO dto) {
 
-        SurveyEntity surveyEntity= surveyDao.selectById(dto.getId());
+        SurveyEntity surveyEntity = surveyDao.selectById(dto.getId());
 
-        if(surveyEntity==null)
+        if (surveyEntity == null)
             return new Result().error("没有找到该问卷");
-        if(surveyEntity.getIsDeleted()!=null
-                &&surveyEntity.getIsDeleted().equals("1"))
+        if (surveyEntity.getIsDeleted() != null
+                && surveyEntity.getIsDeleted().equals("1"))
             return new Result().error("该问卷已经被删除");
 
-        if(System.currentTimeMillis()>=surveyEntity.getStartTime().getTime()
-                &&System.currentTimeMillis()<=surveyEntity.getEndTime().getTime())
+        if (surveyEntity.getReserved() != null && surveyEntity.getReserved().equals("1"))
+//        if ((surveyEntity.getStartTime() != null && System.currentTimeMillis() >= surveyEntity.getStartTime().getTime())
+//                && (surveyEntity.getEndTime() != null && System.currentTimeMillis() <= surveyEntity.getEndTime().getTime()))
             return new Result().error("该问卷正在进行中,无法修改");
 
-        update(dto);
+        super.update(dto);
 
         return new Result().ok(null);
     }
 
+    @Override
+    public Result getGroup(String id) {
+        return new Result().ok(super.get(id).getUpdater());
+    }
 
 }

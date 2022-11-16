@@ -38,7 +38,7 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("user/usergroup")
-@Api(tags="user_group")
+@Api(tags = "user_group")
 public class UserGroupController {
     @Resource
     private UserGroupService userGroupService;
@@ -46,20 +46,20 @@ public class UserGroupController {
     @GetMapping("page")
     @ApiOperation("分页")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
+            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String")
     })
     @RequiresPermissions("user:usergroup:page")
-    public Result<PageData<UserGroupDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params){
+    public Result<PageData<UserGroupDTO>> page(@ApiIgnore @RequestParam Map<String, Object> params) {
         PageData<UserGroupDTO> page = userGroupService.page(params);
 
         return new Result<PageData<UserGroupDTO>>().ok(page);
     }
 //    pageAnswerUser
 
-//    @GetMapping("pageAnswerUser")
+    //    @GetMapping("pageAnswerUser")
 //    @ApiOperation("分页")
 //    @ApiImplicitParams({
 //            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
@@ -75,14 +75,14 @@ public class UserGroupController {
     @GetMapping("/getGroupInfo")
     @ApiOperation("信息")
     @RequiresPermissions("user:usergroup:info")
-    public Result<UserGroupDTO> get(@ApiIgnore @RequestParam String id){
+    public Result<UserGroupDTO> get(@ApiIgnore @RequestParam String id) {
 
         //雷世鹏:软删除判定和存在性检测
-        if(!userGroupService.ifExists(id))
+        if (!userGroupService.ifExists(id))
             return new Result().error("该群组不存在");
-        if(userGroupService.ifDeleted(id))
+        if (userGroupService.ifDeleted(id))
             return new Result().error("该群组已经被删除");
- 
+
         UserGroupDTO data = userGroupService.get(id);
 
         return new Result<UserGroupDTO>().ok(data);
@@ -102,12 +102,11 @@ public class UserGroupController {
 //    }
 
 
-
     @PutMapping
     @ApiOperation("修改")
     @LogOperation("修改")
     @RequiresPermissions("user:usergroup:update")
-    public Result update(@RequestBody UserGroupDTO dto){
+    public Result update(@RequestBody UserGroupDTO dto) {
 //        System.out.println(dto);
 
         //效验数据
@@ -118,12 +117,11 @@ public class UserGroupController {
     }
 
 
-
     @DeleteMapping()
     @ApiOperation("删除")
     @LogOperation("删除")
     @RequiresPermissions("user:usergroup:delete")
-    public Result delete(@RequestBody String[] ids){
+    public Result delete(@RequestBody String[] ids) {
 
         //效验数据
         AssertUtils.isArrayEmpty(ids, "id");
@@ -131,44 +129,43 @@ public class UserGroupController {
 //        userGroupService.delete(ids);
         int result_code = userGroupService.deleteGroup(ids);
         Result result = new Result();
-        if (result_code == 444){
+        if (result_code == 444) {
             result.setMsg("群组内含有用户无法删除！");
-        }else {
+        } else {
             result.setMsg("删除成功！");
         }
 
         return result;
     }
 
-//    删除群组下的特定用户 软删除
-@DeleteMapping("deleteUserById")
-@ApiOperation("删除")
-@LogOperation("删除")
-@RequiresPermissions("user:usergroup:delete")
-public Result deleteUserById(@RequestBody UserGroupOperateUserDTO dto){
+    //    删除群组下的特定用户 软删除
+    @DeleteMapping("deleteUserById")
+    @ApiOperation("删除")
+    @LogOperation("删除")
+    @RequiresPermissions("user:usergroup:delete")
+    public Result deleteUserById(@RequestBody UserGroupOperateUserDTO dto) {
 
-    Result result = new Result();
-    return userGroupService.deleteUserByPrimary(dto);
-}
+        Result result = new Result();
+        return userGroupService.deleteUserByPrimary(dto);
+    }
 
-//    新增群组下的用户
-@PostMapping("/addGroupUser")
-@ApiOperation("保存")
-@LogOperation("保存")
-@RequiresPermissions("user:usergroup:save")
-public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto){
-    //效验数据
-    ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
+    //    新增群组下的用户
+    @PostMapping("/addGroupUser")
+    @ApiOperation("保存")
+    @LogOperation("保存")
+    @RequiresPermissions("user:usergroup:save")
+    public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto) {
+        //效验数据
+        ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
-    return userGroupService.addGroupUser(dto);
+        return userGroupService.addGroupUser(dto);
 
-}
+    }
 
-//新增&删除
-
+    //新增&删除
     @PostMapping("updateGroupUsers")
     @RequiresPermissions("user:usergroup:update")
-    public Result updateGroupUsers(@RequestBody UserGroupOperateUserDTO dto){
+    public Result updateGroupUsers(@RequestBody UserGroupOperateUserDTO dto) {
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
         return userGroupService.updateGroupUsers(dto);
@@ -181,7 +178,7 @@ public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto){
     @ApiOperation("保存")
     @LogOperation("保存")
     @RequiresPermissions("user:usergroup:addGroup")
-    public Result addGroup(@RequestBody UserGroupDTO dto){
+    public Result addGroup(@RequestBody UserGroupDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
@@ -193,36 +190,36 @@ public Result addGroupUser(@RequestBody UserGroupOperateUserDTO dto){
     @ApiOperation("保存")
     @LogOperation("保存")
     @RequiresPermissions("user:usergroup:addGroup")
-    public Result invitationCodeAddGroup(@RequestBody InvitationDTO dto){
+    public Result invitationCodeAddGroup(@RequestBody InvitationDTO dto) {
         //效验数据
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
         return userGroupService.invitationCodeAddGroup(dto);
     }
 
-//    查找群组下的用户
-@GetMapping("pageGroupUser")
-@ApiOperation("分页")
-@ApiImplicitParams({
-        @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query",required = true, dataType="int") ,
-        @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType="String") ,
-        @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType="String")
-})
-@RequiresPermissions("user:usergroup:page")
-public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestParam Map<String, Object> params){
+    //    查找群组下的用户
+    @GetMapping("pageGroupUser")
+    @ApiOperation("分页")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = Constant.PAGE, value = "当前页码，从1开始", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.LIMIT, value = "每页显示记录数", paramType = "query", required = true, dataType = "int"),
+            @ApiImplicitParam(name = Constant.ORDER_FIELD, value = "排序字段", paramType = "query", dataType = "String"),
+            @ApiImplicitParam(name = Constant.ORDER, value = "排序方式，可选值(asc、desc)", paramType = "query", dataType = "String")
+    })
+    @RequiresPermissions("user:usergroup:page")
+    public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestParam Map<String, Object> params) {
 
-    System.out.println(params);
-    PageData<UserDTO> page = userGroupService.pageGroupUser(params);
+        System.out.println(params);
+        PageData<UserDTO> page = userGroupService.pageGroupUser(params);
 
-    return new Result<PageData<UserDTO>>().ok(page);
-}
+        return new Result<PageData<UserDTO>>().ok(page);
+    }
 
     @PostMapping("recover")
     @ApiOperation("恢复")
     @LogOperation("恢复")
     @RequiresPermissions("user:userhistory:recover")
-    public Result recover(@RequestBody String[] ids){
+    public Result recover(@RequestBody String[] ids) {
         //效验数据
         ValidatorUtils.validateEntity(ids, UpdateGroup.class, DefaultGroup.class);
 
@@ -234,7 +231,7 @@ public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestParam Map<Stri
     @ApiOperation("从删除中恢复")
     @LogOperation("从删除中恢复")
     @RequiresPermissions("user:userhistory:recoverFromDelete")
-    public Result recoverFromDelete(@RequestBody String[] ids){
+    public Result recoverFromDelete(@RequestBody String[] ids) {
         //效验数据
         ValidatorUtils.validateEntity(ids, UpdateGroup.class, DefaultGroup.class);
 

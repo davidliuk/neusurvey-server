@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -59,18 +60,29 @@ public class SurveyController {
     @ApiOperation("信息")
     @RequiresPermissions("survey:survey:info")
     public Result<SurveyDTO> get(@PathVariable("id") String id) {
-
         //雷世鹏:软删除判定和存在性检测
-        if(!surveyService.ifExists(id))
+        if (!surveyService.ifExists(id))
             return new Result().error("该问卷不存在");
-        if(surveyService.ifDeleted(id))
+        if (surveyService.ifDeleted(id))
             return new Result().error("该问卷已经被删除");
-
 
         SurveyDTO data = surveyService.get(id);
         return new Result<SurveyDTO>().ok(data);
     }
 
+    @GetMapping("group/{id}")
+    @ApiOperation("")
+    @RequiresPermissions("survey:survey:info")
+    public Result<SurveyDTO> getGroup(@PathVariable("id") String id) {
+        //雷世鹏:软删除判定和存在性检测
+        if (!surveyService.ifExists(id))
+            return new Result().error("该问卷不存在");
+        if (surveyService.ifDeleted(id))
+            return new Result().error("该问卷已经被删除");
+
+        SurveyDTO data = surveyService.get(id);
+        return new Result<SurveyDTO>().ok(data);
+    }
 
     @GetMapping("/getUserAnswerDerail")
     @ApiOperation("信息")
@@ -82,8 +94,8 @@ public class SurveyController {
 //            return new Result().error("该问卷不存在");
 //        if(surveyService.ifDeleted(id))
 //            return new Result().error("该问卷已经被删除");
-     
-        AnsweredSurveyDTO data = surveyService.getUserAnswerDerail(id,userId);
+
+        AnsweredSurveyDTO data = surveyService.getUserAnswerDerail(id, userId);
         return new Result<AnsweredSurveyDTO>().ok(data);
     }
 

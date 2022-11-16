@@ -72,7 +72,7 @@
     <update id="changePassword" parameterType="map">
         update user
         set password=#{password}
-        where username=#{username}
+        where username = #{username}
     </update>
 
     <select id="statisticHeatmap" parameterType="string"

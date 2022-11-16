@@ -57,6 +57,18 @@
             <version>5.0.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.neud</groupId>
+            <artifactId>survey-client</artifactId>
+            <version>5.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.neud</groupId>
+            <artifactId>survey-client</artifactId>
+            <version>5.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <properties>

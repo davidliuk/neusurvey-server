@@ -26,4 +26,5 @@ public interface SurveyService extends CrudService<SurveyEntity, SurveyDTO> {
 
     Result updateSurvey(SurveyDTO dto);
 
+    Result getGroup(String id);
 }

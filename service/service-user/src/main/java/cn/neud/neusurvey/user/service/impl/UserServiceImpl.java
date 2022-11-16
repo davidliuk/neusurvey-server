@@ -109,7 +109,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
             String userId = UuidUtils.generateUuid();
             userEntity.setId(userId);
             userEntity.setCreator(userId);
-            userEntity.setUpdater(userId);
+//            userEntity.setUpdater(userId);
             userEntity.setCreateDate(new Date(System.currentTimeMillis()));
             userEntity.setUpdateDate(new Date(System.currentTimeMillis()));
             userEntity.setIsDeleted(String.valueOf(0));

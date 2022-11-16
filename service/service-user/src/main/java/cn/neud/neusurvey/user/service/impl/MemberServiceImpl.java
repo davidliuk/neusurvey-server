@@ -9,6 +9,7 @@ import cn.neud.neusurvey.user.service.MemberService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,5 +31,16 @@ public class MemberServiceImpl extends CrudServiceImpl<MemberDao, MemberEntity, 
         return wrapper;
     }
 
+    @Override
+    public boolean have(String userId, String groupId) {
+        QueryWrapper<MemberEntity> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id", userId);
+        wrapper.eq("group_id", groupId);
+        System.out.println(userId);
+        System.out.println(groupId);
+        List<MemberEntity> memberEntities = baseDao.selectList(wrapper);
+        System.out.println(memberEntities);
+        return memberEntities.size() != 0;
+    }
 
 }

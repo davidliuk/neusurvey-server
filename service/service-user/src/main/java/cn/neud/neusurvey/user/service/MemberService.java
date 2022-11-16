@@ -12,4 +12,6 @@ import cn.neud.neusurvey.entity.user.MemberEntity;
  */
 public interface MemberService extends CrudService<MemberEntity, MemberDTO> {
 
+    boolean have(String userId, String groupId);
+
 }

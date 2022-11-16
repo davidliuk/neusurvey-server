@@ -14,19 +14,18 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("statistics/group")
-@Api(tags="user_group")
+@Api(tags = "user_group")
 public class StatisticsGroupController {
 
     @Resource
     UserFeignClient userFeignClient;
 
 
-
     @GetMapping("{id}")
     @ApiOperation("群组统计数据")
     @RequiresPermissions("user:usergroup:info")
 //    public Result questionStatistic(@ApiIgnore @RequestParam String id){
-    public Result groupStatistic(@PathVariable("id") String id){
+    public Result groupStatistic(@PathVariable("id") String id) {
 
         Result result = userFeignClient.groupStatistic(id);
 

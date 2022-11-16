@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("statistics/survey")
-@Api(tags="user_group")
+@Api(tags = "user_group")
 public class StatisticsSurveyController {
 
     @Resource
@@ -20,7 +20,7 @@ public class StatisticsSurveyController {
     @GetMapping("{id}")
     @ApiOperation("问题统计数据")
     @RequiresPermissions("survey:stasticSurvey:info")
-    public Result surveyStatistic(@PathVariable("id") String id){
+    public Result surveyStatistic(@PathVariable("id") String id) {
 
         Result result;
 
