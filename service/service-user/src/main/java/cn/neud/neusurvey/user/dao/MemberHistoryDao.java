@@ -21,6 +21,6 @@ public interface MemberHistoryDao extends BaseDao<MemberHistoryEntity> {
 
     @Select("select user_id from member_history where group_history_id=#{groupHistoryId}")
     String[] selectByGroupHistoryId(String groupHistoryId);
-    
+
 //    List<String> selectByGroupHistoryId(String groupHistoryId);
 }

@@ -155,6 +155,19 @@ public class UserController {
 
     }
 
+
+    @PostMapping("recoverFromDelete")
+    @ApiOperation("恢复删除用户")
+    @LogOperation("恢复删除用户")
+    @RequiresPermissions("user:user:recoverFromDelete")
+    public Result recoverFromDelete(@RequestBody String[] ids) {
+        //效验数据
+        ValidatorUtils.validateEntity(ids, UpdateGroup.class, DefaultGroup.class);
+
+        return userService.recoverFromDelete(ids);
+
+    }
+
     @DeleteMapping
     @ApiOperation("删除")
     @LogOperation("删除")

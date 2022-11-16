@@ -45,4 +45,6 @@ public interface UserGroupService extends CrudService<UserGroupEntity, UserGroup
 
     Result recoverUserHistory(String[] ids);
 
+    Result recoverFromDelete(String[] ids);
+
 }

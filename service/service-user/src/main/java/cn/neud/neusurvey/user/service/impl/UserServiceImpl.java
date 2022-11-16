@@ -253,6 +253,39 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         else return result.error(msg);
     }
 
+    //用户id
+    @Override
+    public Result recoverFromDelete(String[] ids) {
+
+        Result result=new Result();
+
+        String msg=new String();
+
+        boolean ifSuccess=true;
+
+        //对每个id，找到历史记录，恢复，被替换的成为历史即可
+        for(int i=0;i< ids.length;i++)
+        {
+            //找到最新的被删除的历史记录
+            //select * from user_history where update_date= (select max(update_date) from user_history where user_id=#{userId});
+            //UserHistoryEntity userHistoryEntity=userHistoryDao.selectTheLatest(ids[i]);
+
+            UserEntity userEntity=userDao.selectById(ids[i]);
+            if(userEntity==null)
+            {
+                ifSuccess=false;
+                msg+="没有找到id为"+ids[i]+"的用户\n";
+                continue;
+            }
+            userEntity.setIsDeleted("0");
+            userDao.deleteById(ids[i]);
+            userDao.insert(userEntity);
+        }
+
+        if(ifSuccess) return result.ok(null);
+        else return result.error(msg);
+    }
+
     @Override
     public Result codeLoginValidate(UserVerificationLoginDTO userVerificationLoginDTO) {
 

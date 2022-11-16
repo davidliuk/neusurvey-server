@@ -230,6 +230,18 @@ public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestParam Map<Stri
     }
 
 
+    @PostMapping("recoverFromDelete")
+    @ApiOperation("从删除中恢复")
+    @LogOperation("从删除中恢复")
+    @RequiresPermissions("user:userhistory:recoverFromDelete")
+    public Result recoverFromDelete(@RequestBody String[] ids){
+        //效验数据
+        ValidatorUtils.validateEntity(ids, UpdateGroup.class, DefaultGroup.class);
+
+        return userGroupService.recoverFromDelete(ids);
+    }
+
+
 ////统计群组
 //@GetMapping("/StatisticGroup{id}")
 //@ApiOperation("统计群组")

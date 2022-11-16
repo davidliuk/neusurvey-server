@@ -30,4 +30,6 @@ public interface UserService extends CrudService<UserEntity, UserDTO> {
 
     Result recoverUser(String[] ids);
 
+    Result recoverFromDelete(String[] ids);
+
 }

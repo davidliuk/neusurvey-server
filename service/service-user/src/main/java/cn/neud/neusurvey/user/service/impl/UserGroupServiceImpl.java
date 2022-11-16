@@ -243,6 +243,42 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
     }
 
     @Override
+    public Result recoverFromDelete(String[] ids) {
+
+
+        Result result=new Result();
+        String msg=new String();
+        boolean ifSuccess=true;
+
+        //得到一个修改群组的数据结构（usergroupDTO)，然后开始修改群组即可
+        //如果没找到到这个群组，那就增加一个这个
+
+
+        for(int i=0;i<ids.length;i++)
+        {
+
+            UserGroupEntity userGroupEntity=userGroupDao.selectById(ids[i]);
+            if(userGroupEntity==null)
+            {
+                msg+="未找到id为"+ids[i]+"的群组\n";
+                ifSuccess=false;
+                continue;
+            }
+
+            userGroupEntity.setIsDeleted("0");
+            userGroupDao.deleteById(ids[i]);
+            userGroupDao.insert(userGroupEntity);
+
+        }
+
+
+        if(ifSuccess) return result.ok(null);
+        else return result.error(msg);
+
+
+    }
+
+    @Override
     public int deleteUserById(String id) {
 
         return 0;
