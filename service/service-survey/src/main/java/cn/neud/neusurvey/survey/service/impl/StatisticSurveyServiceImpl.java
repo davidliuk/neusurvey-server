@@ -54,10 +54,16 @@ public class StatisticSurveyServiceImpl implements StatisticSurveyService {
         //存在性检查
         SurveyEntity surveyEntity=surveyDao.selectById(id);
         if(surveyEntity==null)
-            return result.error("找不到该问卷");
+        {
+            result.setMsg("找不到该问卷");
+            return result.ok(null);
+        }
         if(surveyEntity.getIsDeleted()!=null
             &&surveyEntity.getIsDeleted().equals("1"))
-            return result.error("该问卷已经删除");
+        {
+            result.setMsg("该问卷已经删除");
+            return result.ok(null);
+        }
 
         //构建数据容器
         StatisticSurveyEntity res=new StatisticSurveyEntity();
@@ -135,7 +141,14 @@ public class StatisticSurveyServiceImpl implements StatisticSurveyService {
         if(haveEntities!=null)
         {
             for(int i=0;i<haveEntities.size();i++)
-                questions.add(QuestionStatistic(haveEntities.get(i).getQuestionId(),id));
+            {
+                StatisticQuestionEntity_WJC wjc=QuestionStatistic(haveEntities.get(i).getQuestionId(),id);
+
+                if(wjc==null) continue;
+
+                questions.add(wjc);
+
+            }
         }
         res.setQuestions(questions);
         

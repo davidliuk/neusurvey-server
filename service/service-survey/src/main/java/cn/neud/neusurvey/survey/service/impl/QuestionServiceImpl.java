@@ -54,7 +54,7 @@ public class QuestionServiceImpl extends CrudServiceImpl<QuestionDao, QuestionEn
 
     public List<QuestionDTO> in(String[] ids) {
         QueryWrapper<QuestionEntity> wrapper = new QueryWrapper<>();
-        System.out.println(ids[0] + ids[1]);
+//        System.out.println(ids[0] + ids[1]);
         wrapper.in(ObjectUtils.isNotEmpty(ids), "id", ids);
         List<QuestionEntity> entityList = questionDao.selectList(wrapper);
         System.out.println(entityList);

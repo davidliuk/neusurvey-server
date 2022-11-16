@@ -217,6 +217,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
             {
                 msg+="没有找到id为"+ids[i]+"的历史\n";
                 ifSuccess = false;
+                continue;
             }
 
             if(userHistoryEntity.getIsDeleted()!=null
@@ -224,6 +225,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
             {
                 msg+="id为"+ids[i]+"的历史已被删除\n";
                 ifSuccess = false;
+                continue;
             }
 
             //增加历史记录
