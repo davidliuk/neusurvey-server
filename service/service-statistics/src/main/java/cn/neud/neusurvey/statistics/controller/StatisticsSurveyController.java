@@ -6,26 +6,25 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("statistics/question")
+@RequestMapping("statistics/survey")
 @Api(tags="user_group")
-public class StatisticsQuestionController {
+public class StatisticsSurveyController {
 
     @Resource
     SurveyFeignClient surveyFeignClient;
 
     @GetMapping("{id}")
     @ApiOperation("问题统计数据")
-    @RequiresPermissions("survey:stasticQuestion:info")
-    public Result groupStatistic(@PathVariable("id") String id){
+    @RequiresPermissions("survey:stasticSurvey:info")
+    public Result surveyStatistic(@PathVariable("id") String id){
 
         Result result;
 
-        result = surveyFeignClient.groupStatistic(id);
+        result = surveyFeignClient.surveyStatistic(id);
         System.out.println(result);
 
         return result;

@@ -27,4 +27,13 @@ public interface AnswerDao extends BaseDao<AnswerEntity> {
             "and user_id = #{userId} " +
             "and question_id = #{questionId}")
     String selectContentByByUserAndSurveyId(@Param("userId") String userId,@Param("surveyId") String surveyId, @Param("questionId") String questionId);
+
+    @Select("select count(user_id) from answer where survey_id=#{surveyId} AND question_id=#{questionId}")
+    Integer getQuestionTotal(String surveyId, String questionId);
+
+    @Select("select count(distinct user_id) from answer where survey_id=#{surveyId}")
+    Integer getQuestionnaireTotal(String surveyId);
+
+    @Select("select distinct user_id from answer where survey_id=#{surveyId}")
+    List<String> getuserIdBySurveyId(String surveyId);
 }

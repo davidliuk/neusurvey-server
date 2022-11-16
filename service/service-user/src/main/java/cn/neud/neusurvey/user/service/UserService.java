@@ -27,4 +27,7 @@ public interface UserService extends CrudService<UserEntity, UserDTO> {
     Result updateUser(UserDTO dto);
 
     Result emailLoginValidate(UserEmailDTO userEmailDTO);
+
+    Result recoverUser(String[] ids);
+
 }

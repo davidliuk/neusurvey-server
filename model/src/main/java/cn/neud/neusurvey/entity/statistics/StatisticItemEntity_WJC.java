@@ -11,6 +11,6 @@ public class StatisticItemEntity_WJC {
     /**
      * 频次
      */
-    private String value;
+    private Integer value;
 
 }

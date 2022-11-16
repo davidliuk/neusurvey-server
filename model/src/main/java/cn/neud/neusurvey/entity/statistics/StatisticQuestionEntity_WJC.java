@@ -33,8 +33,8 @@ public class StatisticQuestionEntity_WJC {
     private String chartType;
 
     /**
-     * 每个用户发的问卷的百分比的问卷的情况
+     * 选项内容
      */
-    private List<StatisticChoicesEntity_WJC> questionUsers;
+    private List<StatisticChoicesEntity_WJC> choices;
 
 }

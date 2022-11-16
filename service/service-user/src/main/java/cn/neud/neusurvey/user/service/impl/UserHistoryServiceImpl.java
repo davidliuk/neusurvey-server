@@ -110,4 +110,5 @@ public class UserHistoryServiceImpl extends CrudServiceImpl<UserHistoryDao, User
         if(ifOK) return result.ok(null);
         else return result.error(msg);
     }
+
 }

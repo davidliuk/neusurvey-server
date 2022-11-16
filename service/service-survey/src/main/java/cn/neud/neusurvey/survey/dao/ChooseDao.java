@@ -25,4 +25,7 @@ public interface ChooseDao extends BaseDao<ChooseEntity> {
             "(select choice.id from choice where choice.belong_to = #{questionId})" +
             "and c.id = choose.choice_id")
     List<String> selectByUserAndSurveyId(@Param("userId") String userId,@Param("surveyId") String surveyId,@Param("questionId") String questionId);
+
+    @Select("select count(user_id) from choose where survey_id=#{surveyId} AND question_id=#{questionId} AND choice_id=#{choiceId}")
+    Integer getChoiceTotal(String surveyId, String questionId, String choiceId);
 }

@@ -14,6 +14,6 @@ public class StatisticChoicesEntity_WJC {
     /**
      * 回答该选项的具体人数
      */
-    private String choiceQuantity;
+    private Integer choiceQuantity;
 
 }

@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.sql.Date;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -62,7 +62,7 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         if(isDeleted!=null&&isDeleted.equals("0"))
             wrapper.ne("is_deleted", "1");
 
-        
+
             return wrapper;
     }
 
@@ -182,7 +182,6 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         BeanUtils.copyProperties(dto, userEntity);
         userEntity.setUpdateDate(new java.util.Date(System.currentTimeMillis()));
 
-
         userDao.updateById(userEntity);
 
         return result.ok(null);
@@ -197,6 +196,61 @@ public class UserServiceImpl extends CrudServiceImpl<UserDao, UserEntity, UserDT
         result.setData(verifyCode);
         result.setMsg("验证码已发送至指定邮箱，请注意查收！");
         return result;
+    }
+
+    @Override
+    public Result recoverUser(String[] ids) {
+
+        Result result=new Result();
+
+        String msg=new String();
+
+        boolean ifSuccess=true;
+
+        //对每个id，找到历史记录，恢复，被替换的成为历史即可
+        for(int i=0;i< ids.length;i++)
+        {
+            //找到历史记录
+            UserHistoryEntity userHistoryEntity=userHistoryDao.selectById(ids[i]);
+
+            if(userHistoryEntity==null)
+            {
+                msg+="没有找到id为"+ids[i]+"的历史\n";
+                ifSuccess = false;
+            }
+
+            if(userHistoryEntity.getIsDeleted()!=null
+                    && userHistoryEntity.getIsDeleted().equals("1"))
+            {
+                msg+="id为"+ids[i]+"的历史已被删除\n";
+                ifSuccess = false;
+            }
+
+            //增加历史记录
+            UserEntity userEntity=userDao.selectById(userHistoryEntity.getUserId());
+//            if(userEntity!=null)
+//            {
+//                UserHistoryEntity userHistoryEntity_new=new UserHistoryEntity();
+//                BeanUtils.copyProperties(userEntity,userHistoryEntity_new);
+//                userHistoryEntity_new.setId(UuidUtils.generateUuid());
+//                userHistoryEntity_new.setUserId(userEntity.getId());
+//                userHistoryEntity_new.setUpdateDate(new Date(System.currentTimeMillis()));
+//                userHistoryDao.insert(userHistoryEntity_new);
+//            }
+
+            //覆写用户实体
+            BeanUtils.copyProperties(userHistoryEntity,userEntity);
+            userEntity.setId(userHistoryEntity.getUserId());
+            userEntity.setUpdateDate(new Date(System.currentTimeMillis()));
+            userEntity.setIsDeleted("0");
+            if(userEntity==null)
+                userDao.insert(userEntity);
+            else
+                userDao.updateById(userEntity);
+        }
+
+        if(ifSuccess) return result.ok(null);
+        else return result.error(msg);
     }
 
     @Override

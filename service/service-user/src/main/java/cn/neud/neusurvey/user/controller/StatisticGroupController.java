@@ -25,7 +25,7 @@ public class StatisticGroupController {
     @GetMapping("{id}")
     @ApiOperation("群组统计数据")
     @RequiresPermissions("user:usergroup:info")
-//    public Result groupStatistic(@ApiIgnore @RequestParam String id){
+//    public Result questionStatistic(@ApiIgnore @RequestParam String id){
     public Result groupStatistic(@PathVariable("id") String id){
         Result result = new Result();
 

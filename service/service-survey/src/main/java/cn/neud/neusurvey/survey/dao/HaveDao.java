@@ -19,4 +19,7 @@ public interface HaveDao extends BaseDao<HaveEntity> {
 
     @Select("select survey_id,next_id from have where question_id=#{id}")
     List<SurveyNext_HaveItem> getSurveyNextByQuestionId(String id);
+
+    @Select("select * from have where survey_id=#{surveyId}")
+    List<HaveEntity> getQuestionBySurveyId(String id);
 }

@@ -42,4 +42,7 @@ public interface UserGroupService extends CrudService<UserGroupEntity, UserGroup
     Result updateGroupUsers(UserGroupOperateUserDTO dto);
 
     Result invitationCodeAddGroup(InvitationDTO dto);
+
+    Result recoverUserHistory(String[] ids);
+
 }

@@ -218,7 +218,16 @@ public Result<PageData<UserDTO>> pageGroupUser(@ApiIgnore @RequestParam Map<Stri
     return new Result<PageData<UserDTO>>().ok(page);
 }
 
+    @PostMapping("recover")
+    @ApiOperation("恢复")
+    @LogOperation("恢复")
+    @RequiresPermissions("user:userhistory:recover")
+    public Result recover(@RequestBody String[] ids){
+        //效验数据
+        ValidatorUtils.validateEntity(ids, UpdateGroup.class, DefaultGroup.class);
 
+        return userGroupService.recoverUserHistory(ids);
+    }
 
 
 ////统计群组

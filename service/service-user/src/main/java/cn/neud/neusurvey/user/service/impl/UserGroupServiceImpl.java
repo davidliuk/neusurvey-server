@@ -3,9 +3,7 @@ package cn.neud.neusurvey.user.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.neud.common.page.PageData;
 import cn.neud.common.utils.Result;
-import cn.neud.common.utils.UUIDUtil;
 import cn.neud.neusurvey.dto.survey.InvitationDTO;
-import cn.neud.neusurvey.dto.user.MemberHistoryDTO;
 import cn.neud.neusurvey.dto.user.UserDTO;
 import cn.neud.neusurvey.dto.user.UserGroupOperateUserDTO;
 import cn.neud.neusurvey.entity.user.GroupHistoryEntity;
@@ -190,6 +188,58 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
         }
 
         return new Result().ok(null);
+    }
+
+    @Override
+    public Result recoverUserHistory(String[] ids) {
+
+        Result result=new Result();
+        String msg=new String();
+        boolean ifSuccess=true;
+
+        //得到一个修改群组的数据结构（usergroupDTO)，然后开始修改群组即可
+        //如果没找到到这个群组，那就增加一个这个
+
+
+        for(int i=0;i<ids.length;i++)
+        {
+
+            GroupHistoryEntity groupHistoryEntity=groupHistoryDao.selectById(ids[i]);
+            if(groupHistoryEntity==null)
+            {
+                msg+="未找到id为"+ids[i]+"的历史记录\n";
+                ifSuccess=false;
+                continue;
+            }
+            if(groupHistoryEntity.getIsDeleted()!=null
+                    &&groupHistoryEntity.getIsDeleted().equals("1"))
+            {
+                msg+="id为"+ids[i]+"的历史记录已被删除\n";
+                ifSuccess=false;
+                continue;
+            }
+
+
+            UserGroupDTO userGroupDTO=new UserGroupDTO();
+            BeanUtil.copyProperties(groupHistoryEntity,userGroupDTO);
+            userGroupDTO.setId(groupHistoryEntity.getGroupId());
+            //找到member
+//            List<String> memberIds=memberHistoryDao.selectByGroupHistoryId(groupHistoryEntity.getGroupId());
+//            userGroupDTO.setUserIds(memberIds.toArray(new String[]{}));
+            String[] memberIds=memberHistoryDao.selectByGroupHistoryId(groupHistoryEntity.getId());
+            userGroupDTO.setUserIds(memberIds);
+
+            UserGroupEntity userGroupEntity=userGroupDao.selectById(groupHistoryEntity.getGroupId());
+            if(userGroupEntity==null) addGroup(userGroupDTO);
+            else    updateGroup(userGroupDTO);
+
+
+        }
+
+
+        if(ifSuccess) return result.ok(null);
+        else return result.error(msg);
+
     }
 
     @Override
@@ -449,4 +499,5 @@ public class UserGroupServiceImpl extends CrudServiceImpl<UserGroupDao, UserGrou
 
         return result;
     }
+
 }

@@ -24,8 +24,8 @@ public interface SurveyFeignClient {
     public StatisticUserEntity getStatisticUserEntity(@PathVariable("id") String id);
 
 
-    @GetMapping("/statistics/question/{id}")
-    @ApiOperation("问题统计数据")
-    public Result groupStatistic(@PathVariable("id") String id);
+    @GetMapping("/statistics/survey/{id}")
+    @ApiOperation("问卷统计数据")
+    public Result surveyStatistic(@PathVariable("id") String id);
 
 }

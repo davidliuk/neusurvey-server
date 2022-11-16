@@ -1,7 +1,9 @@
-package cn.neud.neusurvey.statistics.controller;
+package cn.neud.neusurvey.survey.controller;
 
 import cn.neud.common.utils.Result;
-import cn.neud.neusurvey.user.client.UserFeignClient;
+import cn.neud.neusurvey.survey.service.StatisticSurveyService;
+import cn.neud.neusurvey.survey.service.SurveyService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -13,24 +15,24 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("statistics/group")
+@RequestMapping("statistics/survey")
 @Api(tags="user_group")
-public class StatisticsGroupController {
+public class StatisticsSurveyController {
 
     @Resource
-    UserFeignClient userFeignClient;
-
-
+    StatisticSurveyService statisticSurveyService;
 
     @GetMapping("{id}")
-    @ApiOperation("群组统计数据")
-    @RequiresPermissions("user:usergroup:info")
-//    public Result questionStatistic(@ApiIgnore @RequestParam String id){
-    public Result groupStatistic(@PathVariable("id") String id){
+    @ApiOperation("问卷统计数据")
+    @RequiresPermissions("survey:stasticSurvey:info")
+    public Result surveyStatistic(@PathVariable("id") String id){
 
-        Result result = userFeignClient.groupStatistic(id);
+        Result result;
+
+        result = statisticSurveyService.surveyStatistic(id);
 
         return result;
+
     }
 
 
