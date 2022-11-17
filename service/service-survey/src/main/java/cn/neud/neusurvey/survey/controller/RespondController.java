@@ -10,8 +10,10 @@ import cn.neud.common.validator.ValidatorUtils;
 import cn.neud.common.validator.group.AddGroup;
 import cn.neud.common.validator.group.DefaultGroup;
 import cn.neud.common.validator.group.UpdateGroup;
+import cn.neud.neusurvey.dto.survey.AnswerDTO;
 import cn.neud.neusurvey.dto.survey.RespondDTO;
 import cn.neud.neusurvey.excel.survey.RespondExcel;
+import cn.neud.neusurvey.survey.service.AnswerService;
 import cn.neud.neusurvey.survey.service.RespondService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -40,6 +42,9 @@ import java.util.Map;
 public class RespondController {
     @Resource
     private RespondService respondService;
+
+    @Resource
+    private AnswerService answerService;
 
     @GetMapping("page")
     @ApiOperation("分页")
@@ -74,6 +79,8 @@ public class RespondController {
         ValidatorUtils.validateEntity(dto, AddGroup.class, DefaultGroup.class);
 
         respondService.save(dto);
+        answerService.save(dto.getAnswers().toArray(new AnswerDTO[0]));
+        System.out.println(dto.getAnswers().toArray(new AnswerDTO[0]).length);
 
         return new Result();
     }

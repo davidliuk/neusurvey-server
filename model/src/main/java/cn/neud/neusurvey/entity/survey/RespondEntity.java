@@ -1,9 +1,11 @@
 package cn.neud.neusurvey.entity.survey;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -35,4 +37,6 @@ public class RespondEntity {
 //     * 回答次数
 //     */
 //	private Date answerTime;
+    @TableField(exist = false)
+    private List<AnswerEntity> answers;
 }

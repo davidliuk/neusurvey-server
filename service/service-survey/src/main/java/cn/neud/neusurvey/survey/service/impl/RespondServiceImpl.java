@@ -1,5 +1,7 @@
 package cn.neud.neusurvey.survey.service.impl;
 
+import cn.neud.common.utils.ConvertUtils;
+import cn.neud.neusurvey.mapper.survey.RespondMapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.neud.common.service.impl.CrudServiceImpl;
 import cn.neud.neusurvey.survey.dao.RespondDao;
@@ -7,6 +9,8 @@ import cn.neud.neusurvey.dto.survey.RespondDTO;
 import cn.neud.neusurvey.entity.survey.RespondEntity;
 import cn.neud.neusurvey.survey.service.RespondService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -30,5 +34,12 @@ public class RespondServiceImpl extends CrudServiceImpl<RespondDao, RespondEntit
         return wrapper;
     }
 
+    @Override
+    public void save(RespondDTO dto) {
+        RespondEntity entity = RespondMapper.INSTANCE.toRespond(dto);
+        insert(entity);
 
+        //copy主键值到dto
+        BeanUtils.copyProperties(entity, dto);
+    }
 }

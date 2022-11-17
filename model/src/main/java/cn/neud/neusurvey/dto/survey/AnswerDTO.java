@@ -20,6 +20,8 @@ import java.util.List;
 public class AnswerDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
+	private String id;
+
 	@ApiModelProperty(value = "问卷id")
 	private String surveyId;
 
@@ -52,6 +54,5 @@ public class AnswerDTO implements Serializable {
 
 	@ApiModelProperty(value = "保留项json")
 	private String reserved;
-
 
 }

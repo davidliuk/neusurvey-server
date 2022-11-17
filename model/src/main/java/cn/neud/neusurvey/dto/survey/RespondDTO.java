@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -34,5 +35,7 @@ public class RespondDTO implements Serializable {
 //	@ApiModelProperty(value = "回答次数")
 //	private Date answerTime;
 
+	@ApiModelProperty(value = "回答问题")
+	private List<AnswerDTO> answers;
 
 }

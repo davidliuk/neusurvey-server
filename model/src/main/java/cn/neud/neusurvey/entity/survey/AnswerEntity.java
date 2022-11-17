@@ -18,10 +18,9 @@ import java.util.List;
 public class AnswerEntity {
 
     /**
-     * 问卷id
+     * 回答id
      */
     private String id;
-
     /**
      * 问卷id
      */
