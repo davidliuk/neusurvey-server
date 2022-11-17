@@ -15,6 +15,11 @@ import java.util.Date;
 @TableName("choose")
 public class ChooseEntity {
     /**
+     *
+     */
+    private String id;
+
+    /**
      * 
      */
 	private String surveyId;

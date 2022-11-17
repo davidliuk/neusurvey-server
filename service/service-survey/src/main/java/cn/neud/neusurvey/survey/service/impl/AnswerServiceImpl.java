@@ -31,12 +31,14 @@ public class AnswerServiceImpl extends CrudServiceImpl<AnswerDao, AnswerEntity, 
 
     @Override
     public QueryWrapper<AnswerEntity> getWrapper(Map<String, Object> params) {
+
         String id = (String) params.get("id");
 
         QueryWrapper<AnswerEntity> wrapper = new QueryWrapper<>();
         wrapper.eq(StringUtils.isNotBlank(id), "id", id);
 
         return wrapper;
+
     }
 
     @Override

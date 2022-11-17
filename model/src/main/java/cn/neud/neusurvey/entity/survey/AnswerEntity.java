@@ -20,6 +20,11 @@ public class AnswerEntity {
     /**
      * 问卷id
      */
+    private String id;
+
+    /**
+     * 问卷id
+     */
 	private String surveyId;
     /**
      * 问题id

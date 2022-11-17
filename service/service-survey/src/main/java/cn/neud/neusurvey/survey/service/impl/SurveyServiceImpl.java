@@ -272,6 +272,8 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
     public AnsweredSurveyDTO getUserAnswerDerail(String id, String userId) {
         AnsweredSurveyDTO answeredSurveyDTO = new AnsweredSurveyDTO();
 
+
+
         // survey 基本内容
         SurveyDTO survey = SurveyMapper.INSTANCE.fromSurvey(super.selectById(id));
 
@@ -334,6 +336,7 @@ public class SurveyServiceImpl extends CrudServiceImpl<SurveyDao, SurveyEntity, 
             //答题选项
             AnswerDTO answerDTO = new AnswerDTO();
             System.out.println(userId + id + question.getId());
+
             List<String> chooseList = chooseDao.selectByUserAndSurveyId(userId, id, question.getId());
             answerDTO.setQuestionId(question.getId());
             answerDTO.setSurveyId(id);

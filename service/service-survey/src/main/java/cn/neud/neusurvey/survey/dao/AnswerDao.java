@@ -18,15 +18,18 @@ import java.util.List;
 @Mapper
 public interface AnswerDao extends BaseDao<AnswerEntity> {
 
-    @Select("select survey_id,user_id,content from answer where question_id=#{id}")
+
+    @Select("select survey_id,user_id,content from answer where question_id=#{id} AND " +
+            "(survey_id,user_id) in (select distinct survey_id,user_id from answer where question_id=#{id});")
     List<SurveyUserContent_AnswerItem> getSurveyUserContentByQuestionId(String id);
 
     @Select("select content " +
             "from answer " +
             "where survey_id = #{surveyId} " +
             "and user_id = #{userId} " +
-            "and question_id = #{questionId}")
-    String selectContentByByUserAndSurveyId(@Param("userId") String userId,@Param("surveyId") String surveyId, @Param("questionId") String questionId);
+            "and question_id = #{questionId}" +
+            "and id= (select max(id) from answer where survey_id = #{surveyId} and user_id = #{userId} and question_id = #{questionId});")
+    String selectContentByByUserAndSurveyId( @Param("userId") String userId,@Param("surveyId") String surveyId, @Param("questionId") String questionId);
 
     @Select("select count(user_id) from answer where survey_id=#{surveyId} AND question_id=#{questionId}")
     Integer getQuestionTotal(String surveyId, String questionId);
